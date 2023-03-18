@@ -1,0 +1,142 @@
+{
+  "id": "8ee4a8a1-7a3d-4552-a547-3b78e31413dc",
+  "repeat_mode": "off",
+  "shuffled": false,
+  "properties": {
+    "position": "0"
+  },
+  "items": [
+    {
+      "id": "1e07a697-bcb7-4e5c-8f61-9c6ebab8e058",
+      "media_id": "23368953",
+      "type": "track",
+      "properties": {
+        "sourceId": "23368953",
+        "active": "false",
+        "original_order": "0",
+        "sourceType": "album"
+      }
+    },
+    {
+      "id": "dca33681-088b-499d-9af9-48fdcfd6d531",
+      "media_id": "23368954",
+      "type": "track",
+      "properties": {
+        "sourceId": "23368954",
+        "active": "false",
+        "original_order": "0",
+        "sourceType": "album"
+      }
+    },
+    {
+      "id": "05ca3a8b-0e22-4f29-aa68-d90dc2987382",
+      "media_id": "23368955",
+      "type": "track",
+      "properties": {
+        "sourceId": "23368955",
+        "active": "false",
+        "original_order": "0",
+        "sourceType": "album"
+      }
+    },
+    {
+      "id": "534ecaf7-dc4e-4aeb-bb61-91e1166a7079",
+      "media_id": "23368956",
+      "type": "track",
+      "properties": {
+        "sourceId": "23368956",
+        "active": "false",
+        "original_order": "0",
+        "sourceType": "album"
+      }
+    },
+    {
+      "id": "edf73fce-7bf9-4a7a-9657-9dd565890f19",
+      "media_id": "23368957",
+      "type": "track",
+      "properties": {
+        "sourceId": "23368957",
+        "active": "false",
+        "original_order": "0",
+        "sourceType": "album"
+      }
+    },
+    {
+      "id": "6ac8495e-013d-45c8-8105-4dbe22ff4b9e",
+      "media_id": "23368958",
+      "type": "track",
+      "properties": {
+        "sourceId": "23368958",
+        "active": "false",
+        "original_order": "0",
+        "sourceType": "album"
+      }
+    },
+    {
+      "id": "1c9a302f-e4b3-4bda-aef6-8d113e3fab74",
+      "media_id": "23368959",
+      "type": "track",
+      "properties": {
+        "sourceId": "23368959",
+        "active": "false",
+        "original_order": "0",
+        "sourceType": "album"
+      }
+    },
+    {
+      "id": "ffafad76-1704-4867-b3da-294ced9eb32a",
+      "media_id": "23368960",
+      "type": "track",
+      "properties": {
+        "sourceId": "23368960",
+        "active": "false",
+        "original_order": "0",
+        "sourceType": "album"
+      }
+    },
+    {
+      "id": "18d7c5c6-4a73-4cc3-9da9-6af8f659de99",
+      "media_id": "23368961",
+      "type": "track",
+      "properties": {
+        "sourceId": "23368961",
+        "active": "false",
+        "original_order": "0",
+        "sourceType": "album"
+      }
+    },
+    {
+      "id": "ceeeba8d-eed9-4458-a466-02ce6d3a8286",
+      "media_id": "23368962",
+      "type": "track",
+      "properties": {
+        "sourceId": "23368962",
+        "active": "false",
+        "original_order": "0",
+        "sourceType": "album"
+      }
+    },
+    {
+      "id": "902de03b-645f-4f14-a923-af0119db4b3d",
+      "media_id": "23368963",
+      "type": "track",
+      "properties": {
+        "sourceId": "23368963",
+        "active": "false",
+        "original_order": "0",
+        "sourceType": "album"
+      }
+    },
+    {
+      "id": "961ef180-8bb5-45c1-a625-b9edba49a454",
+      "media_id": "23368964",
+      "type": "track",
+      "properties": {
+        "sourceId": "23368964",
+        "active": "false",
+        "original_order": "0",
+        "sourceType": "album"
+      }
+    }
+  ]
+}

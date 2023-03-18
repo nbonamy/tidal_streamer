@@ -1,0 +1,90 @@
+{
+  "command": "loadCloudQueue",
+  "requestId": 2,
+  "queueInfo": {
+    "queueId": "64d7502b-653b-4deb-89ec-295ac41895a1",
+    "repeatMode": "off",
+    "shuffled": false,
+    "maxBeforeSize": 10,
+    "maxAfterSize": 10
+  },
+  "queueServerInfo": {
+    "serverUrl": "https://connectqueue.tidal.com/v1/queues",
+    "authInfo": {
+      "oauthServerInfo": {
+        "serverUrl": "https://auth.tidal.com/v1/oauth2/token/",
+        "authInfo": {
+          "headerAuth": "Bearer XXXX",
+          "oauthParameters": {
+            "accessToken": "XXXX",
+            "refreshToken": "YYY"
+          }
+        },
+        "httpHeaderFields": [],
+        "formParameters": {
+          "scope": "r_usr",
+          "grant_type": "switch_client"
+        }
+      }
+    },
+    "httpHeaderFields": [],
+    "queryParameters": {}
+  },
+  "contentServerInfo": {
+    "serverUrl": "https://api.tidal.com/v1",
+    "authInfo": {
+      "oauthServerInfo": {
+        "serverUrl": "https://auth.tidal.com/v1/oauth2/token/",
+        "authInfo": {
+          "headerAuth": "Bearer XXXX",
+          "oauthParameters": {
+            "accessToken": "XXXX",
+            "refreshToken": "YYY"
+          }
+        },
+        "httpHeaderFields": [],
+        "formParameters": {
+          "scope": "r_usr",
+          "grant_type": "switch_client"
+        }
+      }
+    },
+    "httpHeaderFields": [],
+    "queryParameters": {
+      "audiomode": "STEREO",
+      "audioquality": "HI_RES"
+    }
+  },
+  "currentMediaInfo": {
+    "itemId": "a85a9c96-fc06-4ef8-9042-958b882db374",
+    "mediaId": "18445266",
+    "mediaType": 0,
+    "metadata": {
+      "albumTitle": "Merry Christmas",
+      "artists": [
+        "Mariah Carey"
+      ],
+      "duration": 242000,
+      "images": {
+        "high": {
+          "height": 1280,
+          "url": "https://resources.tidal.com/images/22ab59f7/5f2d/43e9/a4c6/50d7b024dfcf/1280x1280.jpg",
+          "width": 1280
+        },
+        "low": {
+          "height": 320,
+          "url": "https://resources.tidal.com/images/22ab59f7/5f2d/43e9/a4c6/50d7b024dfcf/640x640.jpg",
+          "width": 320
+        },
+        "medium": {
+          "height": 640,
+          "url": "https://resources.tidal.com/images/22ab59f7/5f2d/43e9/a4c6/50d7b024dfcf/1280x1280.jpg",
+          "width": 640
+        }
+      },
+      "title": "All I Want for Christmas Is You"
+    }
+  },
+  "autoplay": true,
+  "position": 0
+}

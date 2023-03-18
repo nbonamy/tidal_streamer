@@ -1,0 +1,631 @@
+{
+  "limit": 100,
+  "offset": 0,
+  "totalNumberOfItems": 12,
+  "items": [
+    {
+      "item": {
+        "id": 23368953,
+        "title": "Le monde est sourd (Remastered)",
+        "duration": 267,
+        "replayGain": -6.64,
+        "peak": 0.999997,
+        "allowStreaming": true,
+        "streamReady": true,
+        "streamStartDate": "2017-09-18T00:00:00.000+0000",
+        "premiumStreamingOnly": false,
+        "trackNumber": 1,
+        "volumeNumber": 1,
+        "version": null,
+        "popularity": 1,
+        "copyright": "(P) 2013 Chandelle Productions",
+        "url": "http://www.tidal.com/track/23368953",
+        "isrc": "FRG951300410",
+        "editable": false,
+        "explicit": false,
+        "audioQuality": "HI_RES",
+        "audioModes": [
+          "STEREO"
+        ],
+        "artist": {
+          "id": 797,
+          "name": "Francis Cabrel",
+          "type": "MAIN",
+          "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+        },
+        "artists": [
+          {
+            "id": 797,
+            "name": "Francis Cabrel",
+            "type": "MAIN",
+            "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+          }
+        ],
+        "album": {
+          "id": 23368952,
+          "title": "Hors-saison (Remastered)",
+          "cover": "78f2d404-4313-4284-8b95-c95328d1ea4e",
+          "vibrantColor": "#199ca4",
+          "videoCover": null
+        },
+        "mixes": {
+          "MASTER_TRACK_MIX": "0146ef8160cd7aec5f298937a5cd3f",
+          "TRACK_MIX": "001aa4a955751dfd0d47bfcd80e831"
+        }
+      },
+      "type": "track"
+    },
+    {
+      "item": {
+        "id": 23368954,
+        "title": "Cent ans de plus (Remastered)",
+        "duration": 236,
+        "replayGain": -6.64,
+        "peak": 0.999967,
+        "allowStreaming": true,
+        "streamReady": true,
+        "streamStartDate": "2017-09-18T00:00:00.000+0000",
+        "premiumStreamingOnly": false,
+        "trackNumber": 2,
+        "volumeNumber": 1,
+        "version": null,
+        "popularity": 1,
+        "copyright": "(P) 2013 Chandelle Productions",
+        "url": "http://www.tidal.com/track/23368954",
+        "isrc": "FRG951300420",
+        "editable": false,
+        "explicit": false,
+        "audioQuality": "HI_RES",
+        "audioModes": [
+          "STEREO"
+        ],
+        "artist": {
+          "id": 797,
+          "name": "Francis Cabrel",
+          "type": "MAIN",
+          "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+        },
+        "artists": [
+          {
+            "id": 797,
+            "name": "Francis Cabrel",
+            "type": "MAIN",
+            "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+          }
+        ],
+        "album": {
+          "id": 23368952,
+          "title": "Hors-saison (Remastered)",
+          "cover": "78f2d404-4313-4284-8b95-c95328d1ea4e",
+          "vibrantColor": "#199ca4",
+          "videoCover": null
+        },
+        "mixes": {
+          "MASTER_TRACK_MIX": "014bf9edb993cd778e7c9726b9643e",
+          "TRACK_MIX": "0012e0cb33d48ea2cf47a67625f5ca"
+        }
+      },
+      "type": "track"
+    },
+    {
+      "item": {
+        "id": 23368955,
+        "title": "Presque rien (Remastered)",
+        "duration": 261,
+        "replayGain": -6.64,
+        "peak": 0.994319,
+        "allowStreaming": true,
+        "streamReady": true,
+        "streamStartDate": "2017-09-18T00:00:00.000+0000",
+        "premiumStreamingOnly": false,
+        "trackNumber": 3,
+        "volumeNumber": 1,
+        "version": null,
+        "popularity": 1,
+        "copyright": "(P) 2013 Chandelle Productions",
+        "url": "http://www.tidal.com/track/23368955",
+        "isrc": "FRG951300430",
+        "editable": false,
+        "explicit": false,
+        "audioQuality": "HI_RES",
+        "audioModes": [
+          "STEREO"
+        ],
+        "artist": {
+          "id": 797,
+          "name": "Francis Cabrel",
+          "type": "MAIN",
+          "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+        },
+        "artists": [
+          {
+            "id": 797,
+            "name": "Francis Cabrel",
+            "type": "MAIN",
+            "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+          }
+        ],
+        "album": {
+          "id": 23368952,
+          "title": "Hors-saison (Remastered)",
+          "cover": "78f2d404-4313-4284-8b95-c95328d1ea4e",
+          "vibrantColor": "#199ca4",
+          "videoCover": null
+        },
+        "mixes": {
+          "MASTER_TRACK_MIX": "0145cbaf0d3549a0ead21bfb6ee25d",
+          "TRACK_MIX": "001d1b4705140236fe952ca8cedce1"
+        }
+      },
+      "type": "track"
+    },
+    {
+      "item": {
+        "id": 23368956,
+        "title": "Le reste du temps (Remastered)",
+        "duration": 211,
+        "replayGain": -6.64,
+        "peak": 0.99458,
+        "allowStreaming": true,
+        "streamReady": true,
+        "streamStartDate": "2017-09-18T00:00:00.000+0000",
+        "premiumStreamingOnly": false,
+        "trackNumber": 4,
+        "volumeNumber": 1,
+        "version": null,
+        "popularity": 2,
+        "copyright": "(P) 2013 Chandelle Productions",
+        "url": "http://www.tidal.com/track/23368956",
+        "isrc": "FRG951300440",
+        "editable": false,
+        "explicit": false,
+        "audioQuality": "HI_RES",
+        "audioModes": [
+          "STEREO"
+        ],
+        "artist": {
+          "id": 797,
+          "name": "Francis Cabrel",
+          "type": "MAIN",
+          "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+        },
+        "artists": [
+          {
+            "id": 797,
+            "name": "Francis Cabrel",
+            "type": "MAIN",
+            "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+          }
+        ],
+        "album": {
+          "id": 23368952,
+          "title": "Hors-saison (Remastered)",
+          "cover": "78f2d404-4313-4284-8b95-c95328d1ea4e",
+          "vibrantColor": "#199ca4",
+          "videoCover": null
+        },
+        "mixes": {
+          "MASTER_TRACK_MIX": "0143d5b2af872e576ab086d286d946",
+          "TRACK_MIX": "001d288af6239fcac46ff4a43a5d9e"
+        }
+      },
+      "type": "track"
+    },
+    {
+      "item": {
+        "id": 23368957,
+        "title": "Rien de nouveau (Remastered)",
+        "duration": 245,
+        "replayGain": -6.64,
+        "peak": 0.999995,
+        "allowStreaming": true,
+        "streamReady": true,
+        "streamStartDate": "2017-09-18T00:00:00.000+0000",
+        "premiumStreamingOnly": false,
+        "trackNumber": 5,
+        "volumeNumber": 1,
+        "version": null,
+        "popularity": 1,
+        "copyright": "(P) 2013 Chandelle Productions",
+        "url": "http://www.tidal.com/track/23368957",
+        "isrc": "FRG951300450",
+        "editable": false,
+        "explicit": false,
+        "audioQuality": "HI_RES",
+        "audioModes": [
+          "STEREO"
+        ],
+        "artist": {
+          "id": 797,
+          "name": "Francis Cabrel",
+          "type": "MAIN",
+          "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+        },
+        "artists": [
+          {
+            "id": 797,
+            "name": "Francis Cabrel",
+            "type": "MAIN",
+            "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+          }
+        ],
+        "album": {
+          "id": 23368952,
+          "title": "Hors-saison (Remastered)",
+          "cover": "78f2d404-4313-4284-8b95-c95328d1ea4e",
+          "vibrantColor": "#199ca4",
+          "videoCover": null
+        },
+        "mixes": {
+          "MASTER_TRACK_MIX": "014205c3bcff17db81ef1a04b63ed0",
+          "TRACK_MIX": "001e847187524b3820b3ab3b6e016c"
+        }
+      },
+      "type": "track"
+    },
+    {
+      "item": {
+        "id": 23368958,
+        "title": "Loin devant (Remastered)",
+        "duration": 286,
+        "replayGain": -6.64,
+        "peak": 0.999969,
+        "allowStreaming": true,
+        "streamReady": true,
+        "streamStartDate": "2017-09-18T00:00:00.000+0000",
+        "premiumStreamingOnly": false,
+        "trackNumber": 6,
+        "volumeNumber": 1,
+        "version": null,
+        "popularity": 1,
+        "copyright": "(P) 2013 Chandelle Productions",
+        "url": "http://www.tidal.com/track/23368958",
+        "isrc": "FRG951300460",
+        "editable": false,
+        "explicit": false,
+        "audioQuality": "HI_RES",
+        "audioModes": [
+          "STEREO"
+        ],
+        "artist": {
+          "id": 797,
+          "name": "Francis Cabrel",
+          "type": "MAIN",
+          "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+        },
+        "artists": [
+          {
+            "id": 797,
+            "name": "Francis Cabrel",
+            "type": "MAIN",
+            "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+          }
+        ],
+        "album": {
+          "id": 23368952,
+          "title": "Hors-saison (Remastered)",
+          "cover": "78f2d404-4313-4284-8b95-c95328d1ea4e",
+          "vibrantColor": "#199ca4",
+          "videoCover": null
+        },
+        "mixes": {
+          "MASTER_TRACK_MIX": "01499607314db3d8d9f5d134b553cd",
+          "TRACK_MIX": "001d908ff4a8a1440a8083253de95c"
+        }
+      },
+      "type": "track"
+    },
+    {
+      "item": {
+        "id": 23368959,
+        "title": "Depuis toujours (Remastered)",
+        "duration": 262,
+        "replayGain": -6.64,
+        "peak": 0.999837,
+        "allowStreaming": true,
+        "streamReady": true,
+        "streamStartDate": "2017-09-18T00:00:00.000+0000",
+        "premiumStreamingOnly": false,
+        "trackNumber": 7,
+        "volumeNumber": 1,
+        "version": null,
+        "popularity": 1,
+        "copyright": "(P) 2013 Chandelle Productions",
+        "url": "http://www.tidal.com/track/23368959",
+        "isrc": "FRG951300470",
+        "editable": false,
+        "explicit": false,
+        "audioQuality": "HI_RES",
+        "audioModes": [
+          "STEREO"
+        ],
+        "artist": {
+          "id": 797,
+          "name": "Francis Cabrel",
+          "type": "MAIN",
+          "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+        },
+        "artists": [
+          {
+            "id": 797,
+            "name": "Francis Cabrel",
+            "type": "MAIN",
+            "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+          }
+        ],
+        "album": {
+          "id": 23368952,
+          "title": "Hors-saison (Remastered)",
+          "cover": "78f2d404-4313-4284-8b95-c95328d1ea4e",
+          "vibrantColor": "#199ca4",
+          "videoCover": null
+        },
+        "mixes": {
+          "MASTER_TRACK_MIX": "014c441519af39fa9e4e32d193ce72",
+          "TRACK_MIX": "001c0eabf7ac35b7156e77b3cfb2f9"
+        }
+      },
+      "type": "track"
+    },
+    {
+      "item": {
+        "id": 23368960,
+        "title": "Comme eux (Remastered)",
+        "duration": 282,
+        "replayGain": -6.64,
+        "peak": 0.999996,
+        "allowStreaming": true,
+        "streamReady": true,
+        "streamStartDate": "2017-09-18T00:00:00.000+0000",
+        "premiumStreamingOnly": false,
+        "trackNumber": 8,
+        "volumeNumber": 1,
+        "version": null,
+        "popularity": 1,
+        "copyright": "(P) 2013 Chandelle Productions",
+        "url": "http://www.tidal.com/track/23368960",
+        "isrc": "FRG951300480",
+        "editable": false,
+        "explicit": false,
+        "audioQuality": "HI_RES",
+        "audioModes": [
+          "STEREO"
+        ],
+        "artist": {
+          "id": 797,
+          "name": "Francis Cabrel",
+          "type": "MAIN",
+          "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+        },
+        "artists": [
+          {
+            "id": 797,
+            "name": "Francis Cabrel",
+            "type": "MAIN",
+            "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+          }
+        ],
+        "album": {
+          "id": 23368952,
+          "title": "Hors-saison (Remastered)",
+          "cover": "78f2d404-4313-4284-8b95-c95328d1ea4e",
+          "vibrantColor": "#199ca4",
+          "videoCover": null
+        },
+        "mixes": {
+          "MASTER_TRACK_MIX": "014d0b009928816b3bdea319505615",
+          "TRACK_MIX": "00117b0eba5ea6f53ed73ce04a3608"
+        }
+      },
+      "type": "track"
+    },
+    {
+      "item": {
+        "id": 23368961,
+        "title": "Hell Nep Avenue (Remastered)",
+        "duration": 347,
+        "replayGain": -6.64,
+        "peak": 0.999974,
+        "allowStreaming": true,
+        "streamReady": true,
+        "streamStartDate": "2017-09-18T00:00:00.000+0000",
+        "premiumStreamingOnly": false,
+        "trackNumber": 9,
+        "volumeNumber": 1,
+        "version": null,
+        "popularity": 1,
+        "copyright": "(P) 2013 Chandelle Productions",
+        "url": "http://www.tidal.com/track/23368961",
+        "isrc": "FRG951300490",
+        "editable": false,
+        "explicit": false,
+        "audioQuality": "HI_RES",
+        "audioModes": [
+          "STEREO"
+        ],
+        "artist": {
+          "id": 797,
+          "name": "Francis Cabrel",
+          "type": "MAIN",
+          "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+        },
+        "artists": [
+          {
+            "id": 797,
+            "name": "Francis Cabrel",
+            "type": "MAIN",
+            "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+          }
+        ],
+        "album": {
+          "id": 23368952,
+          "title": "Hors-saison (Remastered)",
+          "cover": "78f2d404-4313-4284-8b95-c95328d1ea4e",
+          "vibrantColor": "#199ca4",
+          "videoCover": null
+        },
+        "mixes": {
+          "MASTER_TRACK_MIX": "014c631033a80453d8f2146f0794a5",
+          "TRACK_MIX": "001b623c631ba5c86e040d4afe23a8"
+        }
+      },
+      "type": "track"
+    },
+    {
+      "item": {
+        "id": 23368962,
+        "title": "Hors-saison (Remastered)",
+        "duration": 281,
+        "replayGain": -6.64,
+        "peak": 0.987547,
+        "allowStreaming": true,
+        "streamReady": true,
+        "streamStartDate": "2017-09-18T00:00:00.000+0000",
+        "premiumStreamingOnly": false,
+        "trackNumber": 10,
+        "volumeNumber": 1,
+        "version": null,
+        "popularity": 2,
+        "copyright": "(P) 2013 Chandelle Productions",
+        "url": "http://www.tidal.com/track/23368962",
+        "isrc": "FRG951300500",
+        "editable": false,
+        "explicit": false,
+        "audioQuality": "HI_RES",
+        "audioModes": [
+          "STEREO"
+        ],
+        "artist": {
+          "id": 797,
+          "name": "Francis Cabrel",
+          "type": "MAIN",
+          "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+        },
+        "artists": [
+          {
+            "id": 797,
+            "name": "Francis Cabrel",
+            "type": "MAIN",
+            "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+          }
+        ],
+        "album": {
+          "id": 23368952,
+          "title": "Hors-saison (Remastered)",
+          "cover": "78f2d404-4313-4284-8b95-c95328d1ea4e",
+          "vibrantColor": "#199ca4",
+          "videoCover": null
+        },
+        "mixes": {
+          "MASTER_TRACK_MIX": "014d57be4838dfbe5d8e5393dc53bb",
+          "TRACK_MIX": "001c708048bc33abef921d964f2556"
+        }
+      },
+      "type": "track"
+    },
+    {
+      "item": {
+        "id": 23368963,
+        "title": "La belle Debbie (Remastered)",
+        "duration": 296,
+        "replayGain": -6.64,
+        "peak": 0.999999,
+        "allowStreaming": true,
+        "streamReady": true,
+        "streamStartDate": "2017-09-18T00:00:00.000+0000",
+        "premiumStreamingOnly": false,
+        "trackNumber": 11,
+        "volumeNumber": 1,
+        "version": null,
+        "popularity": 1,
+        "copyright": "(P) 2013 Chandelle Productions",
+        "url": "http://www.tidal.com/track/23368963",
+        "isrc": "FRG951300510",
+        "editable": false,
+        "explicit": false,
+        "audioQuality": "HI_RES",
+        "audioModes": [
+          "STEREO"
+        ],
+        "artist": {
+          "id": 797,
+          "name": "Francis Cabrel",
+          "type": "MAIN",
+          "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+        },
+        "artists": [
+          {
+            "id": 797,
+            "name": "Francis Cabrel",
+            "type": "MAIN",
+            "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+          }
+        ],
+        "album": {
+          "id": 23368952,
+          "title": "Hors-saison (Remastered)",
+          "cover": "78f2d404-4313-4284-8b95-c95328d1ea4e",
+          "vibrantColor": "#199ca4",
+          "videoCover": null
+        },
+        "mixes": {
+          "MASTER_TRACK_MIX": "0143f137d4ce7fb090dff5537a9277",
+          "TRACK_MIX": "001cef1f75c73e2f2c231533d4c820"
+        }
+      },
+      "type": "track"
+    },
+    {
+      "item": {
+        "id": 23368964,
+        "title": "Madame X (Remastered)",
+        "duration": 160,
+        "replayGain": -6.64,
+        "peak": 0.999894,
+        "allowStreaming": true,
+        "streamReady": true,
+        "streamStartDate": "2017-09-18T00:00:00.000+0000",
+        "premiumStreamingOnly": false,
+        "trackNumber": 12,
+        "volumeNumber": 1,
+        "version": null,
+        "popularity": 1,
+        "copyright": "(P) 2013 Chandelle Productions",
+        "url": "http://www.tidal.com/track/23368964",
+        "isrc": "FRG951300520",
+        "editable": false,
+        "explicit": false,
+        "audioQuality": "HI_RES",
+        "audioModes": [
+          "STEREO"
+        ],
+        "artist": {
+          "id": 797,
+          "name": "Francis Cabrel",
+          "type": "MAIN",
+          "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+        },
+        "artists": [
+          {
+            "id": 797,
+            "name": "Francis Cabrel",
+            "type": "MAIN",
+            "picture": "91678a3e-8d7c-4f8b-ac1b-e29a6095d25f"
+          }
+        ],
+        "album": {
+          "id": 23368952,
+          "title": "Hors-saison (Remastered)",
+          "cover": "78f2d404-4313-4284-8b95-c95328d1ea4e",
+          "vibrantColor": "#199ca4",
+          "videoCover": null
+        },
+        "mixes": {
+          "MASTER_TRACK_MIX": "0140db9ea6b9b21c8fd58706a30498",
+          "TRACK_MIX": "001475bd28aafd4bde0580c50b1038"
+        }
+      },
+      "type": "track"
+    }
+  ]
+}
