@@ -37,8 +37,7 @@ module.exports = class {
     })
 
     router.get('/ping', (req, res) => {
-      if (req.device?.connect?.connected()) res.json('pong')
-      else json_status(res, 'device not connected')
+      res.json('pong')
     })
 
     router.get('/status', (req, res) => {
@@ -301,7 +300,6 @@ module.exports = class {
 
   async _connectToDevice(device) {
     let connect = new TidalConnect(this._settings, device)
-    await connect.connect()
     device.connect = connect
   }
 

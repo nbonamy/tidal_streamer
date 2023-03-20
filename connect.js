@@ -20,9 +20,9 @@ module.exports = class {
   }
 
   _reset() {
+    this._ws = null
     this._reqid = 0
     this._sessionId = 0
-    this._connected = false
     this._heartbeat = 0
     this._resetStatus()
   }
@@ -43,10 +43,6 @@ module.exports = class {
     return this._device
   }
 
-  connected() {
-    return this._connected
-  }
-
   status() {
     return this._status
   }
@@ -54,27 +50,36 @@ module.exports = class {
   shutdown() {
     
     // try to clean properly
-    try {
-      clearInterval(this._heartbeat)
-      this._ws.close()
-      this._ws.terminate()
-      console.log(`Disconnected from ${this._device.description}`)
-    } catch (e) {
-      console.error(`Error while closing connection to ${this._device.ip}: ${e}`)
+    if (this._ws) {
+      try {
+        clearInterval(this._heartbeat)
+        this._ws.close()
+        this._ws.terminate()
+        console.log(`Disconnected from ${this._device.description}`)
+      } catch (e) {
+        console.error(`Error while closing connection to ${this._device.ip}: ${e}`)
+      }
     }
 
     // reset anyway
     this._reset()
   }
 
-  connect() {
+  _connect() {
 
     // we need a user id. if we haven't we are waiting for one
     if (this._settings?.auth?.user?.id == null) {
       this._retryTimer = setTimeout(() => {
-        this.connect()
+        this._connect()
       }, CONNECT_WAIT_DELAY)
       return
+    }
+
+    // if already connected then resolve immediately
+    if (this._ws != null) {
+      return new Promise((resolve, reject) => {
+        resolve()
+      })
     }
 
     // clear
@@ -102,16 +107,16 @@ module.exports = class {
         console.log(`Closing connection to ${this._device.description}@${this._device.ip}`)
         // setTimeout(() => {
         //   this._reset()
-        //   this.connect()
+        //   this._connect()
         // }, 500)
       })
       this._ws.on('error', (e) => {
-        reject(e)
         console.log(`Error while connecting to ${this._device.description}@${this._device.ip}`)
         // setTimeout(() => {
         //   this._reset()
-        //   this.connect()
+        //   this._connect()
         // }, 500)
+        reject(e)
       })
       this._ws.on('message', (message) => {
         this._processMessage(JSON.parse(message.toString()))
@@ -292,8 +297,9 @@ module.exports = class {
   }
 
   _sendMessage(message) {
-    //console.log(JSON.parse(message))
-    this._ws.send(message)
+    this._connect().then(() => {
+      this._ws.send(message)
+    })
   }
 
   async _reloadQueue(queueId) {
@@ -333,8 +339,6 @@ module.exports = class {
 
     //
     if (message.command == 'notifySessionStarted') {
-      //console.log(message)
-      this._connected = true
       if (this._sessionId == 0) {
         this._sessionId = message.sessionId
       }
@@ -344,7 +348,7 @@ module.exports = class {
     //
     if (message.command == 'notifySessionEnded') {
       this.shutdown()
-      this.connect()
+      //this.connect()
       return
     }
 
@@ -395,7 +399,7 @@ module.exports = class {
     if (message.command == 'notifySessionError') {
       console.log(`[ERR] ${this._device.ip}: Unsuccessful connection. Retrying in ${CONNECT_RETRY_DELAY} ms.`)
       this._retryTimer = setTimeout(() => {
-        this.connect()
+        this._connect()
       }, CONNECT_RETRY_DELAY)
       return
     }
