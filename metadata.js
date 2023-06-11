@@ -44,7 +44,7 @@ module.exports = class {
     })
 
     router.get('/info/genres', (req, res, next) => {
-      this.getGenres()
+      this.getGenres(req.query.countryCode)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
@@ -135,9 +135,9 @@ module.exports = class {
     return results
   }
 
-  async getGenres() {
+  async getGenres(countryCode) {
     let api = new TidalApi(this._settings)
-    let results = await api.fetchGenres()
+    let results = await api.fetchGenres(countryCode)
     return results
   }
 

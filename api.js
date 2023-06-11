@@ -59,8 +59,8 @@ module.exports = class {
     return await this._fetchAll(`/artists/${artistId}/radio`)
   }
 
-  async fetchGenres() {
-    return await this._fetchAll(`/genres`)
+  async fetchGenres(countryCode) {
+    return await this._callApi(`/genres`, { countryCode: countryCode || COUNTRY_CODE })
   }
 
   async fetchGenreTracks(genreId) {
@@ -280,7 +280,7 @@ module.exports = class {
 
   _getUrl(baseUrl, path, params) {
     let url = `${baseUrl}${path}`
-    if (Object.keys(params).includes('countryCode') == false) {
+    if (params != null && Object.keys(params).includes('countryCode') == false) {
       let sep = url.includes('?') ? '&' : '?'
       url += `${sep}countryCode=${this._countryCode}`
     }
