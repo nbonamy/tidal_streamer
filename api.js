@@ -279,9 +279,14 @@ module.exports = class {
   }
 
   _getUrl(baseUrl, path, params) {
-    let url = `${baseUrl}${path}?countryCode=${this._countryCode}`
+    let url = `${baseUrl}${path}`
+    if (Object.keys(params).includes('countryCode') == false) {
+      let sep = url.includes('?') ? '&' : '?'
+      url += `${sep}countryCode=${this._countryCode}`
+    }
     for (let key in params) {
-      url += `&${key}=${encodeURIComponent(params[key])}`
+      let sep = url.includes('?') ? '&' : '?'
+      url += `${sep}${key}=${encodeURIComponent(params[key])}`
     }
     return url
   }
