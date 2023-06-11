@@ -135,7 +135,7 @@ module.exports = class {
     return response;
   }
 
-  queueTracks(tracks, position) {
+  queueTracks(sourceType, sourceId, tracks, position) {
 
     let payload = {
       properties: {
@@ -143,15 +143,15 @@ module.exports = class {
       },
       repeat_mode: 'off',
       shuffled: false,
-      items: tracks.map((t) => {
+      items: tracks.map((t, index) => {
         return {
           type: t.type,
           media_id: t.item.id,
           properties: {
             active: false,
-            original_order: 0,
-            sourceId: t.item.id,
-            sourceType: 'album'
+            original_order: index,
+            sourceId: sourceId,
+            sourceType: sourceType
           },
         }
       })

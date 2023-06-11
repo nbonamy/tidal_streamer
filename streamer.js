@@ -139,19 +139,22 @@ module.exports = class {
       // console.log(`  Device: ${connect.device().description}`)
 
       // stream
-      this._streamTracks(api, connect, tracks.items.map((t) => {
+      this._streamTracks(api, connect, 'unknown', 0, tracks.items.map((t) => {
         if (typeof t == 'string') t = JSON.parse(t)
         return {
           type: 'track',
           item: {
             id: t.id,
+            title: t.title,
+            album: t.album,
+            artist: t.artist,
+            artists: t.artists,
             duration: t.duration,
             allowStreaming: true,
             editbale: false,
             streamReady: true,
-            audioModes: [
-              'STEREO'
-            ]
+            audioModes: t.audioModes,
+            audioQuality: t.audioQuality,
           }
         }
       }), position || 0)
@@ -192,7 +195,7 @@ module.exports = class {
       // console.log(`  Tracks: ${count}`)
 
       // stream
-      await this._streamTracks(api, connect, tracks.items, position)
+      await this._streamTracks(api, connect, 'album', albumId, tracks.items, position)
 
       // done
       cb?.(null, {
@@ -228,7 +231,7 @@ module.exports = class {
       // console.log(`  Tracks: ${count}`)
 
       // stream
-      await this._streamTracks(api, connect, tracks.items, position || 0)
+      await this._streamTracks(api, connect, 'playlist', playlistId, tracks.items, position || 0)
 
       // done
       cb?.(null, {
@@ -243,10 +246,13 @@ module.exports = class {
 
   }
 
-  async _streamTracks(api, connect, tracks, position) {
+  async _streamTracks(api, connect, sourceType, sourceId, tracks, position) {
+
+    // limit
+    tracks = tracks.slice(0, 100)
 
     // queue
-    let response = await api.queueTracks(tracks, position)
+    let response = await api.queueTracks(sourceType, sourceId, tracks, position)
     let queue = await response.json()
     queue.etag = response.headers.get('etag')
 
