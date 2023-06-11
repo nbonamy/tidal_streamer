@@ -49,6 +49,10 @@ module.exports = class {
     return await this._fetchAll(`/artists/${artistId}/albums`)
   }
 
+  async fetchArtistTopTracks(artistId) {
+    return await this._fetchAll(`/artists/${artistId}/toptracks`)
+  }
+
   async fetchTrackLyrics(trackId) {
     return await this._callApi(`/tracks/${trackId}/lyrics`)
   }
