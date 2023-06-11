@@ -37,6 +37,24 @@ module.exports = class {
         .catch(err => next(err))
     })
 
+    router.get('/info/artist/:id/radio', (req, res, next) => {
+      this.getArtistRadio(req.params.id)
+        .then((result) => json_status(res, null, result))
+        .catch(err => next(err))
+    })
+
+    router.get('/info/genres', (req, res, next) => {
+      this.getGenres()
+        .then((result) => json_status(res, null, result))
+        .catch(err => next(err))
+    })
+
+    router.get('/info/genre/:id/tracks', (req, res, next) => {
+      this.getGenreTracks(req.params.id)
+        .then((result) => json_status(res, null, result))
+        .catch(err => next(err))
+    })
+
     router.get('/lyrics/:id', (req, res, next) => {
       this.getTrackLyrics(req.params.id)
         .then((result) => json_status(res, null, result))
@@ -51,6 +69,12 @@ module.exports = class {
 
     router.get('/search/album', (req, res, next) => {
       this.searchAlbums(req.query.query)
+      .then((result) => json_status(res, null, result))
+      .catch(err => next(err))
+    })
+
+    router.get('/api/*', (req, res, next) => {      console.log(req.path)
+      this.apiProxy(req.path.substring(4), req.query)
       .then((result) => json_status(res, null, result))
       .catch(err => next(err))
     })
@@ -102,6 +126,30 @@ module.exports = class {
   async getArtistTopTracks(artistId) {
     let api = new TidalApi(this._settings)
     let results = await api.fetchArtistTopTracks(artistId)
+    return results
+  }
+
+  async getArtistRadio(artistId) {
+    let api = new TidalApi(this._settings)
+    let results = await api.fetchArtistRadio(artistId)
+    return results
+  }
+
+  async getGenres() {
+    let api = new TidalApi(this._settings)
+    let results = await api.fetchGenres()
+    return results
+  }
+
+  async getGenreTracks(genreId) {
+    let api = new TidalApi(this._settings)
+    let results = await api.fetchGenreTracks(genreId)
+    return results
+  }
+
+  async apiProxy(path, query) {
+    let api = new TidalApi(this._settings)
+    let results = await api.proxy(path, query)
     return results
   }
 

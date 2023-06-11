@@ -1,6 +1,8 @@
 
 const Auth = require('./auth')
 
+// https://tidalapi.netlify.app
+
 // some constants
 const AUTH_BASE_URL = 'https://auth.tidal.com/v1/oauth2'
 const API_BASE_URL = 'https://api.tidal.com/v1'
@@ -53,12 +55,28 @@ module.exports = class {
     return await this._fetchAll(`/artists/${artistId}/toptracks`)
   }
 
+  async fetchArtistRadio(artistId) {
+    return await this._fetchAll(`/artists/${artistId}/radio`)
+  }
+
+  async fetchGenres() {
+    return await this._fetchAll(`/genres`)
+  }
+
+  async fetchGenreTracks(genreId) {
+    return await this._fetchAll(`/genres/${genreId}/tracks`)
+  }
+
   async fetchTrackLyrics(trackId) {
     return await this._callApi(`/tracks/${trackId}/lyrics`)
   }
   
   async search(type, query) {
     return this._callApi(`/search/${type}`, { query: query, limit: LIMIT })
+  }
+
+  async proxy(path, query) {
+    return this._callApi(path, query)
   }
 
   async fetchQueue(queueId) {
