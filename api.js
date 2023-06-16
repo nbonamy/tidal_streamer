@@ -280,7 +280,7 @@ module.exports = class {
 
   _getUrl(baseUrl, path, params) {
     let url = `${baseUrl}${path}`
-    if (params != null && Object.keys(params).includes('countryCode') == false) {
+    if (params == null || Object.keys(params).includes('countryCode') == false) {
       let sep = url.includes('?') ? '&' : '?'
       url += `${sep}countryCode=${this._countryCode}`
     }
