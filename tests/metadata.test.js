@@ -77,7 +77,6 @@ test('get artist albums', async () => {
   }
 })
 
-
 test('get artist top tracks', async () => {
   const tracks = await metadata.getArtistTopTracks(8847)
   expect(url).toEqual(expect.stringContaining('GET https://api.tidal.com/v1/artists/8847/toptracks?countryCode=US&offset='))
