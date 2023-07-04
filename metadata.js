@@ -73,7 +73,7 @@ module.exports = class {
       .catch(err => next(err))
     })
 
-    router.get('/api/*', (req, res, next) => {      console.log(req.path)
+    router.get('/api/*', (req, res, next) => {
       this.apiProxy(req.path.substring(4), req.query)
       .then((result) => json_status(res, null, result))
       .catch(err => next(err))
