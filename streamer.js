@@ -4,7 +4,7 @@ const express = require('express')
 const Discoverer = require('./discoverer');
 const TidalApi = require('./api')
 const TidalConnect = require('./connect')
-const { json_status } = require('./utils');
+const { json_status, runLocalCommand } = require('./utils');
 
 module.exports = class {
 
@@ -41,7 +41,11 @@ module.exports = class {
     })
 
     router.get('/status', (req, res) => {
-      res.json(req.device.connect?.status())
+      let status = req.device.connect?.status()
+      if (this._settings.volume?.up != null) {
+        status.volume.level = -1
+      }
+      res.json(status)
     })
 
     router.post('/play/tracks', (req, res) => {
@@ -118,6 +122,16 @@ module.exports = class {
 
     router.post('/timeseek/:progress', async (req, res) => {
       await req.device.connect.sendCommand('seek', { position: req.params.progress * 1000 });
+      json_status(res)
+    })
+
+    router.post('/volume/down', async (req, res) => {
+      runLocalCommand(this._settings.volume?.down)
+      json_status(res)
+    })
+
+    router.post('/volume/up', async (req, res) => {
+      runLocalCommand(this._settings.volume?.up)
       json_status(res)
     })
 
@@ -306,6 +320,7 @@ module.exports = class {
 
   async _connectToDevice(device) {
     let connect = new TidalConnect(this._settings, device)
+    connect._connect()
     device.connect = connect
   }
 
