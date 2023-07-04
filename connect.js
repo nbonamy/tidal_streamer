@@ -100,18 +100,18 @@ module.exports = class {
           appName: 'tidal',
           sessionCredential: this._settings.auth.user.id.toString()
         }))
-        console.log(`Connected to ${this._device.description}@${this._device.ip}`)
+        console.log(`Connected to ${this._device.description}@${this._device.ip}:${this._device.port}`)
         resolve()
       })
       this._ws.on('close', (e) => {
-        console.log(`Closing connection to ${this._device.description}@${this._device.ip}`)
+        console.log(`Closing connection to ${this._device.description}@${this._device.ip}:${this._device.port}`)
         // setTimeout(() => {
         //   this._reset()
         //   this._connect()
         // }, 500)
       })
       this._ws.on('error', (e) => {
-        console.log(`Error while connecting to ${this._device.description}@${this._device.ip}`)
+        console.log(`Error while connecting to ${this._device.description}@${this._device.ip}:${this._device.port}`)
         // setTimeout(() => {
         //   this._reset()
         //   this._connect()
