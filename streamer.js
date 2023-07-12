@@ -262,6 +262,9 @@ module.exports = class {
 
   async _streamTracks(api, connect, sourceType, sourceId, tracks, position) {
 
+    // check before play script
+    runLocalCommand(this._settings.beforeplay, true)
+
     // limit
     tracks = tracks.slice(0, 100)
 

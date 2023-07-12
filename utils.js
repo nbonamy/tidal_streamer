@@ -1,6 +1,6 @@
 
 const RESOURCES_BASE_URL = 'https://resources.tidal.com'
-const { exec } = require('child_process')
+const { exec, execSync } = require('child_process')
 
 module.exports = {
 
@@ -38,16 +38,17 @@ module.exports = {
     }
   },
 
-  runLocalCommand: function(command) {
+  runLocalCommand: function(command, wait=false) {
 		if (command == null) return
 		if (Array.isArray(command)) {
 			for (let cmd of command) {
-				this.runLocalCommand(cmd);
+				module.exports.runLocalCommand(cmd, wait);
 			}
 			return
 		}
-		console.log(`[CMD] ${command}`)
-		exec(command, (error, stdout, stderr) => {
+		console.log(`[CMD] ${command} [${wait?'wait':'no-wait'}]`)
+    let ex = wait ? execSync : exec
+		ex(command, (error, stdout, stderr) => {
 			if (error) console.log(error)
 			if (stderr) console.log(stderr)
 		})
