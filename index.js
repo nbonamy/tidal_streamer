@@ -1,7 +1,7 @@
 
 const express = require('express')
 const portfinder = require('portfinder')
-const mdns = require('mdns');
+const mdns = require('mdns')
 const Config = require('./config')
 const Auth = require('./auth')
 const Metadata = require('./metadata')

@@ -1,10 +1,10 @@
 
 const md5 = require('md5')
 const express = require('express')
-const Discoverer = require('./discoverer');
+const Discoverer = require('./discoverer')
 const TidalApi = require('./api')
 const TidalConnect = require('./connect')
-const { json_status, runLocalCommand } = require('./utils');
+const { json_status, runLocalCommand } = require('./utils')
 
 module.exports = class {
 
