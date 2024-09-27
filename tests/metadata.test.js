@@ -22,7 +22,7 @@ test('get album info', async () => {
   expect(album.title).toBe('Random Access Memories (10th Anniversary Edition)')
   expect(album.numberOfTracks).toBe(22)
   expect(album.releaseDate).toBe('2013-05-20')
-  expect(album.audioQuality).toBe('HI_RES')
+  expect(album.audioQuality).toBe('LOSSLESS')
   expect(album.audioModes).toStrictEqual(['STEREO'])
   expect(album.artist.id).toBe(8847)
   expect(album.artist.name).toBe('Daft Punk')
@@ -33,7 +33,7 @@ test('get album info', async () => {
   expect(album.items[0].item.id).toBe(293301134)
   expect(album.items[0].item.title).toBe('Give Life Back to Music')
   expect(album.items[0].item.duration).toBe(274)
-  expect(album.items[0].item.audioQuality).toBe('HI_RES')
+  expect(album.items[0].item.audioQuality).toBe('LOSSLESS')
 })
 
 test('get track lyrics', async () => {

@@ -16,6 +16,14 @@ if (typeof fetch == 'undefined') {
   fetch = require('node-fetch')
 }
 
+const FORM = {
+  stringify: (dict) => {
+    return Object.keys(dict).map(key => {
+      return encodeURIComponent(key) + '=' + encodeURIComponent(dict[key]);
+    }).join('&');
+  }
+}
+
 module.exports = class {
 
   constructor(settings) {
@@ -37,6 +45,10 @@ module.exports = class {
 
   async fetchAlbumInfo(albumId) {
     return this._callApi(`/albums/${albumId}`)
+  }
+
+  async fetchPlaylistInfo(playlistId) {
+    return this._callApi(`/playlists/${playlistId}`)
   }
 
   async fetchAlbumTracks(albumId) {
@@ -73,6 +85,37 @@ module.exports = class {
   
   async search(type, query) {
     return this._callApi(`/search/${type}`, { query: query, limit: LIMIT })
+  }
+
+  async createPlaylist(title, description) {
+    return this._callApi(`/users/${this._settings.auth.user.id}/playlists`, { limit: LIMIT }, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: FORM.stringify({ title, description})
+    })
+  }
+
+  async addTrackToPlaylist(playlistId, trackId) {
+
+    // we need to get the etag
+    let headers = {}
+    await this._callApi(`/playlists/${playlistId}`, null, null, headers)
+
+    // now we can do it!
+    return this._callApi(`/playlists/${playlistId}/items`, { limit: LIMIT }, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'If-None-Match': headers['etag']
+      },
+      body: FORM.stringify({
+        onArtifactNotFound: 'SKIP',
+        onDupes: 'SKIP',
+        trackIds: trackId
+      })
+    })
   }
 
   async proxy(path, query) {
@@ -134,7 +177,6 @@ module.exports = class {
   async deleteFromQueue(queue, trackId) {
     let response = await this._callQueue(`/queues/${queue.id}/items/${trackId}`, null, {
       method: 'DELETE',
-      ...this._getFetchOptions()
     })
     queue.etag = response.headers.get('etag')
     return response;
@@ -144,8 +186,6 @@ module.exports = class {
     let response = await this._callQueue(`/queues/${queue.id}/items`, null, {
       method: 'PATCH',
       headers: {
-        'Authorization': `Bearer ${this._accessToken()}`,
-        'Content-Type': 'application/json',
         'If-Match': queue.etag,
       },
       body: JSON.stringify({
@@ -181,10 +221,6 @@ module.exports = class {
 
     return this._callQueue(`/queues`, null, {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${this._accessToken()}`,
-        'Content-Type': 'application/json'
-      },
       body: JSON.stringify(payload)
     })
 
@@ -222,15 +258,22 @@ module.exports = class {
   
   }
 
-  async _callApi(path, params) {
+  async _callApi(path, params, options, returnHeaders) {
 
     // we may try two times in case token is invalid
     for (let i=0; i<2; i++) {
 
       // call it
       let url = this._getUrl(API_BASE_URL, path, params)
-      console.log(`GET ${url}`)
-      let response = await fetch(url, this._getFetchOptions())
+      console.log(`${options?.method || 'GET'} ${url}`)
+      let response = await fetch(url, this._getFetchOptions(options))
+
+      // return headers
+      if (returnHeaders) {
+        for (const header of response.headers) {
+          returnHeaders[header[0]] = header[1]
+        }
+      }
 
       // parse and check auth
       let json = await response.json();
@@ -255,7 +298,7 @@ module.exports = class {
   async _callQueue(path, params, options) {
     let url = this._getUrl(QUEUE_BASE_URL, path, params)
     console.log(`${options?.method || 'GET'} ${url}`)
-    return fetch(url, options || this._getFetchOptions())
+    return fetch(url, this._getFetchOptions(options))
   }
 
   getAuthInfo() {
@@ -291,12 +334,24 @@ module.exports = class {
     return url
   }
 
-  _getFetchOptions() {
-    return {
-      headers: {
-        'Authorization': `Bearer ${this._accessToken()}`
+  _getFetchOptions(options) {
+
+    // init
+    options = options || {}
+    options.headers = options.headers || {}
+
+    // add authorization header
+    options.headers['Authorization'] = `Bearer ${this._accessToken()}`
+
+    // if not get
+    if (options.method && options.method !== 'GET') {
+      if (!options.headers['Content-Type']) {
+        options.headers['Content-Type'] = 'application/json'
       }
     }
+
+    // done
+    return options
   }
 
   _accessToken = () => this._settings.auth.access_token

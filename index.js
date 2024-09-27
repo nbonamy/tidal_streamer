@@ -6,6 +6,7 @@ const Config = require('./config')
 const Auth = require('./auth')
 const Metadata = require('./metadata')
 const Streamer = require('./streamer')
+const Playlist = require('./playlist')
 const { json_status } = require('./utils')
 
 // init our stuff
@@ -44,6 +45,7 @@ auth.is_auth().then(async (rc) => {
 // now we can build our modules
 const metadata = new Metadata(settings)
 const streamer = new Streamer(settings)
+const playlist = new Playlist(settings)
 
 // we need a port
 let startPort = settings.port
@@ -59,6 +61,7 @@ portfinder.getPort({ port: startPort },  async (err, port) => {
   const app = express()
   app.use(express.json({limit: '50mb'}));
   app.use('/', metadata.routes())
+  app.use('/', playlist.routes())
   app.use('/', streamer.routes())
 
   // error handler
