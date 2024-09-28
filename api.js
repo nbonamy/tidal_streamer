@@ -97,7 +97,7 @@ module.exports = class {
     })
   }
 
-  async addTrackToPlaylist(playlistId, trackId) {
+  async addTracksToPlaylist(playlistId, trackIds) {
 
     // we need to get the etag
     let headers = {}
@@ -113,7 +113,7 @@ module.exports = class {
       body: FORM.stringify({
         onArtifactNotFound: 'SKIP',
         onDupes: 'SKIP',
-        trackIds: trackId
+        trackIds: trackIds
       })
     })
   }

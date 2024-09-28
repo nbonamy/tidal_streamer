@@ -20,7 +20,7 @@ module.exports = class {
     })
 
     router.post('/playlist/add', (req, res, next) => {
-      this.addToPlaylist(req.body.playlistId, req.body.trackId)
+      this.addTracksToPlaylist(req.body.playlistId, req.body.trackIds)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
@@ -35,9 +35,9 @@ module.exports = class {
     return result
   }
 
-  async addToPlaylist(playlistId, trackId) {
+  async addTracksToPlaylist(playlistId, trackIds) {
     let api = new TidalApi(this._settings)
-    let result = api.addTrackToPlaylist(playlistId, trackId)
+    let result = api.addTracksToPlaylist(playlistId, trackIds)
     return result
   }
 
