@@ -265,7 +265,7 @@ module.exports = class {
 
       // call it
       let url = this._getUrl(API_BASE_URL, path, params)
-      console.log(`${options?.method || 'GET'} ${url}`)
+      console.log(`[OUT] ${options?.method || 'GET'} ${url}`)
       let response = await fetch(url, this._getFetchOptions(options))
 
       // return headers

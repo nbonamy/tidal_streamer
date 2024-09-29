@@ -79,6 +79,20 @@ module.exports = class {
       .catch(err => next(err))
     })
 
+    router.get('/search/track/digest', (req, res, next) => {
+      this.searchTracks(req.query.query)
+      .then((result) => {
+        result = result.items.map((i) => { return {
+          id: i.id,
+          title: i.title,
+          artist: i.artist.name,
+          album: i.album.title,
+        }}).slice(0, 5)
+        json_status(res, null, result)
+      })
+      .catch(err => next(err))
+    })
+    
     router.get('/api/*', (req, res, next) => {
       this.apiProxy(req.path.substring(4), req.query)
       .then((result) => json_status(res, null, result))
