@@ -323,6 +323,7 @@ module.exports = class {
 
   async _connectToDevice(device) {
     let connect = new TidalConnect(this._settings, device)
+		connect._connect()
     device.connect = connect
   }
 
