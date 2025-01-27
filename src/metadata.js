@@ -55,6 +55,12 @@ module.exports = class {
         .catch(err => next(err))
     })
 
+    router.get('/info/mix/:id/tracks', (req, res, next) => {
+      this.getMixTracks(req.params.id)
+        .then((result) => json_status(res, null, result))
+        .catch(err => next(err))
+    })
+
     router.get('/lyrics/:id', (req, res, next) => {
       this.getTrackLyrics(req.params.id)
         .then((result) => json_status(res, null, result))
@@ -171,6 +177,11 @@ module.exports = class {
     let api = new TidalApi(this._settings)
     let results = await api.fetchGenreTracks(genreId)
     return results
+  }
+
+  async getMixTracks(mixId) {
+    const results = await this.apiProxy(`/pages/mix`, { mixId, deviceType: 'PHONE' })
+    return { items: results.rows[1].modules[0].pagedList.items }
   }
 
   async apiProxy(path, query) {

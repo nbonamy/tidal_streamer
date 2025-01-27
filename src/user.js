@@ -4,10 +4,6 @@ const TidalApi = require('./api')
 const { json_status } = require('./utils')
 
 const customMixes = [ 'Custom mixes' ]
-const suggestedAlbums = [ 'Suggested new albums for you' ]
-const suggestedTracks = [ 'Recommended new tracks' ]
-const recentlyPlayed = [ 'Recently played' ]
-
 
 module.exports = class {
 
@@ -21,6 +17,12 @@ module.exports = class {
 
     router.get('/user/feed', (req, res, next) => {
       this.getUserFeed()
+        .then((result) => json_status(res, null, result))
+        .catch(err => next(err))
+    })
+
+    router.get('/user/shortcuts', (req, res, next) => {
+      this.getUserShortcuts()
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
@@ -51,12 +53,6 @@ module.exports = class {
 
     router.get('/user/mixes', (req, res, next) => {
       this.getUserMixes()
-        .then((result) => json_status(res, null, result))
-        .catch(err => next(err))
-    })
-
-    router.get('/user/mix/:id/tracks', (req, res, next) => {
-      this.getMixTracks(req.params.id)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
@@ -93,6 +89,10 @@ module.exports = class {
     const api = new TidalApi(this._settings)
     const feed = api.fetchHomeStaticFeed()
     return feed
+  }
+
+  async getUserShortcuts() {
+    return await this.getFeedModule('SHORTCUT_LIST')
   }
 
   async getUserArtists() {
@@ -141,25 +141,6 @@ module.exports = class {
     return {}
   }
 
-  async getMixTracks(mixId) {
-    const api = new TidalApi(this._settings)
-    const results = await api.proxy(`/pages/mix`, { mixId, deviceType: 'PHONE' })
-    return { items: results.rows[1].modules[0].pagedList.items.map((track) => ({
-      id: track.id,
-      title: track.title,
-      artists: track.artists.map((a) => a.name),
-      albumId: track.album.id,
-      albumTitle: track.album.title,
-      duration: track.duration * 1000,
-      images: {
-        thumbnail: `https://resources.tidal.com/images/${track.album.cover.replace(/-/g, '/')}/160x160.jpg`,
-        small: `https://resources.tidal.com/images/${track.album.cover.replace(/-/g, '/')}/320x320.jpg`,
-        medium: `https://resources.tidal.com/images/${track.album.cover.replace(/-/g, '/')}/640x640.jpg`,
-        large: `https://resources.tidal.com/images/${track.album.cover.replace(/-/g, '/')}/1280x1280.jpg`
-      }
-    }))}
-  }
-
   async getNewAlbums() {
     return await this.getFeedModule('NEW_ALBUM_SUGGESTIONS')
   }
@@ -180,9 +161,13 @@ module.exports = class {
     const api = new TidalApi(this._settings)
     const feed = await api.fetchHomeStaticFeed()
     const module = feed.items.find((item) => item.moduleId === moduleId)
-    const url = module.viewAll
-    const results = await api.proxyV2(`/${url}`, { deviceType: 'PHONE' })
-    return results.items.map((item) => item.data)
+    if (module.viewAll) {
+      const url = module.viewAll
+      const results = await api.proxyV2(`/${url}`, { deviceType: 'PHONE' })
+      return results.items.map((item) => item.data)
+    } else {
+      return module.items.map((item) => item.data)
+    }
   }
 
 }
