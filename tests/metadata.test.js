@@ -1,6 +1,6 @@
 
-const Config = require('../config')
-const Metadata = require('../metadata');
+const Config = require('../src/config')
+const Metadata = require('../src/metadata');
 
 let url = null
 console.debug = console.log
@@ -16,7 +16,7 @@ beforeEach(() => {
 
 test('get album info', async () => {
   const album = await metadata.getAlbumInfo('293301129')
-  expect(url).toBe('GET https://api.tidal.com/v1/albums/293301129/items?countryCode=US&offset=0&limit=100')
+  expect(url).toBe('[OUT] GET https://api.tidal.com/v1/albums/293301129/items?countryCode=US&offset=0&limit=100')
   expect(album.id).toBe(293301129)
   expect(album.type).toBe('ALBUM')
   expect(album.title).toBe('Random Access Memories (10th Anniversary Edition)')
@@ -38,14 +38,14 @@ test('get album info', async () => {
 
 test('get track lyrics', async () => {
   const lyrics = await metadata.getTrackLyrics('293301134')
-  expect(url).toBe('GET https://api.tidal.com/v1/tracks/293301134/lyrics?countryCode=US')
+  expect(url).toBe('[OUT] GET https://api.tidal.com/v1/tracks/293301134/lyrics?countryCode=US')
   expect(lyrics.trackId).toBe(293301134)
   expect(lyrics.lyrics).toEqual(expect.stringContaining('Give life back to music'))
 })
 
 test('search albums', async () => {
   const albums = await metadata.searchAlbums('Pink Floyd')
-  expect(url).toBe('GET https://api.tidal.com/v1/search/albums?countryCode=US&query=Pink%20Floyd&limit=100')
+  expect(url).toBe('[OUT] GET https://api.tidal.com/v1/search/albums?countryCode=US&query=Pink%20Floyd&limit=100')
   expect(albums.limit).toBe(100)
   expect(albums.offset).toBe(0)
   expect(albums.totalNumberOfItems).toBeGreaterThan(0)
@@ -62,7 +62,7 @@ test('search albums', async () => {
 
 test('get artist albums', async () => {
   const albums = await metadata.getArtistAlbums(8847)
-  expect(url).toBe('GET https://api.tidal.com/v1/artists/8847/albums?countryCode=US&offset=0&limit=100')
+  expect(url).toBe('[OUT] GET https://api.tidal.com/v1/artists/8847/albums?countryCode=US&offset=0&limit=100')
   expect(albums.limit).toBe(100)
   expect(albums.offset).toBe(0)
   expect(albums.totalNumberOfItems).toBeGreaterThan(0)
@@ -116,7 +116,7 @@ test('get artist radio', async () => {
 
 test('get genres', async () => {
   const genres = await metadata.getGenres()
-  expect(url).toBe('GET https://api.tidal.com/v1/genres?countryCode=US')
+  expect(url).toBe('[OUT] GET https://api.tidal.com/v1/genres?countryCode=US')
   expect(genres.length).toBeGreaterThan(0)
   for (let i = 0; i < genres.length; i++) {
     expect(genres[i].name).toBeDefined()
@@ -126,7 +126,7 @@ test('get genres', async () => {
 
 test('get genre', async () => {
   const tracks = await metadata.getGenreTracks('pop')
-  expect(url).toEqual(expect.stringContaining('GET https://api.tidal.com/v1/genres/pop/tracks?countryCode=US&offset='))
+  expect(url).toEqual(expect.stringContaining('[OUT] GET https://api.tidal.com/v1/genres/pop/tracks?countryCode=US&offset='))
   expect(tracks.items).toBeDefined()
   expect(tracks.items.length).toBeGreaterThan(0)
   for (let i = 0; i < tracks.items.length; i++) {

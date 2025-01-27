@@ -1,0 +1,406 @@
+{
+  "status": "ok",
+  "result": {
+    "selfLink": "pages/single-module-page/5b31fe14-fa8b-415e-9203-a9cf19361c10/252/1df13424-c7e8-48d5-9d59-3b15a22dac31/2",
+    "id": "eyJwIjoiNWIzMWZlMTQtZmE4Yi00MTVlLTkyMDMtYTljZjE5MzYxYzEwIiwicFYiOjI1MiwibSI6IjFkZjEzNDI0LWM3ZTgtNDhkNS05ZDU5LTNiMTVhMjJkYWMzMSIsIm1WIjoyLCJtSCI6ImE1YTY4NDNkIn0=",
+    "title": "Custom mixes",
+    "rows": [
+      {
+        "modules": [
+          {
+            "id": "eyJwIjoiNWIzMWZlMTQtZmE4Yi00MTVlLTkyMDMtYTljZjE5MzYxYzEwIiwicFYiOjI1MiwibSI6IjFkZjEzNDI0LWM3ZTgtNDhkNS05ZDU5LTNiMTVhMjJkYWMzMSIsIm1WIjoyLCJtSCI6ImE4ODY5OWU0In0=",
+            "type": "MIX_LIST",
+            "width": 100,
+            "title": "",
+            "description": "",
+            "preTitle": null,
+            "showMore": null,
+            "supportsPaging": true,
+            "quickPlay": true,
+            "scroll": "VERTICAL",
+            "listFormat": null,
+            "pagedList": {
+              "limit": 50,
+              "offset": 0,
+              "totalNumberOfItems": 10,
+              "items": [
+                {
+                  "id": "002a7caac9856a9168001948bb865d",
+                  "title": "My Mix 1",
+                  "subTitle": "Ben Howard, James Blunt, Coldplay and more",
+                  "graphic": {
+                    "type": "SQUARES_GRID",
+                    "text": "My Mix 1",
+                    "images": [
+                      {
+                        "id": "dummy-placeholder",
+                        "vibrantColor": "#FFFFFF",
+                        "type": "ARTIST"
+                      }
+                    ]
+                  },
+                  "images": {
+                    "SMALL": {
+                      "width": 320,
+                      "height": 320,
+                      "url": "https://images.tidal.com/0/EMACGMACIKABKKAB/CAEaJDJjMGEwMWIwLzhiMzQvNGM1YS85MTc4LzE3NjVkZTFhYTFlYRokYjQ1Nzk2NzIvNWI5MS80Njc5L2EyN2EvMjg4ZjA5N2E0ZGE1GiQ5YWUxYWI1ZC9mY2MyLzRiMmQvYTBjZC9lODcwMjQ0MWVmZDAiATEqByNENUJCOEQwAg?token=21fb44843abffc4b689dfaac2972c3f246cf36d9"
+                    },
+                    "MEDIUM": {
+                      "width": 640,
+                      "height": 640,
+                      "url": "https://images.tidal.com/0/EIAFGIAFIMACKMAC/CAEaJDJjMGEwMWIwLzhiMzQvNGM1YS85MTc4LzE3NjVkZTFhYTFlYRokYjQ1Nzk2NzIvNWI5MS80Njc5L2EyN2EvMjg4ZjA5N2E0ZGE1GiQ5YWUxYWI1ZC9mY2MyLzRiMmQvYTBjZC9lODcwMjQ0MWVmZDAiATEqByNENUJCOEQwAg?token=0b7bfef673750c078c175ffe1c84b77483c7a3c0"
+                    },
+                    "LARGE": {
+                      "width": 1500,
+                      "height": 1500,
+                      "url": "https://images.tidal.com/0/ENwLGNwLIO4FKO4F/CAEaJDJjMGEwMWIwLzhiMzQvNGM1YS85MTc4LzE3NjVkZTFhYTFlYRokYjQ1Nzk2NzIvNWI5MS80Njc5L2EyN2EvMjg4ZjA5N2E0ZGE1GiQ5YWUxYWI1ZC9mY2MyLzRiMmQvYTBjZC9lODcwMjQ0MWVmZDAiATEqByNENUJCOEQwAg?token=2433aac6a7316eabd8993aade355e58a410db9c5"
+                    }
+                  },
+                  "sharingImages": null,
+                  "mixType": "DAILY_MIX",
+                  "contentBehavior": "UNRESTRICTED",
+                  "shortSubtitle": "Created by TIDAL"
+                },
+                {
+                  "id": "002d7b2e4bdb46e7ef92e76e2da4fb",
+                  "title": "My Mix 2",
+                  "subTitle": "Téléphone, Benjamin Biolay, Joe Dassin and more",
+                  "graphic": {
+                    "type": "SQUARES_GRID",
+                    "text": "My Mix 2",
+                    "images": [
+                      {
+                        "id": "dummy-placeholder",
+                        "vibrantColor": "#FFFFFF",
+                        "type": "ARTIST"
+                      }
+                    ]
+                  },
+                  "images": {
+                    "SMALL": {
+                      "width": 320,
+                      "height": 320,
+                      "url": "https://images.tidal.com/0/EMACGMACIKABKKAB/CAEaJDgzZjRjZTJlLzUzNTYvNGE4NC9hN2U0LzY2Zjg5MzhlODY0OBokZjlmODlkMmEvMWU3My80ODNkL2IyY2MvMGRhYzEwOWQwYzlkGiQ0ODMyZTY2ZS80ZGE4LzQwOTAvYjBlYy8zZTJkNmRmM2EwNmIiATIqByNGNUEwNjIwAg?token=a60f100778bca56e859ee758a54340428984758f"
+                    },
+                    "MEDIUM": {
+                      "width": 640,
+                      "height": 640,
+                      "url": "https://images.tidal.com/0/EIAFGIAFIMACKMAC/CAEaJDgzZjRjZTJlLzUzNTYvNGE4NC9hN2U0LzY2Zjg5MzhlODY0OBokZjlmODlkMmEvMWU3My80ODNkL2IyY2MvMGRhYzEwOWQwYzlkGiQ0ODMyZTY2ZS80ZGE4LzQwOTAvYjBlYy8zZTJkNmRmM2EwNmIiATIqByNGNUEwNjIwAg?token=bd0eab68fdacad33fd435a6f45ebf52acbd20714"
+                    },
+                    "LARGE": {
+                      "width": 1500,
+                      "height": 1500,
+                      "url": "https://images.tidal.com/0/ENwLGNwLIO4FKO4F/CAEaJDgzZjRjZTJlLzUzNTYvNGE4NC9hN2U0LzY2Zjg5MzhlODY0OBokZjlmODlkMmEvMWU3My80ODNkL2IyY2MvMGRhYzEwOWQwYzlkGiQ0ODMyZTY2ZS80ZGE4LzQwOTAvYjBlYy8zZTJkNmRmM2EwNmIiATIqByNGNUEwNjIwAg?token=843c7e55cd60db552d674c2f2429f66fba94a580"
+                    }
+                  },
+                  "sharingImages": null,
+                  "mixType": "DAILY_MIX",
+                  "contentBehavior": "UNRESTRICTED",
+                  "shortSubtitle": "Created by TIDAL"
+                },
+                {
+                  "id": "0029cee8e9c2ccc4e99372a92b06a0",
+                  "title": "My Mix 3",
+                  "subTitle": "Eels, The Clash, Oasis and more",
+                  "graphic": {
+                    "type": "SQUARES_GRID",
+                    "text": "My Mix 3",
+                    "images": [
+                      {
+                        "id": "dummy-placeholder",
+                        "vibrantColor": "#FFFFFF",
+                        "type": "ARTIST"
+                      }
+                    ]
+                  },
+                  "images": {
+                    "SMALL": {
+                      "width": 320,
+                      "height": 320,
+                      "url": "https://images.tidal.com/0/EMACGMACIKABKKAB/CAEaJDUzYTY1OGU0LzZjNzYvNGE2Ni9hZWNjLzYxZDQ4OTcyOTVjNRokMzBiOTA2MzMvMjk0OS80N2E1Lzk5OGUvOWFmOGZhZGE2Zjg4GiRlMDNlYzkzZC82NDVhLzRiZjYvYjY2Ni81YWIxN2ZkNWE5OGUiATMqByNFNEQxQUYwAg?token=d800b9d366d194181ecc8085749134224ea9151a"
+                    },
+                    "MEDIUM": {
+                      "width": 640,
+                      "height": 640,
+                      "url": "https://images.tidal.com/0/EIAFGIAFIMACKMAC/CAEaJDUzYTY1OGU0LzZjNzYvNGE2Ni9hZWNjLzYxZDQ4OTcyOTVjNRokMzBiOTA2MzMvMjk0OS80N2E1Lzk5OGUvOWFmOGZhZGE2Zjg4GiRlMDNlYzkzZC82NDVhLzRiZjYvYjY2Ni81YWIxN2ZkNWE5OGUiATMqByNFNEQxQUYwAg?token=5ba02538b4f9119e85dbc7413281e648d36e5264"
+                    },
+                    "LARGE": {
+                      "width": 1500,
+                      "height": 1500,
+                      "url": "https://images.tidal.com/0/ENwLGNwLIO4FKO4F/CAEaJDUzYTY1OGU0LzZjNzYvNGE2Ni9hZWNjLzYxZDQ4OTcyOTVjNRokMzBiOTA2MzMvMjk0OS80N2E1Lzk5OGUvOWFmOGZhZGE2Zjg4GiRlMDNlYzkzZC82NDVhLzRiZjYvYjY2Ni81YWIxN2ZkNWE5OGUiATMqByNFNEQxQUYwAg?token=7a2b4a6e6987123c371f2513132f6c1f2981eac9"
+                    }
+                  },
+                  "sharingImages": null,
+                  "mixType": "DAILY_MIX",
+                  "contentBehavior": "UNRESTRICTED",
+                  "shortSubtitle": "Created by TIDAL"
+                },
+                {
+                  "id": "002197b81a9bba716d37696382c06c",
+                  "title": "My Mix 4",
+                  "subTitle": "Bee Gees, U2, Bonnie Tyler and more",
+                  "graphic": {
+                    "type": "SQUARES_GRID",
+                    "text": "My Mix 4",
+                    "images": [
+                      {
+                        "id": "dummy-placeholder",
+                        "vibrantColor": "#FFFFFF",
+                        "type": "ARTIST"
+                      }
+                    ]
+                  },
+                  "images": {
+                    "SMALL": {
+                      "width": 320,
+                      "height": 320,
+                      "url": "https://images.tidal.com/0/EMACGMACIKABKKAB/CAEaJDgwYmViMGVjL2M5ZTAvNGE2Ni9hZjExLzA2ZDVjMjJhMDQyNhokOGIwZmUwNjAvZWY4YS80NzAyL2ExMTUvY2U4MzllYjhiZjhiGiQxN2UzN2M5YS9jMTIyLzRkNTcvOWQ1Yy9mYTExN2IxMTZkNzAiATQqByNDMUUyRTYwAg?token=2480b82ddd7b2ce96cefdc19d7ecf2adb7fed55b"
+                    },
+                    "MEDIUM": {
+                      "width": 640,
+                      "height": 640,
+                      "url": "https://images.tidal.com/0/EIAFGIAFIMACKMAC/CAEaJDgwYmViMGVjL2M5ZTAvNGE2Ni9hZjExLzA2ZDVjMjJhMDQyNhokOGIwZmUwNjAvZWY4YS80NzAyL2ExMTUvY2U4MzllYjhiZjhiGiQxN2UzN2M5YS9jMTIyLzRkNTcvOWQ1Yy9mYTExN2IxMTZkNzAiATQqByNDMUUyRTYwAg?token=951fc4312d648adaaf782c5fda834e17c3cd75a0"
+                    },
+                    "LARGE": {
+                      "width": 1500,
+                      "height": 1500,
+                      "url": "https://images.tidal.com/0/ENwLGNwLIO4FKO4F/CAEaJDgwYmViMGVjL2M5ZTAvNGE2Ni9hZjExLzA2ZDVjMjJhMDQyNhokOGIwZmUwNjAvZWY4YS80NzAyL2ExMTUvY2U4MzllYjhiZjhiGiQxN2UzN2M5YS9jMTIyLzRkNTcvOWQ1Yy9mYTExN2IxMTZkNzAiATQqByNDMUUyRTYwAg?token=9458e75636fbf8c19fb4c84a0c930bf8301febe1"
+                    }
+                  },
+                  "sharingImages": null,
+                  "mixType": "DAILY_MIX",
+                  "contentBehavior": "UNRESTRICTED",
+                  "shortSubtitle": "Created by TIDAL"
+                },
+                {
+                  "id": "002090b3231de3509fc3f15e6d7d06",
+                  "title": "My Mix 5",
+                  "subTitle": "Abbey Cone, Cody Johnson, Ella Langley and more",
+                  "graphic": {
+                    "type": "SQUARES_GRID",
+                    "text": "My Mix 5",
+                    "images": [
+                      {
+                        "id": "dummy-placeholder",
+                        "vibrantColor": "#FFFFFF",
+                        "type": "ARTIST"
+                      }
+                    ]
+                  },
+                  "images": {
+                    "SMALL": {
+                      "width": 320,
+                      "height": 320,
+                      "url": "https://images.tidal.com/0/EMACGMACIKABKKAB/CAEaJGM0ZjAzZjMxL2NhZjQvNGE3NC84YzZkL2E2N2ZiYjRlOTViNRokZjJjMzBlZGIvNDA4ZS80NTgwLzkwZjcvZDk0N2NiNjhjMDYwGiRjZTBlOGYzMC9hMWQwLzRmZWIvOWRiZi85ZDgyNjg0NDhiNmEiATUqByNDOEE1NjQwAg?token=afa8490d96771e55290a1a63495ece73e02a01ec"
+                    },
+                    "MEDIUM": {
+                      "width": 640,
+                      "height": 640,
+                      "url": "https://images.tidal.com/0/EIAFGIAFIMACKMAC/CAEaJGM0ZjAzZjMxL2NhZjQvNGE3NC84YzZkL2E2N2ZiYjRlOTViNRokZjJjMzBlZGIvNDA4ZS80NTgwLzkwZjcvZDk0N2NiNjhjMDYwGiRjZTBlOGYzMC9hMWQwLzRmZWIvOWRiZi85ZDgyNjg0NDhiNmEiATUqByNDOEE1NjQwAg?token=5b7ee7bfae677b8b5f007b02663962d337f645ed"
+                    },
+                    "LARGE": {
+                      "width": 1500,
+                      "height": 1500,
+                      "url": "https://images.tidal.com/0/ENwLGNwLIO4FKO4F/CAEaJGM0ZjAzZjMxL2NhZjQvNGE3NC84YzZkL2E2N2ZiYjRlOTViNRokZjJjMzBlZGIvNDA4ZS80NTgwLzkwZjcvZDk0N2NiNjhjMDYwGiRjZTBlOGYzMC9hMWQwLzRmZWIvOWRiZi85ZDgyNjg0NDhiNmEiATUqByNDOEE1NjQwAg?token=80f9ca83581718e428bb1b1e9e2988ccaa213997"
+                    }
+                  },
+                  "sharingImages": null,
+                  "mixType": "DAILY_MIX",
+                  "contentBehavior": "UNRESTRICTED",
+                  "shortSubtitle": "Created by TIDAL"
+                },
+                {
+                  "id": "00265842f29e2d9c8e3698176fa588",
+                  "title": "My Mix 6",
+                  "subTitle": "Slowdive, Beach House, Cass McCombs and more",
+                  "graphic": {
+                    "type": "SQUARES_GRID",
+                    "text": "My Mix 6",
+                    "images": [
+                      {
+                        "id": "dummy-placeholder",
+                        "vibrantColor": "#FFFFFF",
+                        "type": "ARTIST"
+                      }
+                    ]
+                  },
+                  "images": {
+                    "SMALL": {
+                      "width": 320,
+                      "height": 320,
+                      "url": "https://images.tidal.com/0/EMACGMACIKABKKAB/CAEaJDM3MDVmZGY1LzNhNmMvNDVhZC85MjU4LzdlYjhiZjhhNjhjZBokMWM0YWY0ZTkvYzQwZS80YmRhLzlkMGMvZGNkMWE0ZWZlMTQ2GiRmZGExNjIyNi81Mzg1LzQ5NmUvYWI4MS8zMTk3ZTk0OGZkMjYiATYqByNDNEEyNUUwAg?token=320bfb183042e883b3d1aa4943e6de85f8803ca0"
+                    },
+                    "MEDIUM": {
+                      "width": 640,
+                      "height": 640,
+                      "url": "https://images.tidal.com/0/EIAFGIAFIMACKMAC/CAEaJDM3MDVmZGY1LzNhNmMvNDVhZC85MjU4LzdlYjhiZjhhNjhjZBokMWM0YWY0ZTkvYzQwZS80YmRhLzlkMGMvZGNkMWE0ZWZlMTQ2GiRmZGExNjIyNi81Mzg1LzQ5NmUvYWI4MS8zMTk3ZTk0OGZkMjYiATYqByNDNEEyNUUwAg?token=ac854abf30a328953e237c50b993574692d3e785"
+                    },
+                    "LARGE": {
+                      "width": 1500,
+                      "height": 1500,
+                      "url": "https://images.tidal.com/0/ENwLGNwLIO4FKO4F/CAEaJDM3MDVmZGY1LzNhNmMvNDVhZC85MjU4LzdlYjhiZjhhNjhjZBokMWM0YWY0ZTkvYzQwZS80YmRhLzlkMGMvZGNkMWE0ZWZlMTQ2GiRmZGExNjIyNi81Mzg1LzQ5NmUvYWI4MS8zMTk3ZTk0OGZkMjYiATYqByNDNEEyNUUwAg?token=fe394dd3f4605b797ba2cd771291f98950911e53"
+                    }
+                  },
+                  "sharingImages": null,
+                  "mixType": "DAILY_MIX",
+                  "contentBehavior": "UNRESTRICTED",
+                  "shortSubtitle": "Created by TIDAL"
+                },
+                {
+                  "id": "002d4a772418e31f7a9a9afbde6701",
+                  "title": "My Mix 7",
+                  "subTitle": "Anette Askvik, HAEVN, Jeff Buckley and more",
+                  "graphic": {
+                    "type": "SQUARES_GRID",
+                    "text": "My Mix 7",
+                    "images": [
+                      {
+                        "id": "dummy-placeholder",
+                        "vibrantColor": "#FFFFFF",
+                        "type": "ARTIST"
+                      }
+                    ]
+                  },
+                  "images": {
+                    "SMALL": {
+                      "width": 320,
+                      "height": 320,
+                      "url": "https://images.tidal.com/0/EMACGMACIKABKKAB/CAEaJDYzZjE1MTUyLzFmYWQvNGMxZS84OGQwLzQzYWIxNGEwNWM0NhokYWRmOWUzMDMvMDIxNy80YjliL2E4YjkvMGE2YzcwYzk2NGZiGiQzMmJjZjY4ZS82ZjI4LzQ4MjEvOTczMy85YjM3ZGUzNTYzNDMiATcqByNGQ0Q3QjUwAg?token=c7aa2117025f003ae67673db6abfb8034debfcfa"
+                    },
+                    "MEDIUM": {
+                      "width": 640,
+                      "height": 640,
+                      "url": "https://images.tidal.com/0/EIAFGIAFIMACKMAC/CAEaJDYzZjE1MTUyLzFmYWQvNGMxZS84OGQwLzQzYWIxNGEwNWM0NhokYWRmOWUzMDMvMDIxNy80YjliL2E4YjkvMGE2YzcwYzk2NGZiGiQzMmJjZjY4ZS82ZjI4LzQ4MjEvOTczMy85YjM3ZGUzNTYzNDMiATcqByNGQ0Q3QjUwAg?token=3f3137b071a3ecc718be3c8e5933d4993eb505af"
+                    },
+                    "LARGE": {
+                      "width": 1500,
+                      "height": 1500,
+                      "url": "https://images.tidal.com/0/ENwLGNwLIO4FKO4F/CAEaJDYzZjE1MTUyLzFmYWQvNGMxZS84OGQwLzQzYWIxNGEwNWM0NhokYWRmOWUzMDMvMDIxNy80YjliL2E4YjkvMGE2YzcwYzk2NGZiGiQzMmJjZjY4ZS82ZjI4LzQ4MjEvOTczMy85YjM3ZGUzNTYzNDMiATcqByNGQ0Q3QjUwAg?token=92b75041043492b401b6028617e6273334959dbe"
+                    }
+                  },
+                  "sharingImages": null,
+                  "mixType": "DAILY_MIX",
+                  "contentBehavior": "UNRESTRICTED",
+                  "shortSubtitle": "Created by TIDAL"
+                },
+                {
+                  "id": "00278d6bb97e21daa45ad22ae25b11",
+                  "title": "My Mix 8",
+                  "subTitle": "Pink Floyd, Heron, Blood, Sweat & Tears and more",
+                  "graphic": {
+                    "type": "SQUARES_GRID",
+                    "text": "My Mix 8",
+                    "images": [
+                      {
+                        "id": "dummy-placeholder",
+                        "vibrantColor": "#FFFFFF",
+                        "type": "ARTIST"
+                      }
+                    ]
+                  },
+                  "images": {
+                    "SMALL": {
+                      "width": 320,
+                      "height": 320,
+                      "url": "https://images.tidal.com/0/EMACGMACIKABKKAB/CAEaJDAxYzllNmM3L2Y0YTEvNGFlYi85M2U2LzFkMGM0MTM5NGRlNRokMWMwNTc2ZDUvZmM5NS80MDQ3Lzg0MzgvOWQ5ZWU5Y2M5MTU3GiRlZGE3MDE5YS9hNmEzLzQwMGUvODk3OC9lMmRiZTEwNzY5YzciATgqByNENkNBQTgwAg?token=105a29ec2f841b2ecf0787523c9b7eff6958848d"
+                    },
+                    "MEDIUM": {
+                      "width": 640,
+                      "height": 640,
+                      "url": "https://images.tidal.com/0/EIAFGIAFIMACKMAC/CAEaJDAxYzllNmM3L2Y0YTEvNGFlYi85M2U2LzFkMGM0MTM5NGRlNRokMWMwNTc2ZDUvZmM5NS80MDQ3Lzg0MzgvOWQ5ZWU5Y2M5MTU3GiRlZGE3MDE5YS9hNmEzLzQwMGUvODk3OC9lMmRiZTEwNzY5YzciATgqByNENkNBQTgwAg?token=065347410bd0e576fd95e1cbcac7625eb1a9b51e"
+                    },
+                    "LARGE": {
+                      "width": 1500,
+                      "height": 1500,
+                      "url": "https://images.tidal.com/0/ENwLGNwLIO4FKO4F/CAEaJDAxYzllNmM3L2Y0YTEvNGFlYi85M2U2LzFkMGM0MTM5NGRlNRokMWMwNTc2ZDUvZmM5NS80MDQ3Lzg0MzgvOWQ5ZWU5Y2M5MTU3GiRlZGE3MDE5YS9hNmEzLzQwMGUvODk3OC9lMmRiZTEwNzY5YzciATgqByNENkNBQTgwAg?token=669f28b804c2072289d2cd5ec577449cbd285c62"
+                    }
+                  },
+                  "sharingImages": null,
+                  "mixType": "DAILY_MIX",
+                  "contentBehavior": "UNRESTRICTED",
+                  "shortSubtitle": "Created by TIDAL"
+                },
+                {
+                  "id": "01674a6a4c4c8866f15780f612d092",
+                  "title": "My Daily Discovery",
+                  "subTitle": "Songs by new and familiar artists inspired by your listening. Updates every morning.",
+                  "graphic": {
+                    "type": "SQUARES_GRID",
+                    "text": "My Daily Discovery",
+                    "images": [
+                      {
+                        "id": "dummy-placeholder",
+                        "vibrantColor": "#FFFFFF",
+                        "type": "ARTIST"
+                      }
+                    ]
+                  },
+                  "images": {
+                    "SMALL": {
+                      "width": 320,
+                      "height": 320,
+                      "url": "https://images.tidal.com/0/EMACGMAC/CAEQCCICMjYqByNBNUUzRkYwBA?token=87ccaf57a3035a334ff70d9973c8f33d0f4feb5a"
+                    },
+                    "MEDIUM": {
+                      "width": 640,
+                      "height": 640,
+                      "url": "https://images.tidal.com/0/EIAFGIAF/CAEQCCICMjYqByNBNUUzRkYwBA?token=c9abf21c54f205dee8bcbc14f1b6940dc416ece9"
+                    },
+                    "LARGE": {
+                      "width": 1500,
+                      "height": 1500,
+                      "url": "https://images.tidal.com/0/ENwLGNwL/CAEQCCICMjYqByNBNUUzRkYwBA?token=2ce34353821dd5c8e4fbb998518ee4b8e8d9934e"
+                    }
+                  },
+                  "sharingImages": null,
+                  "mixType": "DISCOVERY_MIX",
+                  "contentBehavior": "UNRESTRICTED",
+                  "shortSubtitle": "Created by TIDAL"
+                },
+                {
+                  "id": "0116788120318a26696f76cf158b03",
+                  "title": "My New Arrivals",
+                  "subTitle": "Yuksek, Christine and the Queens, Ringo Starr and more",
+                  "graphic": {
+                    "type": "SQUARES_GRID",
+                    "text": "My New Arrivals",
+                    "images": [
+                      {
+                        "id": "dummy-placeholder",
+                        "vibrantColor": "#FFFFFF",
+                        "type": "ARTIST"
+                      }
+                    ]
+                  },
+                  "images": {
+                    "SMALL": {
+                      "width": 320,
+                      "height": 320,
+                      "url": "https://images.tidal.com/0/EMACGMAC/CAEQCiIBNCoHI0E4RjdDMjAF?token=af21380a33161d92a490762e553203464f9a0aae"
+                    },
+                    "MEDIUM": {
+                      "width": 640,
+                      "height": 640,
+                      "url": "https://images.tidal.com/0/EIAFGIAF/CAEQCiIBNCoHI0E4RjdDMjAF?token=17e91dbcdd36f2f5d5595968fd067c502f9401b9"
+                    },
+                    "LARGE": {
+                      "width": 1500,
+                      "height": 1500,
+                      "url": "https://images.tidal.com/0/ENwLGNwL/CAEQCiIBNCoHI0E4RjdDMjAF?token=1852c541ecb198d8ce39f4a432a1b52393032d40"
+                    }
+                  },
+                  "sharingImages": null,
+                  "mixType": "NEW_RELEASE_MIX",
+                  "contentBehavior": "UNRESTRICTED",
+                  "shortSubtitle": "Created by TIDAL"
+                }
+              ],
+              "dataApiPath": "pages/data/becbad59-6599-4552-b6d0-0456ea356d24"
+            },
+            "layout": null
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,7 +1,7 @@
 module.exports = {
   apps : [{
     name   : "tidal-streamer",
-    script : "./index.js",
+    script : "./src/index.js",
     watch: true,
 		watch_delay: 1000,
 		ignore_watch : ["config.yml*"],

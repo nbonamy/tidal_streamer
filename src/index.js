@@ -4,6 +4,7 @@ const portfinder = require('portfinder')
 const mdns = require('mdns')
 const Config = require('./config')
 const Auth = require('./auth')
+const User = require('./user')
 const Metadata = require('./metadata')
 const Streamer = require('./streamer')
 const Playlist = require('./playlist')
@@ -45,6 +46,7 @@ auth.is_auth().then(async (rc) => {
 })
   
 // now we can build our modules
+const user = new User(settings)
 const metadata = new Metadata(settings)
 const streamer = new Streamer(settings)
 const playlist = new Playlist(settings)
@@ -73,6 +75,7 @@ portfinder.getPort({ port: startPort },  async (err, port) => {
   })
 
   // routes
+  app.use('/', user.routes())
   app.use('/', metadata.routes())
   app.use('/', playlist.routes())
   app.use('/', streamer.routes())

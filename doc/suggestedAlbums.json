@@ -1,0 +1,1788 @@
+  {
+    "status": "ok",
+    "result": {
+      "selfLink": "pages/single-module-page/5b31fe14-fa8b-415e-9203-a9cf19361c10/252/0f802e61-49a0-47dd-9d69-8042f487bca3/1",
+      "id": "eyJwIjoiNWIzMWZlMTQtZmE4Yi00MTVlLTkyMDMtYTljZjE5MzYxYzEwIiwicFYiOjI1MiwibSI6IjBmODAyZTYxLTQ5YTAtNDdkZC05ZDY5LTgwNDJmNDg3YmNhMyIsIm1WIjoxLCJtSCI6IjVlNjI1NDI1In0=",
+      "title": "Suggested new albums for you",
+      "rows": [
+        {
+          "modules": [
+            {
+              "id": "eyJwIjoiNWIzMWZlMTQtZmE4Yi00MTVlLTkyMDMtYTljZjE5MzYxYzEwIiwicFYiOjI1MiwibSI6IjBmODAyZTYxLTQ5YTAtNDdkZC05ZDY5LTgwNDJmNDg3YmNhMyIsIm1WIjoxLCJtSCI6IjQwMmQwODZlIn0=",
+              "type": "ALBUM_LIST",
+              "width": 100,
+              "title": "",
+              "description": "",
+              "preTitle": null,
+              "showMore": null,
+              "supportsPaging": true,
+              "quickPlay": false,
+              "scroll": "VERTICAL",
+              "listFormat": null,
+              "pagedList": {
+                "limit": 50,
+                "offset": 0,
+                "totalNumberOfItems": 96,
+                "items": [
+                  {
+                    "id": 389221876,
+                    "title": "Love You All Over Again",
+                    "cover": "cde91e61-d2f2-435e-8a5a-9b7443a47177",
+                    "vibrantColor": "#f2debc",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/389221876",
+                    "artists": [
+                      {
+                        "id": 3580238,
+                        "name": "Tunng",
+                        "type": "MAIN",
+                        "picture": "f027f893-e2a3-4706-90af-7ee4a401d3f3"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2024-10-08T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 10,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2627,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 391884823,
+                    "title": "The Bad Fire",
+                    "cover": "5dd6312e-62c0-47d4-9e76-c10a8282b122",
+                    "vibrantColor": "#ea3763",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/391884823",
+                    "artists": [
+                      {
+                        "id": 3568709,
+                        "name": "Mogwai",
+                        "type": "MAIN",
+                        "picture": "c9ea429d-2a95-40f9-a8d0-faa017be7211"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 10,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 3291,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 390923389,
+                    "title": "You & i are Earth",
+                    "cover": "e52345e4-1da2-400f-b98c-c1817e59984e",
+                    "vibrantColor": "#FFFFFF",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/390923389",
+                    "artists": [
+                      {
+                        "id": 6929633,
+                        "name": "Anna B Savage",
+                        "type": "MAIN",
+                        "picture": "4a9f8286-3602-4102-8439-77b7b7a6f396"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2024-10-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 10,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 1884,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 412508098,
+                    "title": "De l'autre côté",
+                    "cover": "6d09f49c-e9c4-41fe-99df-f072f666440d",
+                    "vibrantColor": "#FFFFFF",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/412508098",
+                    "artists": [
+                      {
+                        "id": 6618119,
+                        "name": "Laura Cahen",
+                        "type": "MAIN",
+                        "picture": null
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2024-11-18T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 10,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2511,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 407142270,
+                    "title": "Middle Farm Session",
+                    "cover": "8e450e3b-2a39-44d9-af27-01867c00b2cd",
+                    "vibrantColor": "#9aa8d1",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/407142270",
+                    "artists": [
+                      {
+                        "id": 3547534,
+                        "name": "Daughter",
+                        "type": "MAIN",
+                        "picture": "65bc2f93-6642-4e45-8d64-0665c56f032f"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-21T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 7,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-21",
+                    "duration": 1684,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 408772624,
+                    "title": "Birna",
+                    "cover": "9dca09f0-e5fb-4b0a-98c4-629311177d8f",
+                    "vibrantColor": "#ae5751",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/408772624",
+                    "artists": [
+                      {
+                        "id": 3565132,
+                        "name": "Wardruna",
+                        "type": "MAIN",
+                        "picture": "dac9a2a8-c5f7-46ff-a66e-f25e676391e2"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 10,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 3993,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 381764584,
+                    "title": "Bloom",
+                    "cover": "1e2c3186-6500-43bc-b8ae-90f9fea9070f",
+                    "vibrantColor": "#d3c053",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/381764584",
+                    "artists": [
+                      {
+                        "id": 3701245,
+                        "name": "Larkin Poe",
+                        "type": "MAIN",
+                        "picture": "3f9cf83f-4a72-47e1-87a1-b1b5f1d2ddb4"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 11,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2529,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 408905895,
+                    "title": "Salt River",
+                    "cover": "ceedd973-cbc9-4300-8f25-96cdb34378ed",
+                    "vibrantColor": "#3d9e78",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/408905895",
+                    "artists": [
+                      {
+                        "id": 3756244,
+                        "name": "Sam Amidon",
+                        "type": "MAIN",
+                        "picture": "e27967c7-0a41-44a3-933b-9f93f0e60fed"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 10,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2625,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 398239650,
+                    "title": "Live ID.",
+                    "cover": "3e0fd4b4-0605-4ab1-b83f-3bf7c1880857",
+                    "vibrantColor": "#c4c8e3",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/398239650",
+                    "artists": [
+                      {
+                        "id": 3652225,
+                        "name": "Riverside",
+                        "type": "MAIN",
+                        "picture": "72c6552c-4c90-4770-9629-242d6ba8ede4"
+                      }
+                    ],
+                    "explicit": true,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 12,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 6739,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 394201878,
+                    "title": "Live At Montreux Jazz Festival 2023",
+                    "cover": "522c6e5f-cecd-4d37-a8cf-d0fd5a9994f9",
+                    "vibrantColor": "#dc252d",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/394201878",
+                    "artists": [
+                      {
+                        "id": 2449,
+                        "name": "Iggy Pop",
+                        "type": "MAIN",
+                        "picture": "7af2c423-0cdf-43c3-a345-c108a9ad7735"
+                      }
+                    ],
+                    "explicit": true,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 17,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 5078,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 412508115,
+                    "title": "Still In Love",
+                    "cover": "abf31b2a-9c79-4507-ac8b-2800ff9801a2",
+                    "vibrantColor": "#f5f3e8",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/412508115",
+                    "artists": [
+                      {
+                        "id": 7109513,
+                        "name": "Ten Fé",
+                        "type": "MAIN",
+                        "picture": "96011c8a-139d-4e37-9555-51529e6c8cba"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2024-10-15T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 11,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-03-28",
+                    "duration": 2848,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 378091333,
+                    "title": "Alive & Kicking",
+                    "cover": "a797358a-f5de-4a13-9afe-aea079f0349f",
+                    "vibrantColor": "#d9e5f4",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/378091333",
+                    "artists": [
+                      {
+                        "id": 3510471,
+                        "name": "Keziah Jones",
+                        "type": "MAIN",
+                        "picture": "ea4cef25-8a23-46a8-a013-cfbe9415dee0"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2024-11-13T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 15,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 4060,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 412952396,
+                    "title": "EUSEXUA",
+                    "cover": "c962b7df-dceb-4d38-90ae-2d757c63b23c",
+                    "vibrantColor": "#FFFFFF",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/412952396",
+                    "artists": [
+                      {
+                        "id": 5037977,
+                        "name": "FKA twigs",
+                        "type": "MAIN",
+                        "picture": "c66330bf-fd51-46d7-a7a1-c2bd190e17db"
+                      }
+                    ],
+                    "explicit": true,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 11,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2578,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 412507663,
+                    "title": "Heard Noises",
+                    "cover": "57858b36-2cc9-45b5-aea9-1994c4944522",
+                    "vibrantColor": "#a3d7bf",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/412507663",
+                    "artists": [
+                      {
+                        "id": 4113263,
+                        "name": "Matt Berry",
+                        "type": "MAIN",
+                        "picture": "7b3f671c-4fcf-4bce-bfc5-a10bb0a3d724"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 14,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2024-01-24",
+                    "duration": 2945,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 387992037,
+                    "title": "LOWER",
+                    "cover": "dbb33d55-99a8-4453-a671-bd5867e81fac",
+                    "vibrantColor": "#FFFFFF",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/387992037",
+                    "artists": [
+                      {
+                        "id": 5530567,
+                        "name": "Benjamin Booker",
+                        "type": "MAIN",
+                        "picture": "7b4b64c2-2104-442d-a17f-e74a717a3b24"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 11,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2514,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 409034324,
+                    "title": "I've Tried Everything But Therapy (Part 2)",
+                    "cover": "1aa0d8c5-26ce-409c-b5a7-a030434c7fcc",
+                    "vibrantColor": "#d14102",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/409034324",
+                    "artists": [
+                      {
+                        "id": 15694955,
+                        "name": "Teddy Swims",
+                        "type": "MAIN",
+                        "picture": "46be457f-3369-4ce7-a25b-41b5f3f46ffb"
+                      }
+                    ],
+                    "explicit": true,
+                    "streamReady": true,
+                    "streamStartDate": "2024-09-30T11:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 13,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2448,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 412151945,
+                    "title": "Dark Moon",
+                    "cover": "f904f66b-1fac-4147-bd90-a9d6b2b0435d",
+                    "vibrantColor": "#8a7741",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/412151945",
+                    "artists": [
+                      {
+                        "id": 3513667,
+                        "name": "Holly Cole",
+                        "type": "MAIN",
+                        "picture": "fa4c3b7f-b7ee-4853-b57f-7b7fc545043d"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 11,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-31",
+                    "duration": 2457,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 388650627,
+                    "title": "Burnout Days",
+                    "cover": "74f42d37-9054-43be-a613-19dd60fc3d30",
+                    "vibrantColor": "#f4d85c",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/388650627",
+                    "artists": [
+                      {
+                        "id": 8110710,
+                        "name": "Flipturn",
+                        "type": "MAIN",
+                        "picture": "8fb0d89a-4ace-45c4-98ac-3b5c92a709b7"
+                      }
+                    ],
+                    "explicit": true,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 12,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2610,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 391768416,
+                    "title": "Airbag Woke Me Up",
+                    "cover": "2414ab74-50a8-4e9c-80f8-7bc12583cecb",
+                    "vibrantColor": "#c3b16f",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/391768416",
+                    "artists": [
+                      {
+                        "id": 7694011,
+                        "name": "Jeshi",
+                        "type": "MAIN",
+                        "picture": "99d43ff6-e36c-41d5-88da-8c1fad6b15a5"
+                      }
+                    ],
+                    "explicit": true,
+                    "streamReady": true,
+                    "streamStartDate": "2024-11-06T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 14,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2387,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 386804415,
+                    "title": "Sol Y Sombra",
+                    "cover": "a3cc0a21-0979-46ff-a0d2-2fbe22ddf3ce",
+                    "vibrantColor": "#cb9f52",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/386804415",
+                    "artists": [
+                      {
+                        "id": 15472367,
+                        "name": "Rose City Band",
+                        "type": "MAIN",
+                        "picture": "b6f451db-2ad7-4839-a8b6-d4cc5a181549"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2024-10-09T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 10,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2534,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 412168730,
+                    "title": "Atelier",
+                    "cover": "ac06223f-4ecd-41bf-94f7-7356c9dab68e",
+                    "vibrantColor": "#b01b29",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/412168730",
+                    "artists": [
+                      {
+                        "id": 5583273,
+                        "name": "Remo Anzovino",
+                        "type": "MAIN",
+                        "picture": "44be1d03-c3a1-43fa-8e06-35dbd833296b"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 21,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 4708,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 394775021,
+                    "title": "Looking For The Thread",
+                    "cover": "db96a62f-8eec-4109-9754-49b84a4ed4f2",
+                    "vibrantColor": "#dcb3d0",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/394775021",
+                    "artists": [
+                      {
+                        "id": 767,
+                        "name": "Mary Chapin Carpenter",
+                        "type": "MAIN",
+                        "picture": "df193818-2015-45b5-bb24-8fbe0c457bf0"
+                      },
+                      {
+                        "id": 3684590,
+                        "name": "Julie Fowlis",
+                        "type": "MAIN",
+                        "picture": "f6b65bf9-bc95-4ffe-a9cf-8d513f161729"
+                      },
+                      {
+                        "id": 3579971,
+                        "name": "Karine Polwart",
+                        "type": "MAIN",
+                        "picture": null
+                      }
+                    ],
+                    "explicit": true,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 10,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2852,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 401586456,
+                    "title": "The Complete String Quartets",
+                    "cover": "11be4f82-6e1d-499a-8bbf-66ddd62805f6",
+                    "vibrantColor": "#FFFFFF",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/401586456",
+                    "artists": [
+                      {
+                        "id": 14748,
+                        "name": "John Zorn",
+                        "type": "MAIN",
+                        "picture": "edc733a2-7911-4ecd-bd25-7a325e431c1d"
+                      },
+                      {
+                        "id": 4054099,
+                        "name": "Jack Quartet",
+                        "type": "FEATURED",
+                        "picture": "d51b77c7-832b-4480-99ec-b01d939c28fc"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 12,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 7423,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 406014773,
+                    "title": "The Bagatelles Vol. 1 - Mary Halvorson Quartet",
+                    "cover": "dce8016e-436c-42b0-909b-9b61114856e7",
+                    "vibrantColor": "#FFFFFF",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/406014773",
+                    "artists": [
+                      {
+                        "id": 14748,
+                        "name": "John Zorn",
+                        "type": "MAIN",
+                        "picture": "edc733a2-7911-4ecd-bd25-7a325e431c1d"
+                      },
+                      {
+                        "id": 42396132,
+                        "name": "Mary Halvorson Quartet",
+                        "type": "FEATURED",
+                        "picture": null
+                      }
+                    ],
+                    "explicit": true,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 9,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2277,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 394187748,
+                    "title": "Journal d'un Loup-Garou",
+                    "cover": "746e8f6a-adce-4602-804f-389cc44e4b1b",
+                    "vibrantColor": "#a6bcda",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/394187748",
+                    "artists": [
+                      {
+                        "id": 7671659,
+                        "name": "Lou-Adriane Cassidy",
+                        "type": "MAIN",
+                        "picture": "e6f5bccd-b5cd-4995-b29a-00bcf6cf7e0e"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 14,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2535,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 386468537,
+                    "title": "MY GOD HAS GOT A GUN",
+                    "cover": "ceef2197-1142-445a-8a9e-d014b90d7b4c",
+                    "vibrantColor": "#f28eaa",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/386468537",
+                    "artists": [
+                      {
+                        "id": 4887908,
+                        "name": "VUKOVI",
+                        "type": "MAIN",
+                        "picture": "33447372-1722-49d4-96c6-1bea33243fea"
+                      }
+                    ],
+                    "explicit": true,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 11,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2656,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 391907408,
+                    "title": "7 Songs For Spiders",
+                    "cover": "e3a925d7-dbc6-427d-a058-2f7baa41cbb9",
+                    "vibrantColor": "#FFFFFF",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/391907408",
+                    "artists": [
+                      {
+                        "id": 3610257,
+                        "name": "Dax Riggs",
+                        "type": "MAIN",
+                        "picture": "d0f67895-4a27-4050-aab3-5cc3ef929043"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 7,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 1699,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 388051474,
+                    "title": "Essex, Drugs and Rock and Roll",
+                    "cover": "573a108d-1e20-41c3-a790-d72a3c6b9b77",
+                    "vibrantColor": "#f2a3a5",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/388051474",
+                    "artists": [
+                      {
+                        "id": 3900048,
+                        "name": "Bilk",
+                        "type": "MAIN",
+                        "picture": "39d7ff32-3c1c-46ce-874b-d2fd54b501cd"
+                      }
+                    ],
+                    "explicit": true,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 13,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2761,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 409225001,
+                    "title": "NGL",
+                    "cover": "4be189c9-d161-4ccd-8a4e-f721a92bb395",
+                    "vibrantColor": "#dbe6ef",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/409225001",
+                    "artists": [
+                      {
+                        "id": 55705,
+                        "name": "JoJo",
+                        "type": "MAIN",
+                        "picture": "50c5cd28-b0fe-4be4-b8a4-5f499083f39c"
+                      }
+                    ],
+                    "explicit": true,
+                    "streamReady": true,
+                    "streamStartDate": "2024-11-20T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 8,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 1327,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 413005959,
+                    "title": "CAN'T RUSH GREATNESS",
+                    "cover": "3df7d16d-2115-454a-947b-bba97e521ec6",
+                    "vibrantColor": "#e18e8f",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/413005959",
+                    "artists": [
+                      {
+                        "id": 8589558,
+                        "name": "Central Cee",
+                        "type": "MAIN",
+                        "picture": "137e6101-36ec-4462-8d18-c6f374a3e4ca"
+                      }
+                    ],
+                    "explicit": true,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 17,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-22",
+                    "duration": 2930,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 406602851,
+                    "title": "Armada LIVE Over Europe - Pt. 2",
+                    "cover": "4d4ca4c1-8adc-40a7-b004-ed23ca783fa9",
+                    "vibrantColor": "#d3e1eb",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/406602851",
+                    "artists": [
+                      {
+                        "id": 3604479,
+                        "name": "Visions of Atlantis",
+                        "type": "MAIN",
+                        "picture": "7e7da5be-6064-4b86-940f-798e7d4187e2"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-21T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 10,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2024-12-10",
+                    "duration": 2609,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 398021482,
+                    "title": "Echoes",
+                    "cover": "d7035535-f0fb-4d91-9e2e-d4e3d1893cc0",
+                    "vibrantColor": "#FFFFFF",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/398021482",
+                    "artists": [
+                      {
+                        "id": 25537,
+                        "name": "Palle Mikkelborg",
+                        "type": "MAIN",
+                        "picture": null
+                      },
+                      {
+                        "id": 3847154,
+                        "name": "Lars Møller",
+                        "type": "MAIN",
+                        "picture": null
+                      },
+                      {
+                        "id": 3578112,
+                        "name": "NDR Bigband",
+                        "type": "MAIN",
+                        "picture": null
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2024-12-13T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 6,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 3631,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 398514238,
+                    "title": "Night Diving",
+                    "cover": "9d517609-3313-4ea4-88d0-36771a524b3e",
+                    "vibrantColor": "#FFFFFF",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/398514238",
+                    "artists": [
+                      {
+                        "id": 38784350,
+                        "name": "Max McNown",
+                        "type": "MAIN",
+                        "picture": "bdae6ea2-cce9-47f7-bc92-ccd04f8c07b3"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 10,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2025,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 384827052,
+                    "title": "Between You, God, The Devil and The Dead",
+                    "cover": "32d4ae63-5c66-44e4-8467-e0f727dc46f1",
+                    "vibrantColor": "#b2b6e0",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/384827052",
+                    "artists": [
+                      {
+                        "id": 5091457,
+                        "name": "Avatarium",
+                        "type": "MAIN",
+                        "picture": "7043bab8-cfd9-425e-bab0-93a37f3b4718"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 8,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2560,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 400281405,
+                    "title": "George",
+                    "cover": "a744ed08-91ff-4fcb-a67c-90a6b44fc5e0",
+                    "vibrantColor": "#f59828",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/400281405",
+                    "artists": [
+                      {
+                        "id": 6358094,
+                        "name": "Sonya Yoncheva",
+                        "type": "MAIN",
+                        "picture": "07d6da03-5a17-4ee4-9b9f-de328a00f57b"
+                      },
+                      {
+                        "id": 7452727,
+                        "name": "Olga Zado",
+                        "type": "MAIN",
+                        "picture": null
+                      },
+                      {
+                        "id": 8944470,
+                        "name": "Marina Viotti",
+                        "type": "MAIN",
+                        "picture": "2f40f0c1-c0a9-402e-8d68-5f19fb3ac67a"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 16,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2975,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 389055898,
+                    "title": "Scorched Earth",
+                    "cover": "4f351ae1-e5b6-444e-9844-ba81a594ca54",
+                    "vibrantColor": "#FFFFFF",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/389055898",
+                    "artists": [
+                      {
+                        "id": 5607378,
+                        "name": "Harakiri for the Sky",
+                        "type": "MAIN",
+                        "picture": "8b80c6eb-3948-4a22-96de-55e2b9cd9b17"
+                      }
+                    ],
+                    "explicit": true,
+                    "streamReady": true,
+                    "streamStartDate": "2024-10-17T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 8,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 4048,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 382812992,
+                    "title": "Gitano Amor",
+                    "cover": "fda27ec9-6773-4dde-9098-c439e10c7c8d",
+                    "vibrantColor": "#e5ce90",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/382812992",
+                    "artists": [
+                      {
+                        "id": 4154208,
+                        "name": "Armik",
+                        "type": "MAIN",
+                        "picture": "e1e73610-2773-4cae-b2c8-4d35053d7d21"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 10,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2584,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 412320268,
+                    "title": "The High Road",
+                    "cover": "fadaa98d-2ac8-464e-91cf-9140560803d8",
+                    "vibrantColor": "#FFFFFF",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/412320268",
+                    "artists": [
+                      {
+                        "id": 6160546,
+                        "name": "Kane Brown",
+                        "type": "MAIN",
+                        "picture": "54e0825a-6e07-4fc0-a083-77ecd6ec18bf"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 18,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 3510,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 394786216,
+                    "title": "Memory Bank",
+                    "cover": "9de56d21-83bd-42b7-8206-0abae316318f",
+                    "vibrantColor": "#a6873a",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/394786216",
+                    "artists": [
+                      {
+                        "id": 3815106,
+                        "name": "Drew Holcomb",
+                        "type": "MAIN",
+                        "picture": "0403de44-2804-44d3-8eef-cab1da3c2dbd"
+                      },
+                      {
+                        "id": 5062446,
+                        "name": "Ellie Holcomb",
+                        "type": "MAIN",
+                        "picture": "f564db3a-5d1f-46e8-8041-00205688cc27"
+                      },
+                      {
+                        "id": 3815098,
+                        "name": "Drew Holcomb & the Neighbors",
+                        "type": "MAIN",
+                        "picture": "0d61d54a-988b-4384-97f4-0f2c69f7a158"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 13,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2647,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 373915543,
+                    "title": "Roadrunner",
+                    "cover": "b9ef672a-395b-483e-9b1c-617ff7115ded",
+                    "vibrantColor": "#ecce4b",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/373915543",
+                    "artists": [
+                      {
+                        "id": 14710628,
+                        "name": "Tom Meighan",
+                        "type": "MAIN",
+                        "picture": "e3f2efe7-1fef-41de-85cd-e3aa607fa1dc"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2024-07-12T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 11,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2358,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 363628842,
+                    "title": "Rave Immortal",
+                    "cover": "d32be8b6-d8d0-4f23-a972-5cf7181f0d0d",
+                    "vibrantColor": "#67aabc",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/363628842",
+                    "artists": [
+                      {
+                        "id": 29041105,
+                        "name": "ALT BLK ERA",
+                        "type": "MAIN",
+                        "picture": "17f2ccb6-b9c6-4e61-b236-6b2f19e4567c"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 10,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 1896,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 411886120,
+                    "title": "A Jaguar's Dream",
+                    "cover": "e324d398-eeae-49cc-ab3f-18fc6dc43464",
+                    "vibrantColor": "#FFFFFF",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/411886120",
+                    "artists": [
+                      {
+                        "id": 8846804,
+                        "name": "Jordan Adetunji",
+                        "type": "MAIN",
+                        "picture": null
+                      }
+                    ],
+                    "explicit": true,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-09T19:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 10,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-22",
+                    "duration": 1463,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 391301607,
+                    "title": "Landfill",
+                    "cover": "bf0c8f13-974d-481f-9a8a-a358d3596e59",
+                    "vibrantColor": "#bf9409",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/391301607",
+                    "artists": [
+                      {
+                        "id": 3946805,
+                        "name": "Young Knives",
+                        "type": "MAIN",
+                        "picture": "6e93f136-edae-4d19-8998-a14f84648499"
+                      }
+                    ],
+                    "explicit": true,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 10,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2818,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 394201765,
+                    "title": "Higher Ground",
+                    "cover": "cf19fa19-5a49-48bd-91d8-fe563b5b60c5",
+                    "vibrantColor": "#f9ec87",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/394201765",
+                    "artists": [
+                      {
+                        "id": 3625,
+                        "name": "Bonfire",
+                        "type": "MAIN",
+                        "picture": "03031cb8-143e-4467-bded-733401afd93a"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 11,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2817,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 389780094,
+                    "title": "Malcolm's Law",
+                    "cover": "bcae8479-4cda-4f5c-9735-e1c6aaadad08",
+                    "vibrantColor": "#e59c96",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/389780094",
+                    "artists": [
+                      {
+                        "id": 15711015,
+                        "name": "Waldo's Gift",
+                        "type": "MAIN",
+                        "picture": null
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 9,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 1949,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 411503164,
+                    "title": "WALK WITH ME",
+                    "cover": "ab3fc360-ef01-4313-b17f-07a480d83f3e",
+                    "vibrantColor": "#eee4ca",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/411503164",
+                    "artists": [
+                      {
+                        "id": 8933190,
+                        "name": "1da Banton",
+                        "type": "MAIN",
+                        "picture": null
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 6,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 839,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 392849553,
+                    "title": "siren songs volume 1",
+                    "cover": "cfbfa6a7-a83d-4533-84f2-662c965454f1",
+                    "vibrantColor": "#d0a95c",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/392849553",
+                    "artists": [
+                      {
+                        "id": 6563121,
+                        "name": "Nicole Zuraitis",
+                        "type": "MAIN",
+                        "picture": "fbd53b0c-8324-44ec-9c8e-bb66adb5663b"
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 7,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2167,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 404300528,
+                    "title": "Aisle 14",
+                    "cover": "2947837e-e227-49fe-b60a-2444debb9ec8",
+                    "vibrantColor": "#80b8cf",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/404300528",
+                    "artists": [
+                      {
+                        "id": 6737263,
+                        "name": "Shoffy",
+                        "type": "MAIN",
+                        "picture": "95e1290a-f637-4739-b169-a19606925235"
+                      }
+                    ],
+                    "explicit": true,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 10,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 1632,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 381253840,
+                    "title": "Slow Flow",
+                    "cover": "0bfa6017-f839-428a-9c2e-4acc5fb3ee88",
+                    "vibrantColor": "#FFFFFF",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/381253840",
+                    "artists": [
+                      {
+                        "id": 4156261,
+                        "name": "Jakob Dinesen",
+                        "type": "MAIN",
+                        "picture": null
+                      }
+                    ],
+                    "explicit": false,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 9,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 2521,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  },
+                  {
+                    "id": 412953612,
+                    "title": "Alana Springsteen: Live from the Ryman",
+                    "cover": "16237325-cf5f-40e1-a8ba-1f230015d3e3",
+                    "vibrantColor": "#166d92",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/412953612",
+                    "artists": [
+                      {
+                        "id": 11103908,
+                        "name": "Alana Springsteen",
+                        "type": "MAIN",
+                        "picture": "01e553c2-084e-4623-ace4-ec8c669443f6"
+                      }
+                    ],
+                    "explicit": true,
+                    "streamReady": true,
+                    "streamStartDate": "2025-01-24T00:00:00.000+00:00",
+                    "allowStreaming": true,
+                    "numberOfTracks": 7,
+                    "numberOfVideos": 0,
+                    "audioQuality": "LOSSLESS",
+                    "audioModes": [
+                      "STEREO"
+                    ],
+                    "releaseDate": "2025-01-24",
+                    "duration": 1668,
+                    "mediaMetadata": {
+                      "tags": [
+                        "LOSSLESS",
+                        "HIRES_LOSSLESS"
+                      ]
+                    }
+                  }
+                ],
+                "dataApiPath": "pages/data/97f0941e-2084-46bf-905c-009245e644d3"
+              },
+              "header": null,
+              "layout": null
+            }
+          ]
+        }
+      ]
+    }
+  }

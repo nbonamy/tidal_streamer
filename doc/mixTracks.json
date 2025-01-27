@@ -1,0 +1,625 @@
+{
+  "status": "ok",
+  "result": {
+    "selfLink": null,
+    "id": "eyJwIjoiOGMxZjRkNjAtZDhmNS00YmU2LTg1YjMtYTA0NDExNDVkYmMwIiwicFYiOjE0fQ==",
+    "title": "My Daily Discovery",
+    "rows": [
+      {
+        "modules": [
+          {
+            "id": "eyJwIjoiOGMxZjRkNjAtZDhmNS00YmU2LTg1YjMtYTA0NDExNDVkYmMwIiwicFYiOjE0LCJtIjoiMTg3ZGVhMTMtNWI1ZS00OWYwLWI5YjktYjc5ODk3M2M2MjVmIiwibVYiOjEsIm1IIjoiOWZlYmZmZDIifQ==",
+            "type": "MIX_HEADER",
+            "width": 100,
+            "title": "",
+            "description": "",
+            "preTitle": "",
+            "mix": {
+              "id": "01674a6a4c4c8866f15780f612d092",
+              "title": "My Daily Discovery",
+              "subTitle": "Songs by new and familiar artists inspired by your listening. Updates every morning.",
+              "graphic": {
+                "type": "SQUARES_GRID",
+                "text": "My Daily Discovery",
+                "images": [
+                  {
+                    "id": "dummy-placeholder",
+                    "vibrantColor": "#FFFFFF",
+                    "type": "ARTIST"
+                  }
+                ]
+              },
+              "images": {
+                "SMALL": {
+                  "width": 320,
+                  "height": 320,
+                  "url": "https://images.tidal.com/0/EMACGMAC/CAEQCCICMjYqByNBNUUzRkYwBA?token=87ccaf57a3035a334ff70d9973c8f33d0f4feb5a"
+                },
+                "MEDIUM": {
+                  "width": 640,
+                  "height": 640,
+                  "url": "https://images.tidal.com/0/EIAFGIAF/CAEQCCICMjYqByNBNUUzRkYwBA?token=c9abf21c54f205dee8bcbc14f1b6940dc416ece9"
+                },
+                "LARGE": {
+                  "width": 1500,
+                  "height": 1500,
+                  "url": "https://images.tidal.com/0/ENwLGNwL/CAEQCCICMjYqByNBNUUzRkYwBA?token=2ce34353821dd5c8e4fbb998518ee4b8e8d9934e"
+                }
+              },
+              "sharingImages": null,
+              "mixType": "DISCOVERY_MIX",
+              "mixNumber": null,
+              "contentBehavior": "UNRESTRICTED",
+              "shortSubtitle": null,
+              "master": false,
+              "titleColor": "#A5E3FF",
+              "subTitleColor": "#A5E3FF",
+              "detailImages": {
+                "SMALL": {
+                  "width": 320,
+                  "height": 320,
+                  "url": "https://images.tidal.com/0/EMACGMAC/CAEQCCICMjYqByNBNUUzRkYwBDgB?token=4cf203bd839faa59d1bd8a6487e8bb13e87b4e78"
+                },
+                "MEDIUM": {
+                  "width": 640,
+                  "height": 640,
+                  "url": "https://images.tidal.com/0/EIAFGIAF/CAEQCCICMjYqByNBNUUzRkYwBDgB?token=5025fe74874d0677ff6280b790d1da67c33c031f"
+                },
+                "LARGE": {
+                  "width": 1500,
+                  "height": 1500,
+                  "url": "https://images.tidal.com/0/ENwLGNwL/CAEQCCICMjYqByNBNUUzRkYwBDgB?token=6a5af18c03fb23da1c7cdb5be7e6b2699c6a55b8"
+                }
+              }
+            },
+            "playbackControls": [
+              {
+                "shuffle": false,
+                "playbackMode": "PLAY",
+                "title": "Play",
+                "icon": "play_tracks",
+                "targetModuleId": "eyJwIjoiOGMxZjRkNjAtZDhmNS00YmU2LTg1YjMtYTA0NDExNDVkYmMwIiwicFYiOjE0LCJtIjoiNmU5OWY3ZjUtMDk4My00Mzk5LWFkYjEtZDk2NzRmMGQ2ZDQ5IiwibVYiOjEsIm1IIjoiNGJiYjVjODQifQ=="
+              },
+              {
+                "shuffle": true,
+                "playbackMode": "SHUFFLE",
+                "title": "Shuffle",
+                "icon": "shuffle_tracks",
+                "targetModuleId": "eyJwIjoiOGMxZjRkNjAtZDhmNS00YmU2LTg1YjMtYTA0NDExNDVkYmMwIiwicFYiOjE0LCJtIjoiNmU5OWY3ZjUtMDk4My00Mzk5LWFkYjEtZDk2NzRmMGQ2ZDQ5IiwibVYiOjEsIm1IIjoiNGJiYjVjODQifQ=="
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "modules": [
+          {
+            "id": "eyJwIjoiOGMxZjRkNjAtZDhmNS00YmU2LTg1YjMtYTA0NDExNDVkYmMwIiwicFYiOjE0LCJtIjoiNmU5OWY3ZjUtMDk4My00Mzk5LWFkYjEtZDk2NzRmMGQ2ZDQ5IiwibVYiOjEsIm1IIjoiNGJiYjVjODQifQ==",
+            "type": "TRACK_LIST",
+            "width": 100,
+            "title": "",
+            "description": "",
+            "preTitle": null,
+            "showMore": null,
+            "supportsPaging": false,
+            "quickPlay": false,
+            "listFormat": "COVERS",
+            "scroll": "VERTICAL",
+            "layout": "LIST",
+            "pagedList": {
+              "limit": 10,
+              "offset": 0,
+              "totalNumberOfItems": 10,
+              "items": [
+                {
+                  "id": 391241402,
+                  "title": "Magnetic",
+                  "duration": 151,
+                  "version": null,
+                  "url": "https://tidal.com/browse/track/391241402",
+                  "artists": [
+                    {
+                      "id": 6240838,
+                      "name": "Tunde Adebimpe",
+                      "type": "MAIN",
+                      "picture": "dd342464-b8d2-4aa5-8970-e9ec1f067645"
+                    }
+                  ],
+                  "album": {
+                    "id": 391241401,
+                    "title": "Magnetic",
+                    "cover": "b0da37dc-a2fe-4c1a-b2e2-b848bcbe5a13",
+                    "vibrantColor": "#FFFFFF",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/391241401",
+                    "releaseDate": "2024-10-29"
+                  },
+                  "explicit": false,
+                  "volumeNumber": 1,
+                  "trackNumber": 1,
+                  "popularity": 40,
+                  "doublePopularity": 0.3989903523775042,
+                  "allowStreaming": true,
+                  "streamReady": true,
+                  "streamStartDate": "2024-10-29T00:00:00.000+0000",
+                  "adSupportedStreamReady": true,
+                  "djReady": true,
+                  "stemReady": false,
+                  "editable": false,
+                  "replayGain": -9.55,
+                  "audioQuality": "LOSSLESS",
+                  "audioModes": [
+                    "STEREO"
+                  ],
+                  "mixes": {
+                    "TRACK_MIX": "00113f66fbe668245abde4ea549939"
+                  },
+                  "mediaMetadata": {
+                    "tags": [
+                      "LOSSLESS",
+                      "HIRES_LOSSLESS"
+                    ]
+                  }
+                },
+                {
+                  "id": 399352243,
+                  "title": "Body Moves",
+                  "duration": 208,
+                  "version": null,
+                  "url": "https://tidal.com/browse/track/399352243",
+                  "artists": [
+                    {
+                      "id": 3849908,
+                      "name": "The Weather Station",
+                      "type": "MAIN",
+                      "picture": "9e445887-e589-4c5d-ad45-7603ee707e62"
+                    }
+                  ],
+                  "album": {
+                    "id": 399352240,
+                    "title": "Body Moves",
+                    "cover": "04d3b970-cd17-4655-b048-271f276449ed",
+                    "vibrantColor": "#FFFFFF",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/399352240",
+                    "releaseDate": "2024-12-16"
+                  },
+                  "explicit": false,
+                  "volumeNumber": 1,
+                  "trackNumber": 1,
+                  "popularity": 43,
+                  "doublePopularity": 0.4303921342576825,
+                  "allowStreaming": true,
+                  "streamReady": true,
+                  "streamStartDate": "2024-12-16T00:00:00.000+0000",
+                  "adSupportedStreamReady": true,
+                  "djReady": true,
+                  "stemReady": false,
+                  "editable": false,
+                  "replayGain": -7.55,
+                  "audioQuality": "LOSSLESS",
+                  "audioModes": [
+                    "STEREO"
+                  ],
+                  "mixes": {
+                    "TRACK_MIX": "001545072724ca6dae29abf14d7fc9"
+                  },
+                  "mediaMetadata": {
+                    "tags": [
+                      "LOSSLESS",
+                      "HIRES_LOSSLESS"
+                    ]
+                  }
+                },
+                {
+                  "id": 407812939,
+                  "title": "It's a Mirror",
+                  "duration": 212,
+                  "version": null,
+                  "url": "https://tidal.com/browse/track/407812939",
+                  "artists": [
+                    {
+                      "id": 3698953,
+                      "name": "Perfume Genius",
+                      "type": "MAIN",
+                      "picture": "7dc7e054-0d05-4343-8d10-decc84aaa1fa"
+                    }
+                  ],
+                  "album": {
+                    "id": 407812938,
+                    "title": "It's a Mirror",
+                    "cover": "197c881c-c856-40df-a518-e0f5f223205e",
+                    "vibrantColor": "#FFFFFF",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/407812938",
+                    "releaseDate": "2025-01-15"
+                  },
+                  "explicit": false,
+                  "volumeNumber": 1,
+                  "trackNumber": 1,
+                  "popularity": 35,
+                  "doublePopularity": 0.3509927068497981,
+                  "allowStreaming": true,
+                  "streamReady": true,
+                  "streamStartDate": "2025-01-23T08:00:00.000+0000",
+                  "adSupportedStreamReady": true,
+                  "djReady": true,
+                  "stemReady": false,
+                  "editable": false,
+                  "replayGain": -8.83,
+                  "audioQuality": "LOSSLESS",
+                  "audioModes": [
+                    "STEREO"
+                  ],
+                  "mixes": {
+                    "TRACK_MIX": "001b3d6e860edca9a74e85f6dc3e25"
+                  },
+                  "mediaMetadata": {
+                    "tags": [
+                      "LOSSLESS"
+                    ]
+                  }
+                },
+                {
+                  "id": 396840689,
+                  "title": "Nobody Loves You More",
+                  "duration": 175,
+                  "version": null,
+                  "url": "https://tidal.com/browse/track/396840689",
+                  "artists": [
+                    {
+                      "id": 4136948,
+                      "name": "Kim Deal",
+                      "type": "MAIN",
+                      "picture": "176ff7e2-973e-408a-a69f-480595946e96"
+                    }
+                  ],
+                  "album": {
+                    "id": 396840686,
+                    "title": "Nobody Loves You More",
+                    "cover": "0ee2ca3a-ac26-4759-a0aa-e3fb8b655a05",
+                    "vibrantColor": "#e72a26",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/396840686",
+                    "releaseDate": "2024-11-22"
+                  },
+                  "explicit": false,
+                  "volumeNumber": 1,
+                  "trackNumber": 1,
+                  "popularity": 46,
+                  "doublePopularity": 0.4587664444190267,
+                  "allowStreaming": true,
+                  "streamReady": true,
+                  "streamStartDate": "2024-11-22T00:00:00.000+0000",
+                  "adSupportedStreamReady": true,
+                  "djReady": true,
+                  "stemReady": false,
+                  "editable": false,
+                  "replayGain": -10.55,
+                  "audioQuality": "LOSSLESS",
+                  "audioModes": [
+                    "STEREO"
+                  ],
+                  "mixes": {
+                    "TRACK_MIX": "001760aa9239b30772e0895d0f3541"
+                  },
+                  "mediaMetadata": {
+                    "tags": [
+                      "LOSSLESS"
+                    ]
+                  }
+                },
+                {
+                  "id": 366083184,
+                  "title": "Wristwatch",
+                  "duration": 222,
+                  "version": null,
+                  "url": "https://tidal.com/browse/track/366083184",
+                  "artists": [
+                    {
+                      "id": 8842731,
+                      "name": "MJ Lenderman",
+                      "type": "MAIN",
+                      "picture": "51d9a7b4-3bec-46e6-8da1-f98ce0b25b6f"
+                    }
+                  ],
+                  "album": {
+                    "id": 366083178,
+                    "title": "Manning Fireworks",
+                    "cover": "94a3e0e2-1013-4bb6-be13-8b4919116185",
+                    "vibrantColor": "#f5cd5b",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/366083178",
+                    "releaseDate": "2024-09-06"
+                  },
+                  "explicit": false,
+                  "volumeNumber": 1,
+                  "trackNumber": 4,
+                  "popularity": 61,
+                  "doublePopularity": 0.60834392206882,
+                  "allowStreaming": true,
+                  "streamReady": true,
+                  "streamStartDate": "2024-09-04T00:00:00.000+0000",
+                  "adSupportedStreamReady": true,
+                  "djReady": true,
+                  "stemReady": false,
+                  "editable": false,
+                  "replayGain": -9.03,
+                  "audioQuality": "LOSSLESS",
+                  "audioModes": [
+                    "STEREO"
+                  ],
+                  "mixes": {
+                    "TRACK_MIX": "001ea37be6fb9edf1e00fdad661102"
+                  },
+                  "mediaMetadata": {
+                    "tags": [
+                      "LOSSLESS",
+                      "HIRES_LOSSLESS"
+                    ]
+                  }
+                },
+                {
+                  "id": 394021615,
+                  "title": "Jerkin'",
+                  "duration": 129,
+                  "version": null,
+                  "url": "https://tidal.com/browse/track/394021615",
+                  "artists": [
+                    {
+                      "id": 9623525,
+                      "name": "Amyl and The Sniffers",
+                      "type": "MAIN",
+                      "picture": "2a7dbfa0-7111-4ec2-8a32-b72c7f6ab9b9"
+                    }
+                  ],
+                  "album": {
+                    "id": 394021606,
+                    "title": "Cartoon Darkness",
+                    "cover": "f7e4dea8-2ca0-4871-b752-e2789729fa41",
+                    "vibrantColor": "#428498",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/394021606",
+                    "releaseDate": "2024-10-25"
+                  },
+                  "explicit": true,
+                  "volumeNumber": 1,
+                  "trackNumber": 1,
+                  "popularity": 37,
+                  "doublePopularity": 0.3654959938557165,
+                  "allowStreaming": true,
+                  "streamReady": true,
+                  "streamStartDate": "2024-10-25T00:00:00.000+0000",
+                  "adSupportedStreamReady": true,
+                  "djReady": true,
+                  "stemReady": false,
+                  "editable": false,
+                  "replayGain": -11.65,
+                  "audioQuality": "LOSSLESS",
+                  "audioModes": [
+                    "STEREO"
+                  ],
+                  "mixes": {
+                    "TRACK_MIX": "00136f2d88ef25903fcee41ef5ecca"
+                  },
+                  "mediaMetadata": {
+                    "tags": [
+                      "LOSSLESS",
+                      "HIRES_LOSSLESS"
+                    ]
+                  }
+                },
+                {
+                  "id": 386419588,
+                  "title": "Sober",
+                  "duration": 221,
+                  "version": null,
+                  "url": "https://tidal.com/browse/track/386419588",
+                  "artists": [
+                    {
+                      "id": 10908082,
+                      "name": "Bartees Strange",
+                      "type": "MAIN",
+                      "picture": "6baade6c-df78-43f9-ab03-b0991a59d1e0"
+                    }
+                  ],
+                  "album": {
+                    "id": 386419587,
+                    "title": "Sober",
+                    "cover": "71a1ed67-7750-47e4-803b-02c84c017b4b",
+                    "vibrantColor": "#e41618",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/386419587",
+                    "releaseDate": "2024-10-01"
+                  },
+                  "explicit": false,
+                  "volumeNumber": 1,
+                  "trackNumber": 1,
+                  "popularity": 36,
+                  "doublePopularity": 0.36361832018821016,
+                  "allowStreaming": true,
+                  "streamReady": true,
+                  "streamStartDate": "2024-10-01T00:00:00.000+0000",
+                  "adSupportedStreamReady": true,
+                  "djReady": true,
+                  "stemReady": false,
+                  "editable": false,
+                  "replayGain": -7.1,
+                  "audioQuality": "LOSSLESS",
+                  "audioModes": [
+                    "STEREO"
+                  ],
+                  "mixes": {
+                    "TRACK_MIX": "0010a4729a03d6b152d5aef27e8695"
+                  },
+                  "mediaMetadata": {
+                    "tags": [
+                      "LOSSLESS"
+                    ]
+                  }
+                },
+                {
+                  "id": 403176644,
+                  "title": "Good Guy",
+                  "duration": 242,
+                  "version": "feat. Faye Webster",
+                  "url": "https://tidal.com/browse/track/403176644",
+                  "artists": [
+                    {
+                      "id": 7650315,
+                      "name": "Julia Jacklin",
+                      "type": "MAIN",
+                      "picture": "2017815d-d85e-48b7-b521-f1dd5104ac6b"
+                    },
+                    {
+                      "id": 8517573,
+                      "name": "Faye Webster",
+                      "type": "FEATURED",
+                      "picture": "f21452d4-32db-4b5d-996b-c753a89863a7"
+                    }
+                  ],
+                  "album": {
+                    "id": 403176642,
+                    "title": "Good Guy (feat. Faye Webster)",
+                    "cover": "d05ace80-5891-44dd-8004-7f723b6ceb89",
+                    "vibrantColor": "#ac9f53",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/403176642",
+                    "releaseDate": "2024-12-11"
+                  },
+                  "explicit": false,
+                  "volumeNumber": 1,
+                  "trackNumber": 1,
+                  "popularity": 37,
+                  "doublePopularity": 0.37340314836915706,
+                  "allowStreaming": true,
+                  "streamReady": true,
+                  "streamStartDate": "2024-12-11T00:00:00.000+0000",
+                  "adSupportedStreamReady": true,
+                  "djReady": true,
+                  "stemReady": false,
+                  "editable": false,
+                  "replayGain": -9.07,
+                  "audioQuality": "LOSSLESS",
+                  "audioModes": [
+                    "STEREO"
+                  ],
+                  "mixes": {
+                    "TRACK_MIX": "001870c31be6d8b2cb66a0039caa42"
+                  },
+                  "mediaMetadata": {
+                    "tags": [
+                      "LOSSLESS",
+                      "HIRES_LOSSLESS"
+                    ]
+                  }
+                },
+                {
+                  "id": 394968253,
+                  "title": "Glamorous",
+                  "duration": 282,
+                  "version": null,
+                  "url": "https://tidal.com/browse/track/394968253",
+                  "artists": [
+                    {
+                      "id": 16928368,
+                      "name": "Poppy Jean Crawford",
+                      "type": "MAIN",
+                      "picture": null
+                    }
+                  ],
+                  "album": {
+                    "id": 394968251,
+                    "title": "Glamorous b/w The Takeover",
+                    "cover": "6176d856-2b9e-4fb3-b369-69650a3330da",
+                    "vibrantColor": "#e0d2ae",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/394968251",
+                    "releaseDate": "2024-11-12"
+                  },
+                  "explicit": false,
+                  "volumeNumber": 1,
+                  "trackNumber": 1,
+                  "popularity": 33,
+                  "doublePopularity": 0.3340256221453214,
+                  "allowStreaming": true,
+                  "streamReady": true,
+                  "streamStartDate": "2024-11-12T10:00:00.000+0000",
+                  "adSupportedStreamReady": true,
+                  "djReady": true,
+                  "stemReady": false,
+                  "editable": false,
+                  "replayGain": -8.12,
+                  "audioQuality": "LOSSLESS",
+                  "audioModes": [
+                    "STEREO"
+                  ],
+                  "mixes": {
+                    "TRACK_MIX": "001b6e7a7bcb2573f5bbc32d1031f6"
+                  },
+                  "mediaMetadata": {
+                    "tags": [
+                      "LOSSLESS",
+                      "HIRES_LOSSLESS"
+                    ]
+                  }
+                },
+                {
+                  "id": 386875590,
+                  "title": "Bodies Laughing",
+                  "duration": 298,
+                  "version": null,
+                  "url": "https://tidal.com/browse/track/386875590",
+                  "artists": [
+                    {
+                      "id": 30058791,
+                      "name": "The Smile",
+                      "type": "MAIN",
+                      "picture": "02f5b08c-c534-4afd-8094-36ab295d324e"
+                    }
+                  ],
+                  "album": {
+                    "id": 386875576,
+                    "title": "Cutouts",
+                    "cover": "3f869679-878c-4371-b14f-7df814f8e32c",
+                    "vibrantColor": "#f18316",
+                    "videoCover": null,
+                    "url": "https://tidal.com/browse/album/386875576",
+                    "releaseDate": "2024-10-04"
+                  },
+                  "explicit": false,
+                  "volumeNumber": 1,
+                  "trackNumber": 10,
+                  "popularity": 45,
+                  "doublePopularity": 0.4459442527000015,
+                  "allowStreaming": true,
+                  "streamReady": true,
+                  "streamStartDate": "2024-12-09T00:00:00.000+0000",
+                  "adSupportedStreamReady": true,
+                  "djReady": true,
+                  "stemReady": false,
+                  "editable": false,
+                  "replayGain": -8.58,
+                  "audioQuality": "LOSSLESS",
+                  "audioModes": [
+                    "STEREO"
+                  ],
+                  "mixes": {
+                    "TRACK_MIX": "0013761247065d8df93b1da8fc56b1"
+                  },
+                  "mediaMetadata": {
+                    "tags": [
+                      "LOSSLESS"
+                    ]
+                  }
+                }
+              ],
+              "dataApiPath": "pages/data/518d479b-3510-41ba-a62b-4c06055ec580?mixId=01674a6a4c4c8866f15780f612d092"
+            },
+            "showTableHeaders": true
+          }
+        ]
+      }
+    ]
+  }
+}

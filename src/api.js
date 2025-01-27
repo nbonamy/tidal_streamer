@@ -5,7 +5,8 @@ const Auth = require('./auth')
 
 // some constants
 const AUTH_BASE_URL = 'https://auth.tidal.com/v1/oauth2'
-const API_BASE_URL = 'https://api.tidal.com/v1'
+const API_V1_BASE_URL = 'https://api.tidal.com/v1'
+const API_V2_BASE_URL = 'https://listen.tidal.com/v2'
 const QUEUE_BASE_URL = 'https://connectqueue.tidal.com/v1'
 const COUNTRY_CODE = 'US'
 const LIMIT = 100
@@ -32,23 +33,43 @@ module.exports = class {
   }
 
   getApiBaseUrl() {
-    return API_BASE_URL
+    return API_V1_BASE_URL
   }
 
   getQueueBaseUrl() {
     return QUEUE_BASE_URL
   }
 
+  getUserId() {
+    return this._settings.auth.user.id
+  }
+
+  async fetchUserArtists() {
+    return await this._fetchAll(`/users/${this.getUserId()}/favorites/artists`)
+  }
+
+  async fetchUserAlbums() {
+    return await this._fetchAll(`/users/${this.getUserId()}/favorites/albums`)
+  }
+
+  async fetchUserPlaylists() {
+    return await this._fetchAll(`/users/${this.getUserId()}/playlists`)
+  }
+
+  async fetchUserTracks() {
+    return await this._fetchAll(`/users/${this.getUserId()}/favorites/tracks`)
+  }
+
   async fetchTrackInfo(trackId) {
-    return this._callApi(`/tracks/${trackId}`)
+    return this._callApiV1(`/tracks/${trackId}`)
   }
 
   async fetchAlbumInfo(albumId) {
-    return this._callApi(`/albums/${albumId}`)
+    return this._callApiV1(`/albums/${albumId}`)
   }
 
   async fetchPlaylistInfo(playlistId) {
-    return this._callApi(`/playlists/${playlistId}`)
+    return this._callApiV1(`/playlists/${playlistId}`)
   }
 
   async fetchAlbumTracks(albumId) {
@@ -72,7 +93,7 @@ module.exports = class {
   }
 
   async fetchGenres(countryCode) {
-    return await this._callApi(`/genres`, { countryCode: countryCode || COUNTRY_CODE })
+    return await this._callApiV1(`/genres`, { countryCode: countryCode || COUNTRY_CODE })
   }
 
   async fetchGenreTracks(genreId) {
@@ -80,15 +101,19 @@ module.exports = class {
   }
 
   async fetchTrackLyrics(trackId) {
-    return await this._callApi(`/tracks/${trackId}/lyrics`)
+    return await this._callApiV1(`/tracks/${trackId}/lyrics`)
+  }
+
+  async fetchHomeStaticFeed(options) {
+    return await this._callApiV2(`/home/feed/static`, options)
   }
   
   async search(type, query) {
-    return this._callApi(`/search/${type}`, { query: query, limit: LIMIT })
+    return this._callApiV1(`/search/${type}`, { query: query, limit: LIMIT })
   }
 
   async createPlaylist(title, description) {
-    return this._callApi(`/users/${this._settings.auth.user.id}/playlists`, { limit: LIMIT }, {
+    return this._callApiV1(`/users/${this._settings.auth.user.id}/playlists`, { limit: LIMIT }, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -101,10 +126,10 @@ module.exports = class {
 
     // we need to get the etag
     let headers = {}
-    await this._callApi(`/playlists/${playlistId}`, null, null, headers)
+    await this._callApiV1(`/playlists/${playlistId}`, null, null, headers)
 
     // now we can do it!
-    return this._callApi(`/playlists/${playlistId}/items`, { limit: LIMIT }, {
+    return this._callApiV1(`/playlists/${playlistId}/items`, { limit: LIMIT }, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -119,7 +144,15 @@ module.exports = class {
   }
 
   async proxy(path, query) {
-    return this._callApi(path, query)
+    return this.proxyV1(path, query)
+  }
+
+  async proxyV1(path, query) {
+    return this._callApiV1(path, query)
+  }
+
+  async proxyV2(path, query) {
+    return this._callApiV2(path, query)
   }
 
   async fetchQueue(queueId) {
@@ -235,7 +268,7 @@ module.exports = class {
     // iterate
     while (true) {
       try {
-        let response = await this._callApi(path, { offset: result?.items?.length || 0, limit: LIMIT })
+        let response = await this._callApiV1(path, { offset: result?.items?.length || 0, limit: LIMIT })
         if (response?.items?.length == 0) {
           break
         } else if (result == null) {
@@ -258,13 +291,34 @@ module.exports = class {
   
   }
 
-  async _callApi(path, params, options, returnHeaders) {
+  async _callApiV1(path, params, options, returnHeaders) {
+    return this._callApi(API_V1_BASE_URL, path, params, options, returnHeaders)
+  }
+
+  async _callApiV2(path, params, options, returnHeaders) {
+    return this._callApi(API_V2_BASE_URL, path, {
+      countryCode: options?.countryCode || COUNTRY_CODE,
+      locale: 'en_US',
+      deviceType: 'BROWSER',
+      platform: 'WEB',
+      timeOffset: '-06:00',
+        ...params
+      }, {
+      headers: {
+        'x-tidal-client-version': '2025.1.9',
+        ...options?.headers
+      },
+      ...options
+    }, returnHeaders)
+  }
+
+  async _callApi(baseUrl, path, params, options, returnHeaders) {
 
     // we may try two times in case token is invalid
     for (let i=0; i<2; i++) {
 
       // call it
-      let url = this._getUrl(API_BASE_URL, path, params)
+      let url = this._getUrl(baseUrl, path, params)
       console.log(`[OUT] ${options?.method || 'GET'} ${url}`)
       let response = await fetch(url, this._getFetchOptions(options))
 
