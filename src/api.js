@@ -85,8 +85,8 @@ module.exports = class {
     return results.rows[1].modules[0].pagedList
   }
 
-  async fetchArtistAlbums(artistId) {
-    return await this._fetchAll(`/artists/${artistId}/albums`)
+  async fetchArtistAlbums(artistId, options) {
+    return await this._fetchAll(`/artists/${artistId}/albums`, options)
   }
 
   async fetchArtistTopTracks(artistId) {
@@ -95,6 +95,10 @@ module.exports = class {
 
   async fetchArtistRadio(artistId) {
     return await this._fetchAll(`/artists/${artistId}/radio`)
+  }
+
+  async fetchSimilarArtists(artistId) {
+    return await this._fetchAll(`/artists/${artistId}/similar`)
   }
 
   async fetchGenres(countryCode) {
@@ -264,7 +268,7 @@ module.exports = class {
 
   }
 
-  async _fetchAll(path) {
+  async _fetchAll(path, options) {
 
     // init
     let result = null
@@ -273,7 +277,7 @@ module.exports = class {
     // iterate
     while (true) {
       try {
-        let response = await this._callApiV1(path, { offset: result?.items?.length || 0, limit: LIMIT })
+        let response = await this._callApiV1(path, { offset: result?.items?.length || 0, limit: LIMIT, ...options })
         if (response?.items?.length == 0) {
           break
         } else if (result == null) {

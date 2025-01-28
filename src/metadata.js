@@ -31,6 +31,18 @@ module.exports = class {
         .catch(err => next(err))
     })
 
+    router.get('/info/artist/:id/singles', (req, res, next) => {
+      this.getArtistSingles(req.params.id)
+        .then((result) => json_status(res, null, result))
+        .catch(err => next(err))
+    })
+
+    router.get('/info/artist/:id/compilations', (req, res, next) => {
+      this.getArtistCompilations(req.params.id)
+        .then((result) => json_status(res, null, result))
+        .catch(err => next(err))
+    })
+
     router.get('/info/artist/:id/toptracks', (req, res, next) => {
       this.getArtistTopTracks(req.params.id)
         .then((result) => json_status(res, null, result))
@@ -39,6 +51,12 @@ module.exports = class {
 
     router.get('/info/artist/:id/radio', (req, res, next) => {
       this.getArtistRadio(req.params.id)
+        .then((result) => json_status(res, null, result))
+        .catch(err => next(err))
+    })
+
+    router.get('/info/artist/:id/similar', (req, res, next) => {
+      this.getSimilarArtists(req.params.id)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
@@ -155,6 +173,18 @@ module.exports = class {
     return results
   }
 
+  async getArtistSingles(artistId) {
+    let api = new TidalApi(this._settings)
+    let results = await api.fetchArtistAlbums(artistId, { filter: 'EPSANDSINGLES' })
+    return results
+  }
+
+  async getArtistCompilations(artistId) {
+    let api = new TidalApi(this._settings)
+    let results = await api.fetchArtistAlbums(artistId, { filter: 'COMPILATIONS' })
+    return results
+  }
+
   async getArtistTopTracks(artistId) {
     let api = new TidalApi(this._settings)
     let results = await api.fetchArtistTopTracks(artistId)
@@ -164,6 +194,12 @@ module.exports = class {
   async getArtistRadio(artistId) {
     let api = new TidalApi(this._settings)
     let results = await api.fetchArtistRadio(artistId)
+    return results
+  }
+
+  async getSimilarArtists(artistId) {
+    let api = new TidalApi(this._settings)
+    let results = await api.fetchSimilarArtists(artistId)
     return results
   }
 
