@@ -127,14 +127,14 @@ module.exports = class {
         if (module.type === 'MIX_LIST' && customMixes.includes(module.title)) {
           const url = module.showMore.apiPath
           const mixes = await api.proxy(`/${url}`, { deviceType: 'PHONE' })
-          return { items: mixes.rows[0].modules[0].pagedList.items.map(mix => ({
+          return mixes.rows[0].modules[0].pagedList.items.map(mix => ({
             id: mix.id,
             type: mix.mixType,
             title: mix.title,
             subTitle: mix.subTitle,
             thumbnail: mix.images.MEDIUM.url,
             image: mix.image
-          }))}
+          }))
         }
       }
     }

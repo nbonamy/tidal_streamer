@@ -66,6 +66,13 @@ module.exports = class {
       })
     })
 
+    router.get('/play/mix/:id', (req, res) => {
+      this.streamMix(req.device.connect, req.params.id, req.query.position, (err, result) => {
+        json_status(res, err, result)
+      })
+    })
+
+
     router.post('/dequeue/:position', async (req, res) => {
       try {
         let api = new TidalApi(this._settings)
@@ -250,6 +257,43 @@ module.exports = class {
       // done
       cb?.(null, {
         id: playlistId,
+        device: connect.device().info(),
+      })
+
+    } catch (e) {
+      console.error(e)
+      cb?.(e)
+    }
+
+  }
+
+  async streamMix(connect, mixId, position, cb) {
+
+    try {
+
+      // log
+      // console.log(`Streaming playlist: ${playlistId}`)
+      
+      // do it
+      let api = new TidalApi(this._settings)
+
+      // get tracks
+      let tracks = await api.fetchMixTracks(mixId)
+
+      // some info
+      // let count = tracks.totalNumberOfItems
+      // console.log(`  Device: ${connect.device().description}`)
+      // console.log(`  Tracks: ${count}`)
+
+      // stream
+      await this._streamTracks(api, connect, 'mix', mixId, tracks.items.map((t) => ({
+        type: 'track',
+        item: t
+      })), position || 0)
+
+      // done
+      cb?.(null, {
+        id: mixId,
         device: connect.device().info(),
       })
 

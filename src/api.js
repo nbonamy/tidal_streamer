@@ -80,6 +80,11 @@ module.exports = class {
     return await this._fetchAll(`/playlists/${playlistId}/items`)
   }
 
+  async fetchMixTracks(mixId) {
+    const results = await this.proxy(`/pages/mix`, { mixId, deviceType: 'PHONE' })
+    return results.rows[1].modules[0].pagedList
+  }
+
   async fetchArtistAlbums(artistId) {
     return await this._fetchAll(`/artists/${artistId}/albums`)
   }

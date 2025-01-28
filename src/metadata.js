@@ -180,8 +180,9 @@ module.exports = class {
   }
 
   async getMixTracks(mixId) {
-    const results = await this.apiProxy(`/pages/mix`, { mixId, deviceType: 'PHONE' })
-    return { items: results.rows[1].modules[0].pagedList.items }
+    let api = new TidalApi(this._settings)
+    let results = await api.fetchMixTracks(mixId)
+    return results.items
   }
 
   async apiProxy(path, query) {
