@@ -327,7 +327,9 @@ module.exports = class {
     this.sendCommand('selectQueueItem', payload)
   }
 
-  stop() {
+  async stop() {
+    // stop does not work when paused
+    await this.sendCommand('play')
     this.sendCommand('stop')
     this._resetStatus();
   }
@@ -340,10 +342,9 @@ module.exports = class {
     }))
   }
 
-  _sendMessage(message) {
-    this._connect().then(() => {
-      this._ws.send(message)
-    })
+  async _sendMessage(message) {
+    await this._connect()
+    this._ws.send(message)
   }
 
   async _reloadQueue(queueId) {
