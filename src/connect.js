@@ -304,6 +304,9 @@ module.exports = class {
 
   async _reloadQueue(queueId) {
 
+    // log
+    console.log(`Reloading queue ${queueId}`)
+
     // we need an api
     let api = new TidalApi(this._settings)
 
@@ -336,6 +339,11 @@ module.exports = class {
   }
 
   _processMessage(message) {
+
+    // debug
+    // if (message.command != 'notifyPlayerStatusChanged') {
+    //   console.dir(message, { depth: null })
+    // }
 
     //
     if (message.command == 'notifySessionStarted') {
@@ -374,7 +382,7 @@ module.exports = class {
 
     //
     if (message.command == 'notifyQueueItemsChanged') {
-      //console.log(message)
+      this._reloadQueue(message.queueInfo.queueId)
       return
     }
 
