@@ -75,6 +75,12 @@ module.exports = class {
         .catch(err => next(err))
     })
 
+    router.get('/user/recent/artists', (req, res, next) => {
+      this.getRecentArtists()
+        .then((result) => json_status(res, null, result))
+        .catch(err => next(err))
+    })
+
     router.get('/user/recommended/albums', (req, res, next) => {
       this.getRecommendedAlbums()
         .then((result) => json_status(res, null, result))
@@ -151,6 +157,10 @@ module.exports = class {
   
   async getRecentAlbums() {
     return await this.getFeedModule('CONTINUE_LISTEN_TO')
+  }
+
+  async getRecentArtists() {
+    return await this.getFeedModule('YOUR_FAVORITE_ARTISTS')
   }
 
   async getRecommendedAlbums() {
