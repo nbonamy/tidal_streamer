@@ -72,6 +72,15 @@ module.exports = class {
       })
     })
 
+    router.post('/enqueue/:position', async (req, res) => {
+      try {
+        let api = new TidalApi(this._settings)
+        await req.device.connect.enqueueTracks(api, req.body, req.params.position)
+        json_status(res)
+      } catch (err) {
+        json_status(res, err)
+      }
+    })
 
     router.post('/dequeue/:position', async (req, res) => {
       try {

@@ -216,6 +216,29 @@ module.exports = class {
     return tracks
   }
 
+  async addToQueue(queue, tracks, afterId) {
+    let response = await this._callQueue(`/queues/${queue.id}/items`, null, {
+      method: 'PUT',
+      headers: {
+        'If-Match': queue.etag,
+      },
+      body: JSON.stringify({
+        mode: 'append',
+        item_id: afterId,
+        items: tracks.map((track) => ({
+          type: 'track',
+          media_id: track.id,
+          properties: {
+            active: false,
+            original_order: queue.total
+          }
+        })),
+      })
+    })
+    queue.etag = response.headers.get('etag')
+    return response;
+  }
+
   async deleteFromQueue(queue, trackId) {
     let response = await this._callQueue(`/queues/${queue.id}/items/${trackId}`, null, {
       method: 'DELETE',

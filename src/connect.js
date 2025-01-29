@@ -194,6 +194,50 @@ module.exports = class {
 
   }
 
+  async enqueueTracks(api, tracks, position) {
+
+    // the queue
+    let queue = this._status?.queue
+    if (queue?.id == null) return
+
+    // positiion can be next: we need get the queue id of current track
+    // otherwise we are adding at the end of the queue (afterId is empty)
+    const afterId = position == 'next' ? queue.items[this._status.position]?.id : ''
+
+    try {
+
+      // add at queue server
+      let res = await api.addToQueue(queue, tracks, afterId)
+      let queueTracks = await res.json()
+      
+      // transform
+      const statusTracks = tracks.map((t) => ({
+        mediaId: t.id,
+        type: 'track',
+        item: t
+      }))
+
+      // update our queue
+      if (position == 'next') {
+        this._status.tracks.splice(this._status.position + 1, 0, ...statusTracks)
+        queue.items.splice(this._status.position + 1, 0, ...queueTracks.items)
+      } else {
+        this._status.tracks = [ ...this._status.tracks, ...statusTracks ]
+        queue.items = [ ...queue.items, ...queueTracks.items ]
+      }
+
+      // done
+      queue.total = queue.total + tracks.length
+      
+      // tell device to reload
+      await this.sendCommand('refreshQueue', { queueId: queue.id })
+
+    } catch (err) {
+      console.log(err)
+    }
+
+  }
+
   async dequeueTrack(api, position) {
 
     // the queue
