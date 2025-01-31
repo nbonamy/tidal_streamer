@@ -4,12 +4,14 @@ const express = require('express')
 const Discoverer = require('./discoverer')
 const TidalApi = require('./api')
 const TidalConnect = require('./connect')
+const WebSocket = require('ws')
 const { json_status, runLocalCommand } = require('./utils')
 
 module.exports = class {
 
   constructor(settings) {
     this._settings = settings
+    this._startServer()
     this._discoverDevices()
   }
 
@@ -339,6 +341,24 @@ module.exports = class {
 
   }
 
+  _startServer() {
+    if (!this._settings.wsport) return
+    if (this._wss) return
+    this._wss = new WebSocket.Server({ port: this._settings.wsport })
+    this._wss.on('listening', () => {
+      console.log(`Websocket server started on port ${this._settings.wsport}`)
+    })
+    this._wss.on('error', (e) => {
+      console.error(`Error while starting websocket server: ${e}`)
+      this._wss = null
+    })
+    this._wss.on('connection', (ws) => {
+      ws.on('message', (message) => {
+        console.log(`Received message from client: ${message}`)
+      })
+    })
+  }
+
   _discoverDevices() {
     this._devices = {}
     new Discoverer(async (device) => {
@@ -375,7 +395,7 @@ module.exports = class {
   }
 
   async _connectToDevice(device) {
-    let connect = new TidalConnect(this._settings, device)
+    let connect = new TidalConnect(this._settings, device, this._wss)
 		connect._connect()
     device.connect = connect
   }

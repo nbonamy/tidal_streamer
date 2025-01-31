@@ -13,9 +13,10 @@ Array.prototype.swap = function(i, j) {
 
 module.exports = class {
 
-  constructor(settings, device) {
+  constructor(settings, device, wss) {
     this._settings = settings
     this._device = device
+    this._wss = wss
     this._reset()
   }
 
@@ -37,6 +38,7 @@ module.exports = class {
       progress: 0,
       volume: { level: null, mute: true },
     }
+    this._sendStatus()
   }
 
   device() {
@@ -383,6 +385,13 @@ module.exports = class {
     }
   }
 
+  _sendStatus() {
+    if (this._wss == null) return
+    this._wss.clients.forEach((client) => {
+      client.send(JSON.stringify(this._status))
+    })
+  }
+
   _processMessage(message) {
 
     // debug
@@ -413,6 +422,7 @@ module.exports = class {
     //
     if (message.command == 'notifyDeviceStatusChanged') {
       this._status.volume = message.volume
+      this._sendStatus()
       return
     }
 
@@ -421,6 +431,7 @@ module.exports = class {
       let queueId = message.queueInfo.queueId
       if (this._status.queue == null || this._status.queue.id != queueId) {
         this._reloadQueue(queueId)
+        this._sendStatus()
       }
       return
     }
@@ -428,6 +439,7 @@ module.exports = class {
     //
     if (message.command == 'notifyQueueItemsChanged') {
       this._reloadQueue(message.queueInfo.queueId)
+      this._sendStatus()
       return
     }
 
@@ -436,6 +448,7 @@ module.exports = class {
       this._status.progress = 0
       this._lastMediaId = message.mediaInfo.mediaId
       this._setStatusPosition()
+      this._sendStatus()
       return
     }
 
@@ -445,6 +458,7 @@ module.exports = class {
         this._status.state = message.playerState
         this._status.progress = message.progress
       }
+      this._sendStatus()
       return
     }
 
