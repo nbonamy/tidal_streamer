@@ -170,19 +170,19 @@ module.exports = class {
   async getArtistAlbums(artistId) {
     let api = new TidalApi(this._settings)
     let results = await api.fetchArtistAlbums(artistId)
-    return results
+    return this.deduplicateAlbums(results)
   }
 
   async getArtistSingles(artistId) {
     let api = new TidalApi(this._settings)
     let results = await api.fetchArtistAlbums(artistId, { filter: 'EPSANDSINGLES' })
-    return results
+    return this.deduplicateAlbums(results)
   }
 
   async getArtistCompilations(artistId) {
     let api = new TidalApi(this._settings)
     let results = await api.fetchArtistAlbums(artistId, { filter: 'COMPILATIONS' })
-    return results
+    return this.deduplicateAlbums(results)
   }
 
   async getArtistTopTracks(artistId) {
@@ -225,6 +225,77 @@ module.exports = class {
     let api = new TidalApi(this._settings)
     let results = await api.proxy(path, query)
     return results
+  }
+
+  deduplicateAlbums(results) {
+    
+    let albums = []
+    for (const album of results.items) {
+
+      if (!album.allowStreaming) {
+        continue
+      }
+
+      const previous = albums.find((previous) => {
+        return previous.title === album.title &&
+        previous.version === album.version &&
+        previous.releaseDate === album.releaseDate &&
+        previous.numberOfVolumes === album.numberOfVolumes &&
+        previous.numberOfTracks === album.numberOfTracks &&
+        previous.duration === album.duration
+      })
+
+      if (!previous) {
+        albums.push(album)
+        continue
+      }
+
+      const replace = () => {
+        albums = albums.filter((a) => {
+          return a.id !== previous.id
+        })
+        albums.push(album)
+      }
+
+      // audio quality
+      if (this.quality(album.audioQuality) > this.quality(previous.audioQuality)) {
+        replace()
+        continue
+      }
+
+      // mediaMetadata.tags length
+      if (album.mediaMetadata?.tags?.length > previous.mediaMetadata?.tags?.length) {
+        replace()
+        continue
+      }
+
+      // popularity
+      if (album.popularity > previous.popularity) {
+        replace()
+        continue
+      }
+
+    }
+
+    results.items = albums
+    results.totalNumberOfItems = albums.length
+    return results
+  }
+
+  quality(audioQuality) {
+    if (audioQuality === 'LOW') {
+      return 1
+    } else if (audioQuality === 'HIGH') {
+      return 2
+    } else if (audioQuality === 'LOSSLESS') {
+      return 3
+    } else if (audioQuality === 'HI_RES') {
+      return 4
+    } else if (audioQuality === 'HIRES_LOSSLESS') {
+      return 5
+    } else {
+      return 0
+    }
   }
 
 }
