@@ -454,10 +454,22 @@ module.exports = class {
 
     //
     if (message.command == 'notifyPlayerStatusChanged') {
+      
+      // update
       if (this._status.tracks.length) {
         this._status.state = message.playerState
         this._status.progress = message.progress
       }
+
+      // detect end of album
+      if (message.playerState === 'PAUSED' && message.progress > message.duration - 500) {
+        if (this._status.position == this._status.tracks.length - 1) {
+          this.stop()
+          return
+        }
+      }
+
+      // normal
       this._sendStatus()
       return
     }
