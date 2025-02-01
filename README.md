@@ -8,7 +8,9 @@ tidal-streamer relies on the `mdns` package which itself has some system depenen
 
 `npm install`
 
-You need to specify a valid TIDAL API consumer application `client_id` and `client_secret`. This is not provided here but can be found with a bit of digging in other TIDAL related repos in github. Once you have that, create a config.yml file and add:
+## Configuration
+
+You need to specify a valid TIDAL API application `client_id` and `client_secret`. You can get those by creating an App on the [TIDAL Developer Portal](https://developer.tidal.com/). Once you have created it, rename`config.sample.yml` to `config.yml` and replace the `app` section with:
 
 ```
 app:
@@ -16,7 +18,7 @@ app:
   client_secret: <YOUR_CLIENT_SECRET>
 ```
 
-You can now run the server. It will display a link you need to navigate to authorize it. After that you are all good: the server will display the port it is listening to!
+You can now run the server. It will display a link you need to navigate to authorize it. After that you are all good: the server will display the port it is listening on so! Now it's time to build whatever app you have in mind such as an [Android TV app](https://github.com/nbonamy/tidal_streamer_tv)!
 
 
 ## API Endpoints
@@ -92,9 +94,10 @@ You can now run the server. It will display a link you need to navigate to autho
 
 ## Advanced
 
-If you want the server to listen on a specific port, you can configure this in config.yml:
+If you want the server to listen on specific ports, you can configure this in config.yml:
 ```
 port: 8000
+wsport: 8001
 ```
 
 If you have multiple TIDAL connect devices, you can specify which one to stream to by adding it's friendly name or IPv4 address in config.yml:

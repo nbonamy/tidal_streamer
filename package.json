@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.js --ignore config.yml",
+    "dev": "nodemon src/index.js --ignore config.yml",
+    "start": "node src/index.js",
     "pm2": "pm2 start ecosystem.config.js && pm2 save",
     "test": "jest"
   },
