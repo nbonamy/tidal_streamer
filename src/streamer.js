@@ -1,5 +1,6 @@
 
 const md5 = require('md5')
+const portfinder = require('portfinder')
 const express = require('express')
 const Discoverer = require('./discoverer')
 const TidalApi = require('./api')
@@ -347,21 +348,27 @@ module.exports = class {
   }
 
   _startServer() {
-    if (!this._settings.wsport) return
+
+    // do not start twice
     if (this._wss) return
-    this._wss = new WebSocket.Server({ port: this._settings.wsport })
-    this._wss.on('listening', () => {
-      console.log(`Websocket server started on port ${this._settings.wsport}`)
-    })
-    this._wss.on('error', (e) => {
-      console.error(`Error while starting websocket server: ${e}`)
-      this._wss = null
-    })
-    this._wss.on('connection', (ws) => {
-      ws.on('message', (message) => {
-        console.log(`Received message from client: ${message}`)
+
+    // find a port
+    portfinder.getPort({ port: this._settings.wsport },  async (err, port) => {
+      this._wss = new WebSocket.Server({ port: port })
+      this._wss.on('listening', () => {
+        console.log(`Websocket server started on port ${port}`)
+      })
+      this._wss.on('error', (e) => {
+        console.error(`Error while starting websocket server: ${e}`)
+        this._wss = null
+      })
+      this._wss.on('connection', (ws) => {
+        ws.on('message', (message) => {
+          console.log(`Received message from client: ${message}`)
+        })
       })
     })
+  
   }
 
   _discoverDevices() {
