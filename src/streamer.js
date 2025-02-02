@@ -11,6 +11,7 @@ module.exports = class {
 
   constructor(settings) {
     this._settings = settings
+    this._devices = {}
     this._startServer()
     this._discoverDevices()
   }
@@ -318,7 +319,11 @@ module.exports = class {
   async _streamTracks(api, connect, sourceType, sourceId, tracks, position) {
 
     // check before play script
-    runLocalCommand(this._settings.beforeplay, true)
+    try {
+      runLocalCommand(this._settings.beforeplay, true)
+    } catch (err) {
+      console.warn('Error while running beforeplay command', err)
+    }
 
     // limit
     tracks = tracks.slice(0, 100)
