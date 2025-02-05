@@ -113,6 +113,10 @@ module.exports = class {
     return await this._callApiV1(`/tracks/${trackId}/lyrics`)
   }
 
+  async fetchTrackRadio(trackId) {
+    return await this._callApiV1(`/tracks/${trackId}/radio`)
+  }
+
   async fetchHomeStaticFeed(options) {
     return await this._callApiV2(`/home/feed/static`, options)
   }

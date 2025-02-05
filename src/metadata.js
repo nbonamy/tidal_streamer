@@ -79,8 +79,14 @@ module.exports = class {
         .catch(err => next(err))
     })
 
-    router.get('/lyrics/:id', (req, res, next) => {
+    router.get(['/lyrics/:id', '/info/track/:id/lyrics'], (req, res, next) => {
       this.getTrackLyrics(req.params.id)
+        .then((result) => json_status(res, null, result))
+        .catch(err => next(err))
+    })
+
+    router.get('/info/track/:id/radio', (req, res, next) => {
+      this.getTrackRadio(req.params.id)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
@@ -219,6 +225,12 @@ module.exports = class {
     let api = new TidalApi(this._settings)
     let results = await api.fetchMixTracks(mixId)
     return results.items
+  }
+
+  async getTrackRadio(trackId) {
+    let api = new TidalApi(this._settings)
+    let results = await api.fetchTrackRadio(trackId)
+    return results
   }
 
   async apiProxy(path, query) {
