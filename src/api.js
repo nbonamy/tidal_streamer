@@ -85,6 +85,10 @@ module.exports = class {
     return results.rows[1].modules[0].pagedList
   }
 
+  async fetchArtistInfo(artistId, options) {
+    return await this._fetchAll(`/artists/${artistId}/bio`, options)
+  }
+
   async fetchArtistAlbums(artistId, options) {
     return await this._fetchAll(`/artists/${artistId}/albums`, options)
   }
