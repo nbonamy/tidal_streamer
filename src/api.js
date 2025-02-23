@@ -8,6 +8,7 @@ const AUTH_BASE_URL = 'https://auth.tidal.com/v1/oauth2'
 const API_V1_BASE_URL = 'https://api.tidal.com/v1'
 const API_V2_BASE_URL = 'https://listen.tidal.com/v2'
 const QUEUE_BASE_URL = 'https://connectqueue.tidal.com/v1'
+const CACHE_EXPIRES = 24 * 60 * 60 * 1000
 
 // api limits
 const COUNTRY_CODE = 'US'
@@ -32,6 +33,9 @@ const FORM = {
     }).join('&');
   }
 }
+
+// global cache
+const cache = {}
 
 module.exports = class {
 
@@ -393,6 +397,17 @@ module.exports = class {
 
       // call it
       let url = this._getUrl(baseUrl, path, params)
+
+      // check in cache
+      const cached = cache[url]
+      if (cached) {
+        if (cached.expires > Date.now()) {
+          console.log(`[CACHE] ${options?.method || 'GET'} ${url}`)
+          return cached.response
+        }
+      }
+
+      // we need to call it
       console.log(`[OUT] ${options?.method || 'GET'} ${url}`)
       let response = await fetch(url, this._getFetchOptions(options))
 
@@ -406,6 +421,13 @@ module.exports = class {
       // parse and check auth
       let json = await response.json();
       if (i != 0 || json.status != 401) {
+
+        // cache it
+        cache[url] = {
+          expires: Date.now() + CACHE_EXPIRES,
+          response: json
+        }
+
         return json;
       }
 
