@@ -8,9 +8,17 @@ const AUTH_BASE_URL = 'https://auth.tidal.com/v1/oauth2'
 const API_V1_BASE_URL = 'https://api.tidal.com/v1'
 const API_V2_BASE_URL = 'https://listen.tidal.com/v2'
 const QUEUE_BASE_URL = 'https://connectqueue.tidal.com/v1'
+
+// api limits
 const COUNTRY_CODE = 'US'
 const LIMIT = 100
 const LIMIT_QUEUE_CONTENT = 50
+
+// when requesting pages
+const PAGE_DEVICE_TYPE = 'BROWSER'
+const PAGE_PLATFORM = 'WEB'
+const PAGE_LOCALE = 'en_US'
+const PAGE_LIMIT = 50
 
 // we need fetch
 if (typeof fetch == 'undefined') {
@@ -91,6 +99,32 @@ module.exports = class {
 
   async fetchArtistAlbums(artistId, options) {
     return await this._fetchAll(`/artists/${artistId}/albums`, options)
+  }
+
+  async fetchArtistRelationShip(artistId, title, options) {
+
+    // add some options
+    options = {
+      artistId: artistId,
+      deviceType: PAGE_DEVICE_TYPE,
+      platform: PAGE_PLATFORM,
+      locale: PAGE_LOCALE,
+      limit: PAGE_LIMIT,
+      ...options
+    }
+
+    // we must do a 1st call to get the dataApiPath
+    const page = await this._callApiV1(`/pages/artist`, options)
+    const pagedList = page.rows.find(row => row.modules[0].type === 'ALBUM_LIST' && row.modules[0].title === title).modules[0].pagedList
+
+    // if we have all, return
+    if (pagedList.totalNumberOfItems < PAGE_LIMIT) {
+      return pagedList
+    }
+
+    // else we need to fetch all based on dataApiPath
+    return await this._fetchAll(`/${pagedList.dataApiPath.split('?')[0]}`, options)
+
   }
 
   async fetchArtistTopTracks(artistId) {

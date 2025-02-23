@@ -37,6 +37,12 @@ module.exports = class {
         .catch(err => next(err))
     })
 
+    router.get('/info/artist/:id/live', (req, res, next) => {
+      this.getArtistLiveAlbums(req.params.id)
+        .then((result) => json_status(res, null, result))
+        .catch(err => next(err))
+    })
+
     router.get('/info/artist/:id/singles', (req, res, next) => {
       this.getArtistSingles(req.params.id)
         .then((result) => json_status(res, null, result))
@@ -187,19 +193,28 @@ module.exports = class {
 
   async getArtistAlbums(artistId) {
     let api = new TidalApi(this._settings)
-    let results = await api.fetchArtistAlbums(artistId)
+    //let results = await api.fetchArtistAlbums(artistId)
+    let results = await api.fetchArtistRelationShip(artistId, 'Albums')
+    return this.deduplicateAlbums(results)
+  }
+
+  async getArtistLiveAlbums(artistId) {
+    let api = new TidalApi(this._settings)
+    let results = await api.fetchArtistRelationShip(artistId, 'Live albums')
     return this.deduplicateAlbums(results)
   }
 
   async getArtistSingles(artistId) {
     let api = new TidalApi(this._settings)
     let results = await api.fetchArtistAlbums(artistId, { filter: 'EPSANDSINGLES' })
+    //let results = await api.fetchArtistRelationShip(artistId, 'EP & Singles')
     return this.deduplicateAlbums(results)
   }
 
   async getArtistCompilations(artistId) {
     let api = new TidalApi(this._settings)
     let results = await api.fetchArtistAlbums(artistId, { filter: 'COMPILATIONS' })
+    //let results = await api.fetchArtistRelationShip(artistId, 'Appears On')
     return this.deduplicateAlbums(results)
   }
 
