@@ -262,11 +262,11 @@ module.exports = class {
 
       const previous = albums.find((previous) => {
         return previous.title === album.title &&
-        previous.version === album.version &&
+        //previous.version === album.version &&
         previous.releaseDate === album.releaseDate &&
         previous.numberOfVolumes === album.numberOfVolumes &&
         previous.numberOfTracks === album.numberOfTracks &&
-        previous.duration === album.duration
+        Math.abs(previous.duration - album.duration) < 10
       })
 
       if (!previous) {
