@@ -119,9 +119,18 @@ module.exports = class {
 
     // we must do a 1st call to get the dataApiPath
     const page = await this._callApiV1(`/pages/artist`, options)
-    const pagedList = page.rows.find(row => row.modules[0].type === 'ALBUM_LIST' && row.modules[0].title === title).modules[0].pagedList
+    const row = page.rows.find(row => row.modules[0].type === 'ALBUM_LIST' && row.modules[0].title === title)
+    if (!row || !row.modules) {
+      return Promise.resolve({
+        limit: PAGE_LIMIT,
+        offset: 0,
+        totalNumberOfItems: 0,
+        items: [],
+      })
+    }
 
     // if we have all, return
+    const pagedList = page.rows.find(row => row.modules[0].type === 'ALBUM_LIST' && row.modules[0].title === title)?.modules?.[0]?.pagedList
     if (pagedList.totalNumberOfItems < PAGE_LIMIT) {
       return pagedList
     }
