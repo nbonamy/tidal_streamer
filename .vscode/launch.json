@@ -11,6 +11,7 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
+      "runtimeExecutable": "/home/mnmt/.nvm/versions/node/v20.12.2/bin/node",
       "program": "${workspaceFolder}/src/index.js"
     }
   ]

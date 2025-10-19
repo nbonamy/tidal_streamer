@@ -193,8 +193,8 @@ module.exports = class {
 
   async getArtistAlbums(artistId) {
     let api = new TidalApi(this._settings)
-    //let results = await api.fetchArtistAlbums(artistId)
-    let results = await api.fetchArtistRelationShip(artistId, 'Albums')
+    let results = await api.fetchArtistAlbums(artistId)
+    //let results = await api.fetchArtistRelationShip(artistId, 'Featured Albums')
     return this.deduplicateAlbums(results)
   }
 
