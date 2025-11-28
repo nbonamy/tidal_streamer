@@ -1,3 +1,9 @@
 app:
   client_id: CLIENT_ID
   client_secret: CLIENT_SECRET
+
+# Authentication method: 'device' or 'authorization_code'
+# - device: Device flow (shows URL + code, no browser needed, uses r_usr scopes)
+# - authorization_code: OAuth 2.0 with PKCE (opens browser, uses new scopes)
+# Default: device
+auth_method: device
