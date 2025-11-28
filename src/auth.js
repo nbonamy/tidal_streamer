@@ -154,12 +154,20 @@ module.exports = class {
       },
       body: new URLSearchParams({
         grant_type: 'refresh_token',
-        refresh_token: this._settings.auth.refresh_token
+        refresh_token: this._settings.auth.refresh_token,
+        client_id: this._settings.app.client_id
       })
     })
 
     // parse
     let auth = await response.json()
+
+    // Check for errors
+    if (!response.ok || auth.error) {
+      console.error(`Token refresh failed: ${auth.error_description || auth.error || response.status}`)
+      return false
+    }
+
     if (auth.access_token) {
       // Note: New API doesn't return a new refresh_token, keep existing one
       auth.refresh_token = this._settings.auth.refresh_token
