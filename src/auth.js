@@ -1,7 +1,8 @@
+const crypto = require('crypto')
 
 // some constants
 const AUTH_BASE_URL = 'https://auth.tidal.com/v1/oauth2'
-const GRANT_TYPE = 'urn:ietf:params:oauth:grant-type:device_code'
+const LOGIN_URL = 'https://login.tidal.com'
 const SCOPE = 'r_usr w_usr w_sub'
 
 // we need fetch
@@ -152,6 +153,18 @@ module.exports = class {
 
   _b64_creds() {
     return Buffer.from(`${this._settings.app.client_id}:${this._settings.app.client_secret}`).toString('base64')
+  }
+
+  _generateCodeVerifier() {
+    // Generate 43-128 character random string (base64url encoded)
+    const buffer = crypto.randomBytes(32)
+    return buffer.toString('base64url')
+  }
+
+  _generateCodeChallenge(verifier) {
+    // S256: BASE64URL(SHA256(ASCII(code_verifier)))
+    const hash = crypto.createHash('sha256').update(verifier).digest()
+    return hash.toString('base64url')
   }
 
 }
