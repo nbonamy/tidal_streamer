@@ -142,6 +142,12 @@ module.exports = class {
 
       this._ws.on('open', () => {
         console.log(`Connected to ${this._device.description}@${this._device.ip}:${this._device.port}`)
+        this._ws.send(JSON.stringify({
+          command: 'startSession',
+          appId: 'tidal',
+          appName: 'tidal',
+          sessionCredential: this._settings.auth.user.id.toString()
+        }))
         this._heartbeat = setInterval(() => {
           if (this._ws && this._ws.readyState === WebSocket.OPEN) {
             this._ws.ping()

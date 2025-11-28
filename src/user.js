@@ -171,6 +171,7 @@ module.exports = class {
     const api = new TidalApi(this._settings)
     const feed = await api.fetchHomeStaticFeed()
     const module = feed.items.find((item) => item.moduleId === moduleId)
+    if (!module) return []
     if (module.viewAll) {
       const url = module.viewAll
       const results = await api.proxyV2(`/${url}`, { deviceType: 'PHONE' })
