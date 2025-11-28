@@ -3,7 +3,8 @@ const crypto = require('crypto')
 // some constants
 const AUTH_BASE_URL = 'https://auth.tidal.com/v1/oauth2'
 const LOGIN_URL = 'https://login.tidal.com'
-const SCOPE = 'r_usr w_usr w_sub'
+// Updated scopes for new Tidal OAuth API
+const SCOPE = 'user.read collection.read search.read playlists.read entitlements.read playback recommendations.read'
 
 // we need fetch
 if (typeof fetch == 'undefined') {
