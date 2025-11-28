@@ -63,7 +63,7 @@ module.exports = class {
 
   async shutdown() {
     
-    console.log(`[${this._device.description}] disconnected`)
+    console.log(`[${this._device.description}] disconnecting`)
 
     // Clear heartbeat
     if (this._heartbeat) {
@@ -85,6 +85,8 @@ module.exports = class {
         })
       }
     }
+
+    console.log(`[${this._device.description}] disconnected`)
 
     this._reset()
   }
@@ -108,10 +110,15 @@ module.exports = class {
 
     return new Promise((resolve, reject) => {
 
-      if (this._ws) {
-        this._ws.removeAllListeners()
-        this._ws.close()
-        this._ws = null
+      if (this._ws && this._ws.readyState === WebSocket.OPEN) {
+        try {
+          this._ws.removeAllListeners()
+          this._ws.close()
+        } catch (e) {
+          console.log(`[${this._device.description}] error closing existing websocket: ${e.message}`)
+        } finally {
+          this._ws = null
+        }
       }
 
       if (this._heartbeat) {
@@ -163,12 +170,14 @@ module.exports = class {
       this._ws.on('open', () => {
         connectionEstablished = true
         console.log(`[${this._device.description}] connected to ${this._device.ip}:${this._device.port}`)
-        this._ws.send(JSON.stringify({
-          command: 'startSession',
-          appId: 'tidal',
-          appName: 'tidal',
-          sessionCredential: this._settings.auth.user.id.toString()
-        }))
+        setTimeout(() => {
+          this._ws.send(JSON.stringify({
+            command: 'startSession',
+            appId: 'tidal',
+            appName: 'tidal',
+            sessionCredential: this._settings.auth.user.id.toString()
+          }))
+        }, 500)
         this._heartbeat = setInterval(() => {
           if (this._ws && this._ws.readyState === WebSocket.OPEN) {
             this._ws.ping()
