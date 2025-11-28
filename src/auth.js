@@ -103,10 +103,43 @@ module.exports = class {
       throw new Error('Token response missing access_token or refresh_token')
     }
 
+    // Fetch user info (new OAuth doesn't include it in token response)
+    try {
+      const userInfo = await this._fetchUserInfo(auth.access_token)
+      auth.user = userInfo
+    } catch (e) {
+      // User info fetch failed, but auth succeeded - continue without user info
+      console.log(`Warning: Could not fetch user info: ${e.message}`)
+    }
+
     // Save auth data
     this._save_auth(auth)
 
     return auth
+  }
+
+  async _fetchUserInfo(accessToken) {
+    // Fetch user info from Tidal API
+    const response = await fetch('https://api.tidal.com/v1/sessions', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch user info: ${response.status}`)
+    }
+
+    const data = await response.json()
+
+    // Map response to expected user format
+    return {
+      userId: data.userId,
+      username: data.username || data.email,
+      countryCode: data.countryCode,
+      email: data.email
+    }
   }
 
 
