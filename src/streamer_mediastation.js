@@ -72,11 +72,12 @@ module.exports = class {
       try {
         let response = await fetch(`http://${req.pod.ip}:${req.pod.port}/player/status`)
         let mediaStatus = await response.json()
-
-        // Transform MediaStation status to Tidal-like format
-        let tidalStatus = this._transformStatus(mediaStatus)
-
-        res.json(tidalStatus)
+        if (req.query.format === 'tidal') {
+          let tidalStatus = this._transformStatus(mediaStatus)
+          res.json(tidalStatus)
+        } else {
+          res.json(mediaStatus)
+        }
       } catch (err) {
         json_status(res, err)
       }
