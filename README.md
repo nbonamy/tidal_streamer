@@ -162,8 +162,42 @@ If you have multiple TIDAL connect devices, you can specify which one to stream 
 device: My TIDAL connect device
 ```
 
-## TODO
+## Feed Modules (as of 28-11-2015)
 
-- N/A
+### API
 
+- ALBUM_RECOMMENDATIONS - Album Recommendations
+- DAILY_MIXES - Custom mixes (Daily Mixes)
+- FORGOTTEN_FAVORITES - Forgotten Favorites
+- HISTORY_MIXES - Your listening history mixes
+- LATEST_SPOTLIGHTED_TRACKS - Spotlighted Tracks
+- NEW_ALBUM_SUGGESTIONS - Suggested New Albums
+- NEW_TRACK_SUGGESTIONS - Recommended New Tracks
+- POPULAR_PLAYLISTS - Popular Playlists
+- RECENTLY_UPDATED_FAVORITED_PLAYLISTS - Recently Updated Favorited Playlists
+- RECOMMENDED_USERS_PLAYLISTS - Recommended Users' Playlists
+- SHORTCUT_LIST - Shortcuts (quick access links)
+- SUGGESTED_ESSENTIAL_PLAYLISTS - Suggested Essential Playlists
+- SUGGESTED_RADIOS_MIXES - Suggested Radios/Mixes
+- THANKSGIVING_PLAYLISTS - Thanksgiving Playlists (seasonal)
+- UPLOADS_FOR_YOU - Uploads for you
+- YOUR_FAVORITE_ARTISTS - Your Favorite Artists
 
+### Tidal app order
+
+- SHORTCUT_LIST
+- NEW_ALBUM_SUGGESTIONS
+- NEW_TRACK_SUGGESTIONS
+- ALBUM_RECOMMENDATIONS
+- POPULAR_PLAYLISTS
+- LATEST_SPOTLIGHTED_TRACKS
+- UPLOADS_FOR_YOU
+- HISTORY_MIXES
+- YOUR_FAVORITE_ARTISTS
+- DAILY_MIXES
+- SUGGESTED_ESSENTIAL_PLAYLISTS
+- SUGGESTED_RADIOS_MIXES
+- RECENTLY_UPDATED_FAVORITED_PLAYLISTS
+- RECOMMENDED_USERS_PLAYLISTS
+- FORGOTTEN_FAVORITES
+- SHORTCUT_LIST
