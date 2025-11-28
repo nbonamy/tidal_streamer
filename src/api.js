@@ -169,7 +169,10 @@ module.exports = class {
   }
 
   async fetchHomeStaticFeed(options) {
-    return await this._callApiV2(`/home/feed/static`, options)
+    return await this._callApiV2(`/home/feed/static`, {
+      ...options,
+      limit: LIMIT,
+    })
   }
   
   async search(type, query) {
