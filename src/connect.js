@@ -146,13 +146,19 @@ module.exports = class {
         }
       })
 
-      // Handle close before connection established
-      this._ws.on('close', () => {
+      // Handle close event (both before and after connection)
+      this._ws.on('close', (code, reason) => {
         if (!connectionEstablished) {
           console.log(`[${this._device.description}] connection closed before established`)
           clearInterval(this._heartbeat)
           this._heartbeat = null
           reject(new Error('WebSocket closed before connection was established'))
+        } else {
+          console.log(`[${this._device.description}] websocket closed with code: ${code} ${reason}`)
+          if (this._heartbeat) {
+            clearInterval(this._heartbeat)
+            this._heartbeat = null
+          }
         }
       })
 
@@ -171,14 +177,6 @@ module.exports = class {
           }
         }, 1000)
         resolve()
-      })
-
-      this._ws.on('close', (code, reason) => {
-        console.log(`[${this._device.description}] websocket closed with code: ${code} ${reason}`)
-        if (this._heartbeat) {
-          clearInterval(this._heartbeat)
-          this._heartbeat = null
-        }
       })
 
       this._ws.on('message', (message) => {
