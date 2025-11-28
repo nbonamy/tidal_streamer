@@ -10,47 +10,71 @@ tidal-streamer relies on the `mdns` package which itself has some system depenen
 
 ## Configuration
 
-### 1. Create a TIDAL Application
+This application supports two authentication methods with Tidal:
 
-You need to specify a valid TIDAL API application `client_id` and `client_secret`. You can get those by creating an App on the [TIDAL Developer Portal](https://developer.tidal.com/):
+### Authentication Methods
 
-1. Log in to https://developer.tidal.com/
-2. Create a new application
-3. Note your `client_id` and `client_secret`
+#### Method 1: Device Authorization Flow (Recommended)
 
-### 2. Configure Redirect URI
+Best for headless servers and provides access to full API with `r_usr` scope.
 
-In your TIDAL Developer Portal app settings, add the following redirect URI:
+**Requirements:**
+- Client credentials that support device flow
+- No browser interaction needed
+- User enters code on Tidal website manually
 
-```
-http://localhost:PORT/callback
-```
-
-Where `PORT` is the port your server will run on (default is dynamically assigned, or you can specify it in `config.yml` - see Advanced section below).
-
-**Important**: If you don't specify a fixed port in `config.yml`, you may want to register multiple redirect URIs for common ports (e.g., 3000, 8000, 8080) or register a wildcard pattern if supported.
-
-### 3. Configure config.yml
-
-Rename `config.sample.yml` to `config.yml` and replace the `app` section with your credentials:
-
+**Setup:**
+1. Rename `config.sample.yml` to `config.yml`
+2. Configure your credentials:
 ```yaml
 app:
   client_id: <YOUR_CLIENT_ID>
   client_secret: <YOUR_CLIENT_SECRET>
+auth_method: device
 ```
 
-### 4. First Run - Authorization
+3. Start the server - it will display a URL and code
+4. Visit the URL and enter the code to authorize
+5. Server automatically saves tokens and continues
 
-When you first run the server, it will automatically:
-1. Start the server on an available port
-2. Open your default browser to the TIDAL authorization page
-3. Wait for you to authorize the application
-4. Save the authorization tokens to `config.yml`
+**Note:** Official Tidal Developer Portal apps may not support device flow. You may need to use credentials from a compatible client.
 
-If the browser doesn't open automatically, the server will display the authorization URL in the terminal - just copy and paste it into your browser.
+#### Method 2: Authorization Code Flow with PKCE
 
-After authorization is complete, the server will be ready to use. Tokens are refreshed automatically when needed, so you only need to authorize once (unless you revoke access or delete the auth section from `config.yml`).
+Works with official Tidal Developer Portal apps (WEB platform).
+
+**Setup:**
+1. Create app at [TIDAL Developer Portal](https://developer.tidal.com/)
+2. Add redirect URI: `http://localhost:PORT/callback` (where PORT is your configured port)
+3. Configure `config.yml`:
+```yaml
+app:
+  client_id: <YOUR_CLIENT_ID>
+  client_secret: <YOUR_CLIENT_SECRET>
+auth_method: authorization_code
+```
+
+4. Start server - browser will automatically open for authorization
+5. Authorize the app and tokens are saved
+
+**Limitations:** WEB platform apps use new scopes (`user.read`, `collection.read`, etc.) which may not provide access to all APIs. Some endpoints require the legacy `r_usr` scope which is only available with device flow credentials.
+
+### Custom Scopes (Optional)
+
+You can override default scopes in `config.yml`:
+
+```yaml
+scopes: user.read collection.read playback recommendations.read
+```
+
+### First Run
+
+Regardless of authentication method:
+1. Server starts and checks for existing auth
+2. If no auth found, initiates chosen auth flow
+3. User authorizes (via code entry or browser)
+4. Tokens saved to `config.yml`
+5. Tokens refresh automatically when expired
 
 
 ## API Endpoints
