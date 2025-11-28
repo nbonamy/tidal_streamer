@@ -42,30 +42,32 @@ module.exports = class {
 
   }
 
-  // async get_link() {
-  //   let response = await fetch(`${AUTH_BASE_URL}/token`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Authorization': `Basic ${this._b64_creds()}`,
-  //       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-  //     },
-  //     body: `grant_type=client_credentials`
-  //   })
-  //   const link = await response.json()
-  //   return link
-  // }
-  
-  async get_link() {
-    let response = await fetch(`${AUTH_BASE_URL}/device_authorization`, {
-      method: 'POST',
-      headers: {
-        // 'Authorization': `Basic ${this._b64_creds()}`,
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      },
-      body: `client_id=${this._settings.app.client_id}&scope=${SCOPE}`
+  async start_authorization(port) {
+    // Generate PKCE values
+    this._codeVerifier = this._generateCodeVerifier()
+    const codeChallenge = this._generateCodeChallenge(this._codeVerifier)
+
+    // Generate state for CSRF protection
+    this._state = crypto.randomBytes(16).toString('base64url')
+
+    // Build authorization URL
+    const params = new URLSearchParams({
+      response_type: 'code',
+      client_id: this._settings.app.client_id,
+      redirect_uri: `http://localhost:${port}/callback`,
+      scope: SCOPE,
+      code_challenge_method: 'S256',
+      code_challenge: codeChallenge,
+      state: this._state
     })
-    const link = await response.json()
-    return link
+
+    const authUrl = `${LOGIN_URL}/authorize?${params.toString()}`
+
+    return {
+      authUrl,
+      state: this._state,
+      codeVerifier: this._codeVerifier
+    }
   }
 
   check_link(link) {
