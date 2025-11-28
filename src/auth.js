@@ -70,6 +70,45 @@ module.exports = class {
     }
   }
 
+  async exchange_code(code, state, port) {
+    // Verify state matches (CSRF protection)
+    if (state !== this._state) {
+      throw new Error('State mismatch - possible CSRF attack')
+    }
+
+    // Exchange authorization code for tokens
+    const response = await fetch(`${AUTH_BASE_URL}/token`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        grant_type: 'authorization_code',
+        client_id: this._settings.app.client_id,
+        code: code,
+        redirect_uri: `http://localhost:${port}/callback`,
+        code_verifier: this._codeVerifier
+      })
+    })
+
+    const auth = await response.json()
+
+    // Check for errors
+    if (!response.ok || auth.error) {
+      throw new Error(auth.error_description || auth.error || `Token exchange failed: ${response.status}`)
+    }
+
+    // Verify we got the tokens
+    if (!auth.access_token || !auth.refresh_token) {
+      throw new Error('Token response missing access_token or refresh_token')
+    }
+
+    // Save auth data
+    this._save_auth(auth)
+
+    return auth
+  }
+
   check_link(link) {
 
     const expires = Date.now() + link.expiresIn * 1000
