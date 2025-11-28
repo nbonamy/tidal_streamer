@@ -109,43 +109,6 @@ module.exports = class {
     return auth
   }
 
-  check_link(link) {
-
-    const expires = Date.now() + link.expiresIn * 1000
-
-    return new Promise(async (resolve, reject) => {
-
-      while (true) {
-
-        // check expiration
-        if (Date.now() > expires) {
-          reject('Link expired')
-          return
-        }
-
-        // get it
-        let response = await fetch(`${AUTH_BASE_URL}/token`, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Basic ${this._b64_creds()}`,
-            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-          },
-          body: `client_id=${this._settings.app.client_id}&client_secret=${this._settings.app.client_secret}&device_code=${link.deviceCode}&grant_type=${GRANT_TYPE}&scope=${SCOPE}`
-        })
-        let auth = await response.json()
-        if (auth.user && auth.access_token && auth.refresh_token) {
-          this._save_auth(auth)
-          resolve(auth.user)
-        }
-
-        // pause
-        await new Promise(r => setTimeout(r, link.interval * 1000));
-
-      }
-    
-    })
-
-  }
 
   async refresh_token() {
 
@@ -193,10 +156,6 @@ module.exports = class {
     // save
     this._settings.save()
 
-  }
-
-  _b64_creds() {
-    return Buffer.from(`${this._settings.app.client_id}:${this._settings.app.client_secret}`).toString('base64')
   }
 
   _generateCodeVerifier() {
