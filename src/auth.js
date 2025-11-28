@@ -153,15 +153,18 @@ module.exports = class {
     let response = await fetch(`${AUTH_BASE_URL}/token`, {
       method: 'POST',
       headers: {
-        'Authorization': `Basic ${this._b64_creds()}`,
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: `grant_type=client_credentials&refresh_token=${this._settings.auth.refresh_token}`
+      body: new URLSearchParams({
+        grant_type: 'refresh_token',
+        refresh_token: this._settings.auth.refresh_token
+      })
     })
 
     // parse
     let auth = await response.json()
     if (auth.access_token) {
+      // Note: New API doesn't return a new refresh_token, keep existing one
       auth.refresh_token = this._settings.auth.refresh_token
       this._save_auth(auth)
       return true
