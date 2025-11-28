@@ -1,7 +1,7 @@
 module.exports = {
   apps : [{
     name   : "tidal-streamer",
-		interpreter: "/home/mnmt/.nvm/versions/node/v20.12.2/bin/node",
+		interpreter: "$HOME/.nvm/versions/node/v20.12.2/bin/node",
     script : "./src/index.js",
     watch: true,
 		watch_delay: 1000,
