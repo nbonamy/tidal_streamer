@@ -76,6 +76,16 @@ module.exports = class {
     return this._callApiV1(`/tracks/${trackId}`)
   }
 
+  async fetchTrackStreamUrl(trackId, audioQuality = 'LOSSLESS') {
+    // Audio quality options: LOW, HIGH, LOSSLESS, HI_RES_LOSSLESS
+    // Returns: { urls: [url1, url2, ...], codec: "FLAC", audioQuality: "LOSSLESS", ... }
+    return this._callApiV1(`/tracks/${trackId}/urlpostpaywall`, {
+      audioquality: audioQuality,
+      urlusagemode: 'STREAM',
+      assetpresentation: 'FULL'
+    })
+  }
+
   async fetchAlbumInfo(albumId) {
     return this._callApiV1(`/albums/${albumId}`)
   }

@@ -103,6 +103,17 @@ module.exports = class {
         .catch(err => next(err))
     })
 
+    router.get('/info/track/:id/url', async (req, res) => {
+      try {
+        let api = new TidalApi(this._settings)
+        let quality = req.query.quality || 'LOSSLESS'  // HIGH, LOSSLESS, HI_RES_LOSSLESS
+        let streamInfo = await api.fetchTrackStreamUrl(req.params.id, quality)
+        res.json(streamInfo)
+      } catch (err) {
+        json_status(res, err)
+      }
+    })
+
     router.get('/search/artist', (req, res, next) => {
       this.searchArtists(req.query.query)
         .then((result) => json_status(res, null, result))
