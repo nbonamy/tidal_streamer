@@ -84,17 +84,26 @@ Regardless of authentication method:
 | Path                          | Method | Parameters          | Explanation                                      |
 |-------------------------------|--------|---------------------|--------------------------------------------------|
 | `/user/feed`                  | GET    | none                | Get user feed                                    |
+| `/user/module/:moduleId`      | GET    | moduleId            | Get specific feed module by ID                   |
 | `/user/shortcuts`             | GET    | none                | Get user shortcuts                               |
 | `/user/artists`               | GET    | none                | Get user artists                                 |
 | `/user/albums`                | GET    | none                | Get user albums                                  |
 | `/user/playlists`             | GET    | none                | Get user playlists                               |
+| `/user/playlists/popular`     | GET    | none                | Get popular playlists                            |
+| `/user/playlists/essential`   | GET    | none                | Get essential playlists                          |
+| `/user/playlists/updated`     | GET    | none                | Get recently updated favorited playlists         |
+| `/user/playlists/recommended` | GET    | none                | Get recommended users' playlists                 |
 | `/user/tracks`                | GET    | none                | Get user tracks                                  |
-| `/user/mixes`                 | GET    | none                | Get user mixes                                   |
+| `/user/tracks/spotlighted`    | GET    | none                | Get spotlighted tracks                           |
+| `/user/tracks/uploads`        | GET    | none                | Get uploads for you                              |
+| `/user/mixes/daily`           | GET    | none                | Get daily mixes                                  |
+| `/user/mixes/history`         | GET    | none                | Get listening history mixes                      |
+| `/user/mixes/radio`           | GET    | none                | Get suggested radio mixes                        |
 | `/user/new/albums`            | GET    | none                | Get new albums                                   |
-| `/user/new/tracks`            | GET    | None                | Get new tracks                                   |
-| `/user/recent/albums`         | GET    | none                | Get recent albums                                |
+| `/user/new/tracks`            | GET    | none                | Get new tracks                                   |
 | `/user/recent/artists`        | GET    | none                | Get recent artists                               |
 | `/user/recommended/albums`    | GET    | none                | Get recommended albums                           |
+| `/user/forgotten/albums`      | GET    | none                | Get forgotten favorite albums                    |
 
 ### Metadata
 
@@ -162,9 +171,11 @@ If you have multiple TIDAL connect devices, you can specify which one to stream 
 device: My TIDAL connect device
 ```
 
-## Feed Modules (as of 28-11-2015)
+## Feed Modules (as of 28-11-2025)
 
 ### API
+
+**Note:** Module availability may vary based on user preferences and region. Seasonal modules (e.g., THANKSGIVING_PLAYLISTS) may not always be present.
 
 - ALBUM_RECOMMENDATIONS - Album Recommendations
 - DAILY_MIXES - Custom mixes (Daily Mixes)
@@ -174,7 +185,7 @@ device: My TIDAL connect device
 - NEW_ALBUM_SUGGESTIONS - Suggested New Albums
 - NEW_TRACK_SUGGESTIONS - Recommended New Tracks
 - POPULAR_PLAYLISTS - Popular Playlists
-- RECENTLY_UPDATED_FAVORITED_PLAYLISTS - Recently Updated Favorited Playlists
+- RECENTLY_UPDATED_FAVORITED_PLAYLIST - Recently Updated Favorited Playlists (singular)
 - RECOMMENDED_USERS_PLAYLISTS - Recommended Users' Playlists
 - SHORTCUT_LIST - Shortcuts (quick access links)
 - SUGGESTED_ESSENTIAL_PLAYLISTS - Suggested Essential Playlists
