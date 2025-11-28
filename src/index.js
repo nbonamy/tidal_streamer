@@ -2,7 +2,6 @@
 const express = require('express')
 const portfinder = require('portfinder')
 const mdns = require('mdns')
-const open = require('open')
 const Config = require('./config')
 const Auth = require('./auth')
 const User = require('./user')
@@ -102,8 +101,14 @@ portfinder.getPort({ port: startPort },  async (err, port) => {
         // Get authorization URL
         const { authUrl } = await auth.start_authorization(port)
 
-        // Open browser
-        await open(authUrl)
+        // Open browser (using dynamic import for ES module)
+        try {
+          const open = (await import('open')).default
+          await open(authUrl)
+        } catch (e) {
+          console.log('Could not auto-open browser:', e.message)
+        }
+
         console.log('If browser does not open automatically, visit:')
         console.log(authUrl)
         console.log('\nWaiting for authorization...')
