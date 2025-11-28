@@ -10,15 +10,47 @@ tidal-streamer relies on the `mdns` package which itself has some system depenen
 
 ## Configuration
 
-You need to specify a valid TIDAL API application `client_id` and `client_secret`. You can get those by creating an App on the [TIDAL Developer Portal](https://developer.tidal.com/). Once you have created it, rename`config.sample.yml` to `config.yml` and replace the `app` section with:
+### 1. Create a TIDAL Application
+
+You need to specify a valid TIDAL API application `client_id` and `client_secret`. You can get those by creating an App on the [TIDAL Developer Portal](https://developer.tidal.com/):
+
+1. Log in to https://developer.tidal.com/
+2. Create a new application
+3. Note your `client_id` and `client_secret`
+
+### 2. Configure Redirect URI
+
+In your TIDAL Developer Portal app settings, add the following redirect URI:
 
 ```
+http://localhost:PORT/callback
+```
+
+Where `PORT` is the port your server will run on (default is dynamically assigned, or you can specify it in `config.yml` - see Advanced section below).
+
+**Important**: If you don't specify a fixed port in `config.yml`, you may want to register multiple redirect URIs for common ports (e.g., 3000, 8000, 8080) or register a wildcard pattern if supported.
+
+### 3. Configure config.yml
+
+Rename `config.sample.yml` to `config.yml` and replace the `app` section with your credentials:
+
+```yaml
 app:
   client_id: <YOUR_CLIENT_ID>
   client_secret: <YOUR_CLIENT_SECRET>
 ```
 
-You can now run the server. It will display a link you need to navigate to authorize it. After that you are all good: the server will display the port it is listening on so! Now it's time to build whatever app you have in mind such as an [Android TV app](https://github.com/nbonamy/tidal_streamer_tv)!
+### 4. First Run - Authorization
+
+When you first run the server, it will automatically:
+1. Start the server on an available port
+2. Open your default browser to the TIDAL authorization page
+3. Wait for you to authorize the application
+4. Save the authorization tokens to `config.yml`
+
+If the browser doesn't open automatically, the server will display the authorization URL in the terminal - just copy and paste it into your browser.
+
+After authorization is complete, the server will be ready to use. Tokens are refreshed automatically when needed, so you only need to authorize once (unless you revoke access or delete the auth section from `config.yml`).
 
 
 ## API Endpoints
