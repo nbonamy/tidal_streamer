@@ -424,7 +424,7 @@ module.exports = class {
       let thumbnail = albumCover.medium?.url || albumCover.low?.url || null
 
       // Use local proxy URL - stream URL will be fetched on-demand
-      let proxyUrl = `http://${this._serverIp}:${this._serverPort}/stream/track/${track.id}?quality=${quality || 'LOSSLESS'}`
+      let proxyUrl = `/stream/track/${track.id}?quality=${quality || 'LOSSLESS'}`
 
       return {
         id: track.id,
@@ -451,7 +451,7 @@ module.exports = class {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        base_url: '',
+        base_url: `http://${this._serverIp}:${this._serverPort}`,
         playlist: {
           id: playlistId,
           title: playlistTitle,
