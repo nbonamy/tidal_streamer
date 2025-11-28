@@ -1,5 +1,6 @@
 
 const express = require('express')
+const WebSocket = require('ws')
 const TidalApi = require('./api')
 const Discoverer = require('./discoverer')
 const { json_status } = require('./utils')
@@ -11,6 +12,9 @@ module.exports = class {
     this._pods = {}
     this._serverPort = null
     this._serverIp = null
+    this._wss = null
+    this._pollInterval = null
+    this._lastStatus = null
     this._discoverPods()
   }
 
@@ -29,6 +33,9 @@ module.exports = class {
       if (this._serverIp) break
     }
     console.log(`MediaStation streamer server info: ${this._serverIp}:${this._serverPort}`)
+
+    // Start WebSocket server and polling
+    this._startServer()
   }
 
   routes() {
@@ -67,68 +74,7 @@ module.exports = class {
         let mediaStatus = await response.json()
 
         // Transform MediaStation status to Tidal-like format
-        let tidalStatus = {
-          state: mediaStatus.state ? mediaStatus.state.toUpperCase() : 'IDLE',
-          queue: {
-            id: mediaStatus.playlist?.id || null,
-            items: (mediaStatus.playlist?.tracks || []).map((track, idx) => ({
-              id: `queue-item-${track.id}`,
-              media_id: track.id,
-              type: 'track',
-              properties: {
-                active: (idx === mediaStatus.index).toString(),
-                sourceId: '0',
-                sourceType: 'tidal',
-                original_order: idx.toString()
-              }
-            })),
-            offset: 0,
-            limit: 100,
-            total: mediaStatus.playlist?.tracks?.length || 0,
-            etag: `"${Date.now()}"`
-          },
-          tracks: (mediaStatus.playlist?.tracks || []).map((track) => ({
-            mediaId: parseInt(track.id),
-            type: 'track',
-            item: {
-              id: parseInt(track.id),
-              editable: false,
-              replayGain: 0,
-              audioQuality: (track.quality || 'lossless').toUpperCase(),
-              audioModes: ['STEREO'],
-              title: track.title,
-              duration: track.duration_raw || track.duration || 0,
-              version: null,
-              url: `http://www.tidal.com/track/${track.id}`,
-              artists: track.artist ? [{
-                id: 0,
-                name: track.artist,
-                type: 'MAIN'
-              }] : [],
-              album: {
-                id: 0,
-                title: track.album || '',
-                cover: track.album_cover || null,
-                videoCover: null,
-                url: null,
-                releaseDate: null
-              },
-              explicit: false,
-              volumeNumber: 1,
-              trackNumber: 1,
-              popularity: 0,
-              allowStreaming: true,
-              streamReady: true,
-              streamStartDate: '1970-01-01T00:00:00.000+0000'
-            }
-          })),
-          position: mediaStatus.index || 0,
-          progress: mediaStatus.position ? mediaStatus.position * 1000 : 0, // convert seconds to ms
-          volume: {
-            level: mediaStatus.volume || 0,
-            mute: false
-          }
-        }
+        let tidalStatus = this._transformStatus(mediaStatus)
 
         res.json(tidalStatus)
       } catch (err) {
@@ -502,9 +448,150 @@ module.exports = class {
     return pods.length > 0 ? pods[0] : null
   }
 
+  _startServer() {
+    // Do not start twice
+    if (this._wss) return
+
+    const portfinder = require('portfinder')
+
+    // Find a port for WebSocket server
+    portfinder.getPort({ port: this._settings.wsport }, async (err, port) => {
+      this._wss = new WebSocket.Server({ port: port })
+      this._wss.on('listening', () => {
+        console.log(`MediaStation WebSocket server started on port ${port}`)
+      })
+      this._wss.on('error', (e) => {
+        console.error(`Error while starting MediaStation websocket server: ${e}`)
+        this._wss = null
+      })
+      this._wss.on('connection', (ws) => {
+        ws.on('message', (message) => {
+          console.log(`Received message from client: ${message}`)
+        })
+        // Send current status to new client
+        if (this._lastStatus) {
+          ws.send(JSON.stringify(this._lastStatus))
+        }
+      })
+
+      // Start polling for status updates
+      this._startStatusPolling()
+    })
+  }
+
+  _startStatusPolling() {
+    // Poll every second
+    this._pollInterval = setInterval(async () => {
+      try {
+        // Get the active pod
+        let pod = this._getPod()
+        if (!pod) return
+
+        // Fetch status from MediaPod
+        let response = await fetch(`http://${pod.ip}:${pod.port}/player/status`)
+        let mediaStatus = await response.json()
+
+        // Transform to Tidal-like format
+        let tidalStatus = this._transformStatus(mediaStatus)
+
+        // Broadcast if status changed
+        let statusStr = JSON.stringify(tidalStatus)
+        if (statusStr !== JSON.stringify(this._lastStatus)) {
+          this._lastStatus = tidalStatus
+          this._sendStatus()
+        }
+      } catch (err) {
+        // Ignore errors during polling
+      }
+    }, 1000)
+  }
+
+  _transformStatus(mediaStatus) {
+    return {
+      state: mediaStatus.state ? mediaStatus.state.toUpperCase() : 'IDLE',
+      queue: {
+        id: mediaStatus.playlist?.id || null,
+        items: (mediaStatus.playlist?.tracks || []).map((track, idx) => ({
+          id: `queue-item-${track.id}`,
+          media_id: track.id,
+          type: 'track',
+          properties: {
+            active: (idx === mediaStatus.index).toString(),
+            sourceId: '0',
+            sourceType: 'tidal',
+            original_order: idx.toString()
+          }
+        })),
+        offset: 0,
+        limit: 100,
+        total: mediaStatus.playlist?.tracks?.length || 0,
+        etag: `"${Date.now()}"`
+      },
+      tracks: (mediaStatus.playlist?.tracks || []).map((track) => ({
+        mediaId: parseInt(track.id),
+        type: 'track',
+        item: {
+          id: parseInt(track.id),
+          editable: false,
+          replayGain: 0,
+          audioQuality: (track.quality || 'lossless').toUpperCase(),
+          audioModes: ['STEREO'],
+          title: track.title,
+          duration: track.duration_raw || track.duration || 0,
+          version: null,
+          url: `http://www.tidal.com/track/${track.id}`,
+          artists: track.artist ? [{
+            id: 0,
+            name: track.artist,
+            type: 'MAIN'
+          }] : [],
+          album: {
+            id: 0,
+            title: track.album || '',
+            cover: track.album_cover || null,
+            videoCover: null,
+            url: null,
+            releaseDate: null
+          },
+          explicit: false,
+          volumeNumber: 1,
+          trackNumber: 1,
+          popularity: 0,
+          allowStreaming: true,
+          streamReady: true,
+          streamStartDate: '1970-01-01T00:00:00.000+0000'
+        }
+      })),
+      position: mediaStatus.index || 0,
+      progress: mediaStatus.position ? mediaStatus.position * 1000 : 0,
+      volume: {
+        level: mediaStatus.volume || 0,
+        mute: false
+      }
+    }
+  }
+
+  _sendStatus() {
+    if (this._wss == null) return
+    this._wss.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(JSON.stringify(this._lastStatus))
+      }
+    })
+  }
+
   async shutdown() {
-    // Discoverer doesn't have a shutdown method, but it's okay
-    // The browser is managed internally
+    // Stop polling
+    if (this._pollInterval) {
+      clearInterval(this._pollInterval)
+      this._pollInterval = null
+    }
+
+    // Close WebSocket server
+    if (this._wss) {
+      this._wss.close()
+      this._wss = null
+    }
   }
 
 }
