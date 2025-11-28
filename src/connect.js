@@ -62,7 +62,8 @@ module.exports = class {
   }
 
   async shutdown() {
-    console.log(`Disconnecting from ${this._device.description}`)
+    
+    console.log(`[${this._device.description}] disconnected`)
 
     // Clear heartbeat
     if (this._heartbeat) {
@@ -134,14 +135,14 @@ module.exports = class {
 
       // Attach error handler FIRST
       this._ws.on('error', (e) => {
-        console.log(`Error: ${e.message}`)
+        console.log(`[${this._device.description}] websocket error: ${e.message}`)
         clearInterval(this._heartbeat)
         this._heartbeat = null
         reject(e)
       })
 
       this._ws.on('open', () => {
-        console.log(`Connected to ${this._device.description}@${this._device.ip}:${this._device.port}`)
+        console.log(`[${this._device.description}] connected to ${this._device.ip}:${this._device.port}`)
         this._ws.send(JSON.stringify({
           command: 'startSession',
           appId: 'tidal',
@@ -157,7 +158,7 @@ module.exports = class {
       })
 
       this._ws.on('close', (code, reason) => {
-        console.log(`Closed: ${code} ${reason}`)
+        console.log(`[${this._device.description}] websocket closed with code: ${code} ${reason}`)
         if (this._heartbeat) {
           clearInterval(this._heartbeat)
           this._heartbeat = null
