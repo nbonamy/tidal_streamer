@@ -133,15 +133,31 @@ module.exports = class {
         // checkServerIdentity: () => undefined
       })
 
+      // Track if connection was established
+      let connectionEstablished = false
+
       // Attach error handler FIRST
       this._ws.on('error', (e) => {
         console.log(`[${this._device.description}] websocket error: ${e.message}`)
         clearInterval(this._heartbeat)
         this._heartbeat = null
-        reject(e)
+        if (!connectionEstablished) {
+          reject(e)
+        }
+      })
+
+      // Handle close before connection established
+      this._ws.on('close', () => {
+        if (!connectionEstablished) {
+          console.log(`[${this._device.description}] connection closed before established`)
+          clearInterval(this._heartbeat)
+          this._heartbeat = null
+          reject(new Error('WebSocket closed before connection was established'))
+        }
       })
 
       this._ws.on('open', () => {
+        connectionEstablished = true
         console.log(`[${this._device.description}] connected to ${this._device.ip}:${this._device.port}`)
         this._ws.send(JSON.stringify({
           command: 'startSession',
@@ -392,8 +408,17 @@ module.exports = class {
   }
 
   async _sendMessage(message) {
-    await this._connect()
-    this._ws.send(message)
+    try {
+      await this._connect()
+      if (this._ws && this._ws.readyState === WebSocket.OPEN) {
+        this._ws.send(message)
+      } else {
+        console.log(`[${this._device.description}] cannot send message - connection not ready`)
+      }
+    } catch (e) {
+      console.log(`[${this._device.description}] failed to send message: ${e.message}`)
+      // Connection will auto-retry via retry timer
+    }
   }
 
   async _reloadQueue(queueId) {
@@ -525,7 +550,9 @@ module.exports = class {
     if (message.command == 'notifySessionError') {
       console.log(`[ERR] ${this._device.ip}: Unsuccessful connection. Retrying in ${CONNECT_RETRY_DELAY} ms.`)
       this._retryTimer = setTimeout(() => {
-        this._connect()
+        this._connect().catch(e => {
+          console.log(`[${this._device.description}] retry connection failed: ${e.message}`)
+        })
       }, CONNECT_RETRY_DELAY)
       return
     }
