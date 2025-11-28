@@ -1,3 +1,4 @@
+const tls = require('tls')
 const WebSocket = require('ws')
 const TidalApi = require('./api')
 const { getAlbumCovers } = require('./utils')
@@ -18,14 +19,6 @@ module.exports = class {
     this._device = device
     this._wss = wss
     this._reset()
-  }
-
-  _reset() {
-    this._ws = null
-    this._reqid = 0
-    this._sessionId = 0
-    this._heartbeat = 0
-    this._resetStatus()
   }
 
   _resetStatus() {
@@ -49,92 +42,139 @@ module.exports = class {
     return this._status
   }
 
-  shutdown() {
+  _reset() {
     
-    // try to clean properly
+    // Clear heartbeat first
+    if (this._heartbeat) {
+      clearInterval(this._heartbeat)
+      this._heartbeat = null
+    }
+
+    // Clean up WebSocket
     if (this._ws) {
-      try {
-        clearInterval(this._heartbeat)
-        this._ws.close()
-        this._ws.terminate()
-        console.log(`Disconnected from ${this._device.description}`)
-      } catch (e) {
-        console.error(`Error while closing connection to ${this._device.ip}: ${e}`)
+      this._ws.removeAllListeners()
+      this._ws = null
+    }
+
+    this._reqid = 0
+    this._sessionId = 0
+    this._resetStatus()
+  }
+
+  async shutdown() {
+    console.log(`Disconnecting from ${this._device.description}`)
+
+    // Clear heartbeat
+    if (this._heartbeat) {
+      clearInterval(this._heartbeat)
+      this._heartbeat = null
+    }
+
+    // Close WebSocket cleanly
+    if (this._ws) {
+      const ws = this._ws
+      this._ws = null
+      ws.removeAllListeners()
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.close(1000, 'Client shutdown')
+        // Wait for close
+        await new Promise(resolve => {
+          ws.once('close', resolve)
+          setTimeout(resolve, 2000)
+        })
       }
     }
 
-    // reset anyway
     this._reset()
   }
 
   _connect() {
-
-    // we need a user id. if we haven't we are waiting for one
+    
+    // Wait for user id
     if (this._settings?.auth?.user?.id == null) {
-      this._retryTimer = setTimeout(() => {
-        this._connect()
-      }, CONNECT_WAIT_DELAY)
-      return
+      this._retryTimer = setTimeout(() => this._connect(), CONNECT_WAIT_DELAY)
+      return Promise.resolve()
     }
 
-    // if already connected then resolve immediately
-    if (this._ws != null) {
-      return new Promise((resolve, reject) => {
-        resolve()
-      })
+    // Already connected
+    if (this._ws != null && this._ws.readyState === WebSocket.OPEN) {
+      return Promise.resolve()
     }
 
-    // clear
+    // Clear retry timer
     clearTimeout(this._retryTimer)
-    this._retryTimer =  null
+    this._retryTimer = null
 
-    //
     return new Promise((resolve, reject) => {
 
-      // open our websocket
+      if (this._ws) {
+        this._ws.removeAllListeners()
+        this._ws.close()
+        this._ws = null
+      }
+
+      if (this._heartbeat) {
+        clearInterval(this._heartbeat)
+        this._heartbeat = null
+      }
+
+      // Fresh agent - no TLS session cache
+      const agent = new (require('https').Agent)({
+        maxCachedSessions: 0,
+        keepAlive: false
+      })
+
       this._ws = new WebSocket(`wss://${this._device.ip}:${this._device.port}`, {
-        rejectUnauthorized: false
+        agent,
+        rejectUnauthorized: false,
+        // secureProtocol: 'TLSv1_2_method',
+        // ciphers: 'AES256-GCM-SHA384',
+        // checkServerIdentity: () => undefined
       })
-      this._ws.on('open', () => {
-        this._ws.send(JSON.stringify({
-          command: 'startSession',
-          appId: 'tidal',
-          appName: 'tidal',
-          sessionCredential: this._settings.auth.user.id.toString()
-        }))
-        console.log(`Connected to ${this._device.description}@${this._device.ip}:${this._device.port}`)
-        resolve()
-      })
-      this._ws.on('close', (e) => {
-        console.log(`Closing connection to ${this._device.description}@${this._device.ip}:${this._device.port}`)
-        // setTimeout(() => {
-        //   this._reset()
-        //   this._connect()
-        // }, 500)
-      })
+
+      // Attach error handler FIRST
       this._ws.on('error', (e) => {
-        console.log(`Error while connecting to ${this._device.description}@${this._device.ip}:${this._device.port}`)
-        // setTimeout(() => {
-        //   this._reset()
-        //   this._connect()
-        // }, 500)
+        console.log(`Error: ${e.message}`)
+        clearInterval(this._heartbeat)
+        this._heartbeat = null
         reject(e)
       })
+
+      this._ws.on('open', () => {
+        console.log(`Connected to ${this._device.description}@${this._device.ip}:${this._device.port}`)
+        this._heartbeat = setInterval(() => {
+          if (this._ws && this._ws.readyState === WebSocket.OPEN) {
+            this._ws.ping()
+          }
+        }, 1000)
+        resolve()
+      })
+
+      this._ws.on('close', (code, reason) => {
+        console.log(`Closed: ${code} ${reason}`)
+        if (this._heartbeat) {
+          clearInterval(this._heartbeat)
+          this._heartbeat = null
+        }
+      })
+
       this._ws.on('message', (message) => {
         this._processMessage(JSON.parse(message.toString()))
       })
 
-      // and ping
-      this._heartbeat = setInterval(() => {
-        try {
-          this._ws.ping()
-        } catch {}
-      }, 1000)
-    
     })
-
   }
 
+  async _close() {
+    if (this._ws && this._ws.readyState === WebSocket.OPEN) {
+      this._ws.close(1000, 'Client shutdown')
+      await new Promise(resolve => {
+        this._ws.once('close', resolve)
+        setTimeout(resolve, 2000) // Timeout after 2s
+      })
+    }
+  }
+    
   async loadQueue(api, queue, tracks) {
 
     // clear reset timer

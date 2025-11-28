@@ -419,6 +419,12 @@ module.exports = class {
     }
   }
 
+  async shutdown() {
+    for (const device of Object.values(this._devices)) {
+      await device.connect?.shutdown()
+    }
+  }
+
   _getDevice(uuid) {
 
     // we need this

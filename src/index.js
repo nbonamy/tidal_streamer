@@ -8,8 +8,6 @@ const User = require('./user')
 const Metadata = require('./metadata')
 const Streamer = require('./streamer')
 const Playlist = require('./playlist')
-const Nestor = require('./nestor')
-const { NestorService } = require('nestor-service')
 const { json_status } = require('./utils')
 
 // init our stuff
@@ -50,7 +48,6 @@ const user = new User(settings)
 const metadata = new Metadata(settings)
 const streamer = new Streamer(settings)
 const playlist = new Playlist(settings)
-const nestor = new Nestor(settings)
 
 // we need a port
 let startPort = settings.port
@@ -79,15 +76,22 @@ portfinder.getPort({ port: startPort },  async (err, port) => {
   app.use('/', metadata.routes())
   app.use('/', playlist.routes())
   app.use('/', streamer.routes())
-  app.use('/', nestor.routes())
-
+  
   // error handler
   app.use((err, req, res, next) => {
     console.error(err.stack)
     json_status(res, err)
   })  
 
-	// start it
+  // gracefully handle exit
+  const close = async () => {
+    await streamer.shutdown()
+    process.exit(0)
+  }
+  process.on('SIGINT', () => close())
+  process.on('SIGTERM', () => close())
+
+  // start it
 	app.listen(port, () => {
 
 		// log
@@ -96,9 +100,6 @@ portfinder.getPort({ port: startPort },  async (err, port) => {
 		// advertise
 		const ad = mdns.createAdvertisement(mdns.tcp('tidalstreamer'), port);
 		ad.start();
-
-    // run nestor service
-    new NestorService('nestor-tidalstreamer', port, '/nestor/list')
 
 	})
 

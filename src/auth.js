@@ -9,6 +9,8 @@ if (typeof fetch == 'undefined') {
   fetch = require('node-fetch')
 }
 
+// https://developer.tidal.com/documentation/api-sdk/api-sdk-authorization
+
 module.exports = class {
 
   constructor(settings) {
@@ -39,15 +41,30 @@ module.exports = class {
 
   }
 
+  // async get_link() {
+  //   let response = await fetch(`${AUTH_BASE_URL}/token`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Authorization': `Basic ${this._b64_creds()}`,
+  //       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+  //     },
+  //     body: `grant_type=client_credentials`
+  //   })
+  //   const link = await response.json()
+  //   return link
+  // }
+  
   async get_link() {
     let response = await fetch(`${AUTH_BASE_URL}/device_authorization`, {
       method: 'POST',
       headers: {
+        // 'Authorization': `Basic ${this._b64_creds()}`,
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
       },
       body: `client_id=${this._settings.app.client_id}&scope=${SCOPE}`
     })
-    return response.json()
+    const link = await response.json()
+    return link
   }
 
   check_link(link) {
@@ -68,6 +85,7 @@ module.exports = class {
         let response = await fetch(`${AUTH_BASE_URL}/token`, {
           method: 'POST',
           headers: {
+            'Authorization': `Basic ${this._b64_creds()}`,
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
           },
           body: `client_id=${this._settings.app.client_id}&client_secret=${this._settings.app.client_secret}&device_code=${link.deviceCode}&grant_type=${GRANT_TYPE}&scope=${SCOPE}`
@@ -93,14 +111,15 @@ module.exports = class {
     let response = await fetch(`${AUTH_BASE_URL}/token`, {
       method: 'POST',
       headers: {
+        'Authorization': `Basic ${this._b64_creds()}`,
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
       },
-      body: `client_id=${this._settings.app.client_id}&client_secret=${this._settings.app.client_secret}&grant_type=refresh_token&refresh_token=${this._settings.auth.refresh_token}`
+      body: `grant_type=client_credentials&refresh_token=${this._settings.auth.refresh_token}`
     })
 
     // parse
     let auth = await response.json()
-    if (auth.user && auth.access_token) {
+    if (auth.access_token) {
       auth.refresh_token = this._settings.auth.refresh_token
       this._save_auth(auth)
       return true
@@ -115,20 +134,24 @@ module.exports = class {
 
     // update settings
     this._settings.auth = {
-      user: {
+      user: auth.user ? {
         id: auth.user.userId,
         login: auth.user.username,
         country: auth.user.countryCode,
         email: auth.user.email,
-      },
+      } : this._settings.auth?.user,
       access_token: auth.access_token,
-      refresh_token: auth.refresh_token,
+      refresh_token: auth.refresh_token || this._settings.auth.refresh_token,
       expires: Date.now() + auth.expires_in * 1000
     }
 
     // save
     this._settings.save()
 
+  }
+
+  _b64_creds() {
+    return Buffer.from(`${this._settings.app.client_id}:${this._settings.app.client_secret}`).toString('base64')
   }
 
 }
