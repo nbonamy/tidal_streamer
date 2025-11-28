@@ -4,6 +4,12 @@ app:
 
 # Authentication method: 'device' or 'authorization_code'
 # - device: Device flow (shows URL + code, no browser needed, uses r_usr scopes)
+#   Note: Requires 'Limited Input Device' client type in Tidal portal
 # - authorization_code: OAuth 2.0 with PKCE (opens browser, uses new scopes)
+#   Note: For WEB platform clients
 # Default: device
-auth_method: device
+auth_method: authorization_code
+
+# Optional: Override default scopes (space-separated)
+# For WEB apps, try requesting all available scopes:
+# scopes: user.read collection.read search.read playlists.read playlists.write entitlements.read playback recommendations.read
