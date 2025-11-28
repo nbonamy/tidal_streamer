@@ -441,7 +441,12 @@ module.exports = class {
       }
 
       // parse and check auth
-      let json = await response.json();
+      let json = null
+      try {
+        json = await response.json();
+      } catch (e) {
+        throw new Error(`API Error: Invalid JSON response from ${url}`, await response.text());
+      }
       if (i != 0 || json.status != 401) {
 
         // cache it

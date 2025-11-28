@@ -4,14 +4,16 @@ const mdns = require('mdns')
 
 module.exports = class {
 
-  constructor(cbUp, cbDown) {
+  constructor(cbUp, cbDown, device_type = 'tidal', service_type = 'tidalconnect') {
     this.cbUp = cbUp
     this.cbDown = cbDown
+    this.device_type = device_type
+    this.service_type = service_type
     this._discover()
   }
 
   _discover() {
-    this._discover_by_type('tidal', 'tidalconnect')
+    this._discover_by_type(this.device_type, this.service_type)
   }
 
   _discover_by_type(device_type, service_type) {

@@ -6,13 +6,18 @@ const Config = require('./config')
 const Auth = require('./auth')
 const User = require('./user')
 const Metadata = require('./metadata')
-const Streamer = require('./streamer')
 const Playlist = require('./playlist')
 const { json_status } = require('./utils')
 
 // init our stuff
 const settings = new Config()
 const auth = new Auth(settings)
+
+// choose streamer based on config
+const streamerType = settings.streamer || 'tidal'
+const StreamerClass = streamerType === 'mediastation'
+  ? require('./streamer_mediastation')
+  : require('./streamer_tidal_connect')
 
 // we need a port
 let startPort = settings.port
@@ -57,7 +62,7 @@ portfinder.getPort({ port: startPort },  async (err, port) => {
   // now we can build our modules
   const user = new User(settings)
   const metadata = new Metadata(settings)
-  const streamer = new Streamer(settings)
+  const streamer = new StreamerClass(settings)
   const playlist = new Playlist(settings)
 
   // routes
@@ -85,6 +90,12 @@ portfinder.getPort({ port: startPort },  async (err, port) => {
 
 		// log
 		console.log(`Tidal streamer listening on port ${port}`)
+		console.log(`Using streamer: ${streamerType}`)
+
+		// Set server info for MediaStation streamer (needs real IP for proxy URLs)
+		if (typeof streamer.setServerInfo === 'function') {
+			streamer.setServerInfo(port)
+		}
 
 		// advertise
 		const ad = mdns.createAdvertisement(mdns.tcp('tidalstreamer'), port);

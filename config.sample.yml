@@ -13,3 +13,8 @@ auth_method: authorization_code
 # Optional: Override default scopes (space-separated)
 # For WEB apps, try requesting all available scopes:
 # scopes: user.read collection.read search.read playlists.read playlists.write entitlements.read playback recommendations.read
+
+# Streamer type: 'tidal' or 'mediastation'
+# - tidal: Use Tidal Connect devices (default)
+# - mediastation: Use MediaPod devices (auto-discovered via mDNS)
+streamer: tidal
