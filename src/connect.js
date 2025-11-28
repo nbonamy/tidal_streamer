@@ -148,17 +148,15 @@ module.exports = class {
 
       // Handle close event (both before and after connection)
       this._ws.on('close', (code, reason) => {
-        if (!connectionEstablished) {
-          console.log(`[${this._device.description}] connection closed before established`)
+        if (this._heartbeat) {
           clearInterval(this._heartbeat)
           this._heartbeat = null
+        }
+        if (!connectionEstablished) {
+          console.log(`[${this._device.description}] connection closed before established`)
           reject(new Error('WebSocket closed before connection was established'))
         } else {
           console.log(`[${this._device.description}] websocket closed with code: ${code} ${reason}`)
-          if (this._heartbeat) {
-            clearInterval(this._heartbeat)
-            this._heartbeat = null
-          }
         }
       })
 
