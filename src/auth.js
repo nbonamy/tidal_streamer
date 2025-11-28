@@ -3,8 +3,17 @@ const crypto = require('crypto')
 // some constants
 const AUTH_BASE_URL = 'https://auth.tidal.com/v1/oauth2'
 const LOGIN_URL = 'https://login.tidal.com'
-// Updated scopes for new Tidal OAuth API
-const SCOPE = 'user.read collection.read search.read playlists.read entitlements.read playback recommendations.read'
+
+// Scopes for different auth flows
+const SCOPES = {
+  // Device flow uses legacy scopes (required for r_usr access)
+  device: 'r_usr w_usr w_sub',
+  // Authorization code flow uses new scopes
+  authorization_code: 'user.read collection.read search.read playlists.read entitlements.read playback recommendations.read'
+}
+
+// Grant type for device flow
+const DEVICE_GRANT_TYPE = 'urn:ietf:params:oauth:grant-type:device_code'
 
 // we need fetch
 if (typeof fetch == 'undefined') {
@@ -17,6 +26,12 @@ module.exports = class {
 
   constructor(settings) {
     this._settings = settings
+    // Determine auth method from settings (default to device for legacy compatibility)
+    this._authMethod = settings.auth_method || 'device'
+  }
+
+  getAuthMethod() {
+    return this._authMethod
   }
 
   is_auth() {
@@ -56,7 +71,7 @@ module.exports = class {
       response_type: 'code',
       client_id: this._settings.app.client_id,
       redirect_uri: `http://localhost:${port}/callback`,
-      scope: SCOPE,
+      scope: SCOPES.authorization_code,
       code_challenge_method: 'S256',
       code_challenge: codeChallenge,
       state: this._state
@@ -143,6 +158,87 @@ module.exports = class {
     }
   }
 
+  // Device Authorization Flow Methods
+
+  async start_device_authorization() {
+    // Initiate device authorization
+    const response = await fetch(`${AUTH_BASE_URL}/device_authorization`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        client_id: this._settings.app.client_id,
+        scope: SCOPES.device
+      })
+    })
+
+    const data = await response.json()
+
+    if (!response.ok || data.error) {
+      throw new Error(data.error_description || data.error || `Device authorization failed: ${response.status}`)
+    }
+
+    // Response contains: verificationUriComplete, deviceCode, userCode, expiresIn, interval
+    return {
+      verificationUri: data.verificationUriComplete,
+      deviceCode: data.deviceCode,
+      userCode: data.userCode,
+      expiresIn: data.expiresIn,
+      interval: data.interval || 5  // Poll interval in seconds
+    }
+  }
+
+  async poll_device_authorization(deviceCode, interval, expiresIn) {
+    const expires = Date.now() + expiresIn * 1000
+    const pollInterval = interval * 1000
+
+    while (true) {
+      // Check expiration
+      if (Date.now() > expires) {
+        throw new Error('Device authorization expired')
+      }
+
+      // Poll for token
+      const response = await fetch(`${AUTH_BASE_URL}/token`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams({
+          client_id: this._settings.app.client_id,
+          client_secret: this._settings.app.client_secret,
+          device_code: deviceCode,
+          grant_type: DEVICE_GRANT_TYPE,
+          scope: SCOPES.device
+        })
+      })
+
+      const auth = await response.json()
+
+      // Check if authorized
+      if (auth.access_token && auth.refresh_token) {
+        // Save auth data (device flow includes user info in response)
+        this._save_auth(auth)
+        return auth.user
+      }
+
+      // Check for errors
+      if (auth.error) {
+        if (auth.error === 'authorization_pending') {
+          // User hasn't authorized yet, continue polling
+          await new Promise(r => setTimeout(r, pollInterval))
+          continue
+        } else {
+          throw new Error(auth.error_description || auth.error)
+        }
+      }
+
+      // Wait before next poll
+      await new Promise(r => setTimeout(r, pollInterval))
+    }
+  }
+
 
   async refresh_token() {
 
@@ -154,20 +250,12 @@ module.exports = class {
       },
       body: new URLSearchParams({
         grant_type: 'refresh_token',
-        refresh_token: this._settings.auth.refresh_token,
-        client_id: this._settings.app.client_id
+        refresh_token: this._settings.auth.refresh_token
       })
     })
 
     // parse
     let auth = await response.json()
-
-    // Check for errors
-    if (!response.ok || auth.error) {
-      console.error(`Token refresh failed: ${auth.error_description || auth.error || response.status}`)
-      return false
-    }
-
     if (auth.access_token) {
       // Note: New API doesn't return a new refresh_token, keep existing one
       auth.refresh_token = this._settings.auth.refresh_token

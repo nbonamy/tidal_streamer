@@ -95,30 +95,50 @@ portfinder.getPort({ port: startPort },  async (err, port) => {
       const isAuthenticated = await auth.is_auth()
 
       if (!isAuthenticated) {
-        console.log('\nAuthentication information not found. You need to authorize the streamer.')
-        console.log('Opening browser for authorization...\n')
+        const authMethod = auth.getAuthMethod()
+        console.log(`\nAuthentication information not found. Using ${authMethod} flow...\n`)
 
-        // Get authorization URL
-        const { authUrl } = await auth.start_authorization(port)
+        if (authMethod === 'device') {
+          // Device Authorization Flow
+          const device = await auth.start_device_authorization()
 
-        // Open browser (using dynamic import for ES module)
-        try {
-          const open = (await import('open')).default
-          await open(authUrl)
-        } catch (e) {
-          console.log('Could not auto-open browser:', e.message)
+          console.log('Please visit the following URL and enter the code:')
+          console.log(`URL: ${device.verificationUri}`)
+          console.log(`Code: ${device.userCode}`)
+          console.log(`\nThis code expires in ${device.expiresIn} seconds`)
+          console.log('Waiting for authorization...\n')
+
+          // Poll for authorization
+          const user = await auth.poll_device_authorization(device.deviceCode, device.interval, device.expiresIn)
+          console.log(`\nAuthorization successful! ${user.username} authorized.`)
+          console.log('Tidal streamer is ready.')
+
+        } else {
+          // Authorization Code Flow
+          console.log('Opening browser for authorization...\n')
+
+          // Get authorization URL
+          const { authUrl } = await auth.start_authorization(port)
+
+          // Open browser (using dynamic import for ES module)
+          try {
+            const open = (await import('open')).default
+            await open(authUrl)
+          } catch (e) {
+            console.log('Could not auto-open browser:', e.message)
+          }
+
+          console.log('If browser does not open automatically, visit:')
+          console.log(authUrl)
+          console.log('\nWaiting for authorization...')
+
+          // Wait for callback
+          const { code, state: returnedState } = await authPromise
+
+          // Exchange code for tokens
+          await auth.exchange_code(code, returnedState, port)
+          console.log('\nAuthorization successful! Tidal streamer is ready.')
         }
-
-        console.log('If browser does not open automatically, visit:')
-        console.log(authUrl)
-        console.log('\nWaiting for authorization...')
-
-        // Wait for callback
-        const { code, state: returnedState } = await authPromise
-
-        // Exchange code for tokens
-        await auth.exchange_code(code, returnedState, port)
-        console.log('\nAuthorization successful! Tidal streamer is ready.')
       }
     } catch (e) {
       console.log(`\nUnable to authorize: ${e.message}`)
