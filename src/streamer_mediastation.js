@@ -374,7 +374,7 @@ module.exports = class {
       let proxyUrl = `/stream/track/${track.id}?quality=${quality || 'LOSSLESS'}`
 
       return {
-        id: track.id,
+        id: track.id.toString(),
         title: track.title,
         album: track.album?.title || track.album || '',
         album_cover: track.album?.cover || null,
