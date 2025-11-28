@@ -253,8 +253,8 @@ module.exports = class {
       },
       body: new URLSearchParams({
         grant_type: 'refresh_token',
-        refresh_token: this._settings.auth.refresh_token,
-        client_id: this._settings.app.client_id
+        client_id: this._settings.app.client_id,
+        refresh_token: this._settings.auth.refresh_token
       })
     })
 

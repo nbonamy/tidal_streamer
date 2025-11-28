@@ -15,8 +15,20 @@ module.exports = class {
 
     const router = express.Router()
 
+    router.get('/user/home', (req, res, next) => {
+      this.getUserFeed()
+        .then((result) => json_status(res, null, result))
+        .catch(err => next(err))
+    })
+
     router.get('/user/feed', (req, res, next) => {
       this.getUserFeed()
+        .then((result) => json_status(res, null, result))
+        .catch(err => next(err))
+    })
+
+    router.get('/user/feed/:moduleId', (req, res, next) => {
+      this.getFeedModule(req.params.moduleId)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
@@ -69,11 +81,11 @@ module.exports = class {
         .catch(err => next(err))
     })
 
-    router.get('/user/recent/albums', (req, res, next) => {
-      this.getRecentAlbums()
-        .then((result) => json_status(res, null, result))
-        .catch(err => next(err))
-    })
+    // router.get('/user/recent/albums', (req, res, next) => {
+    //   this.getRecentAlbums()
+    //     .then((result) => json_status(res, null, result))
+    //     .catch(err => next(err))
+    // })
 
     router.get('/user/recent/artists', (req, res, next) => {
       this.getRecentArtists()
@@ -87,8 +99,20 @@ module.exports = class {
         .catch(err => next(err))
     })
 
+    router.get('/user/forgotten/albums', (req, res, next) => {
+      this.getForgottenAlbums()
+        .then((result) => json_status(res, null, result))
+        .catch(err => next(err))
+    })
+
     return router
 
+  }
+
+  async getUserHome() {
+    const api = new TidalApi(this._settings)
+    const home = await api.proxy('/pages/home', { deviceType: 'PHONE' })
+    return home
   }
 
   async getUserFeed() {
@@ -155,9 +179,9 @@ module.exports = class {
     return await this.getFeedModule('NEW_TRACK_SUGGESTIONS')
   }
   
-  async getRecentAlbums() {
-    return await this.getFeedModule('CONTINUE_LISTEN_TO')
-  }
+  // async getRecentAlbums() {
+  //   return await this.getFeedModule('CONTINUE_LISTEN_TO')
+  // }
 
   async getRecentArtists() {
     return await this.getFeedModule('YOUR_FAVORITE_ARTISTS')
@@ -167,11 +191,18 @@ module.exports = class {
     return await this.getFeedModule('ALBUM_RECOMMENDATIONS')
   }
 
+  async getForgottenAlbums() {
+    return await this.getFeedModule('FORGOTTEN_FAVORITES')
+  }
+
   async getFeedModule(moduleId) {
     const api = new TidalApi(this._settings)
     const feed = await api.fetchHomeStaticFeed()
     const module = feed.items.find((item) => item.moduleId === moduleId)
-    if (!module) return []
+    if (!module) {
+      console.warn(`Module ${moduleId} not found in user feed`)
+      return []
+    }
     if (module.viewAll) {
       const url = module.viewAll
       const results = await api.proxyV2(`/${url}`, { deviceType: 'PHONE' })
