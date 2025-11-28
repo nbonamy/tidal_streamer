@@ -66,12 +66,15 @@ module.exports = class {
     // Generate state for CSRF protection
     this._state = crypto.randomBytes(16).toString('base64url')
 
+    // Use custom scopes if specified in config, otherwise use default for auth method
+    const scopes = this._settings.scopes || SCOPES.authorization_code
+
     // Build authorization URL
     const params = new URLSearchParams({
       response_type: 'code',
       client_id: this._settings.app.client_id,
       redirect_uri: `http://localhost:${port}/callback`,
-      scope: SCOPES.authorization_code,
+      scope: scopes,
       code_challenge_method: 'S256',
       code_challenge: codeChallenge,
       state: this._state
