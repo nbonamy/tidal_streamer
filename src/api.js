@@ -452,7 +452,7 @@ module.exports = class {
       } catch (e) {
         throw new Error(`API Error: Invalid JSON response from ${url}`, await response.text());
       }
-      if (i != 0 || json.status != 401) {
+      if (i != 0 || json.httpStatus != 401) {
 
         // cache it
         cache[cacheKey] = {
@@ -465,7 +465,7 @@ module.exports = class {
 
       // try to renew token
       let auth = new Auth(this._settings)
-      let renewed = await auth.refreshToken()
+      let renewed = await auth.refreshToken(this._userAuth)
       if (renewed == false) {
         return json;
       }
