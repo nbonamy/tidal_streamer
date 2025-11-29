@@ -43,6 +43,7 @@ module.exports = class {
     this._settings = settings
     this._userAuth = userAuth || settings.getUser()
     this._countryCode = settings.countryCode || COUNTRY_CODE
+    this._refreshPromise = null // shared promise for token refresh
   }
 
   getApiBaseUrl() {
@@ -463,15 +464,25 @@ module.exports = class {
         return json;
       }
 
-      // try to renew token
-      let auth = new Auth(this._settings)
-      let renewed = await auth.refreshToken(this._userAuth)
+      // try to renew token - use shared promise to avoid parallel refresh attempts
+      if (!this._refreshPromise) {
+        this._refreshPromise = (async () => {
+          try {
+            console.log('Auth token expired, trying to renew...')
+            let auth = new Auth(this._settings)
+            let renewed = await auth.refreshToken(this._userAuth)
+            this._settings.reload()
+            return renewed
+          } finally {
+            this._refreshPromise = null
+          }
+        })()
+      }
+
+      let renewed = await this._refreshPromise
       if (renewed == false) {
         return json;
       }
-
-      // refresh settings
-      this._settings.reload()
 
     }
     
