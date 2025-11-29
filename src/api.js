@@ -421,8 +421,12 @@ module.exports = class {
       // call it
       let url = this._getUrl(baseUrl, path, params)
 
+      // create user-specific cache key
+      const userId = this._userAuth?.user?.id || 'default'
+      const cacheKey = `${userId}:${url}`
+
       // check in cache
-      const cached = cache[url]
+      const cached = cache[cacheKey]
       if (cached) {
         if (cached.expires > Date.now()) {
           console.log(`[CACHE] ${options?.method || 'GET'} ${url}`)
@@ -451,7 +455,7 @@ module.exports = class {
       if (i != 0 || json.status != 401) {
 
         // cache it
-        cache[url] = {
+        cache[cacheKey] = {
           expires: Date.now() + CACHE_EXPIRES,
           response: json
         }
