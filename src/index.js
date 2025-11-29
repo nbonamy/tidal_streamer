@@ -32,29 +32,25 @@ portfinder.getPort({ port: startPort },  async (err, port) => {
   // our server
   const app = express()
   app.use(express.json({limit: '50mb'}));
-
-  // OAuth callback promise - used to coordinate auth flow
-  let authResolver = null
-  const authPromise = new Promise((resolve, reject) => {
-    authResolver = { resolve, reject }
-  })
-
-  // OAuth callback route - handles redirect from Tidal
-  app.get('/callback', (req, res) => {
-    const { code, state, error, error_description } = req.query
-    if (error) {
-      authResolver.reject(new Error(error_description || error))
-      res.send('<h1>Authorization Failed</h1><p>Check the console for details. You can close this window.</p>')
-    } else {
-      authResolver.resolve({ code, state })
-      res.send('<h1>Authorization Successful!</h1><p>You can close this window and return to the terminal.</p>')
-    }
-  })
+  app.set('port', port)
 
   // logger middleware
   app.use((req,res,next) =>{
     if (req.path != '/status' && req.path != '/callback') {
       console.log(` [IN] ${req.method} ${req.path} ${JSON.stringify(req.query)}`)
+    }
+    next()
+  })
+
+  // auth routes (must be before user context middleware)
+  app.use('/', auth.routes())
+
+  // user context middleware - extracts user from X-User-Id header
+  app.use((req, res, next) => {
+    const userId = req.headers['x-user-id']
+    req.userAuth = settings.getUser(userId)
+    if (!req.userAuth && userId) {
+      return json_status(res, new Error(`User ${userId} not found`))
     }
     next()
   })
@@ -103,7 +99,7 @@ portfinder.getPort({ port: startPort },  async (err, port) => {
 
     // Handle authentication after server is running
     try {
-      const isAuthenticated = await auth.is_auth()
+      const isAuthenticated = await auth.isAuth()
 
       if (!isAuthenticated) {
         const authMethod = auth.getAuthMethod()
@@ -111,7 +107,7 @@ portfinder.getPort({ port: startPort },  async (err, port) => {
 
         if (authMethod === 'device') {
           // Device Authorization Flow
-          const device = await auth.start_device_authorization()
+          const device = await auth.startDeviceAuthorization()
 
           console.log('Please visit the following URL and enter the code:')
           console.log(`URL: ${device.verificationUri}`)
@@ -120,7 +116,7 @@ portfinder.getPort({ port: startPort },  async (err, port) => {
           console.log('Waiting for authorization...\n')
 
           // Poll for authorization
-          const user = await auth.poll_device_authorization(device.deviceCode, device.interval, device.expiresIn)
+          const user = await auth.pollDeviceAuthorization(device.deviceCode, device.interval, device.expiresIn)
           console.log(`\nAuthorization successful! ${user.username} authorized.`)
           console.log('Tidal streamer is ready.')
 
@@ -129,7 +125,7 @@ portfinder.getPort({ port: startPort },  async (err, port) => {
           console.log('Opening browser for authorization...\n')
 
           // Get authorization URL
-          const { authUrl } = await auth.start_authorization(port)
+          const { authUrl } = await auth.startAuthorization(port)
 
           // Open browser (using dynamic import for ES module)
           try {
@@ -144,10 +140,10 @@ portfinder.getPort({ port: startPort },  async (err, port) => {
           console.log('\nWaiting for authorization...')
 
           // Wait for callback
-          const { code, state: returnedState } = await authPromise
+          const { code, state: returnedState } = await auth.getAuthPromise()
 
           // Exchange code for tokens
-          await auth.exchange_code(code, returnedState, port)
+          await auth.exchangeCode(code, returnedState, port)
           console.log('\nAuthorization successful! Tidal streamer is ready.')
         }
       }

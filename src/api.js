@@ -39,8 +39,9 @@ const cache = {}
 
 module.exports = class {
 
-  constructor(settings) {
+  constructor(settings, userAuth = null) {
     this._settings = settings
+    this._userAuth = userAuth || settings.getUser()
     this._countryCode = settings.countryCode || COUNTRY_CODE
   }
 
@@ -53,7 +54,7 @@ module.exports = class {
   }
 
   getUserId() {
-    return this._settings.auth.user.id
+    return this._userAuth.user.id
   }
 
   async fetchUserArtists() {
@@ -190,7 +191,7 @@ module.exports = class {
   }
 
   async createPlaylist(title, description) {
-    return this._callApiV1(`/users/${this._settings.auth.user.id}/playlists`, { limit: LIMIT }, {
+    return this._callApiV1(`/users/${this.getUserId()}/playlists`, { limit: LIMIT }, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -460,7 +461,7 @@ module.exports = class {
 
       // try to renew token
       let auth = new Auth(this._settings)
-      let renewed = await auth.refresh_token()
+      let renewed = await auth.refreshToken()
       if (renewed == false) {
         return json;
       }
@@ -531,7 +532,7 @@ module.exports = class {
     return options
   }
 
-  _accessToken = () => this._settings.auth.access_token
-  _refreshToken = () => this._settings.auth.refresh_token
+  _accessToken = () => this._userAuth.access_token
+  _refreshToken = () => this._userAuth.refresh_token
 
 }

@@ -92,9 +92,10 @@ module.exports = class {
   }
 
   _connect() {
-    
-    // Wait for user id
-    if (this._settings?.auth?.user?.id == null) {
+
+    // Wait for user id (get first user for backward compat)
+    const user = this._settings.getUser()
+    if (!user?.user?.id) {
       this._retryTimer = setTimeout(() => this._connect(), CONNECT_WAIT_DELAY)
       return Promise.resolve()
     }
@@ -171,11 +172,12 @@ module.exports = class {
         connectionEstablished = true
         console.log(`[${this._device.description}] connected to ${this._device.ip}:${this._device.port}`)
         setTimeout(() => {
+          const user = this._settings.getUser()
           this._ws.send(JSON.stringify({
             command: 'startSession',
             appId: 'tidal',
             appName: 'tidal',
-            sessionCredential: this._settings.auth.user.id.toString()
+            sessionCredential: user.user.id.toString()
           }))
         }, 500)
         this._heartbeat = setInterval(() => {
@@ -431,8 +433,8 @@ module.exports = class {
     // log
     console.log(`Reloading queue ${queueId}`)
 
-    // we need an api
-    let api = new TidalApi(this._settings)
+    // we need an api (use first user for backward compat)
+    let api = new TidalApi(this._settings, this._settings.getUser())
 
     // fetch queue
     let queue = await api.fetchQueue(queueId)
@@ -444,7 +446,7 @@ module.exports = class {
     this._status.queue = queue
     this._status.tracks = tracks
     this._setStatusPosition()
-    
+
   }
 
   _getLastMediaPosition() {

@@ -14,98 +14,98 @@ module.exports = class {
     const router = express.Router()
 
     router.get('/info/album/:id', (req, res, next) => {
-      this.getAlbumInfo(req.params.id)
+      this.getAlbumInfo(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/info/playlist/:id', (req, res, next) => {
-      this.getPlaylistInfo(req.params.id)
+      this.getPlaylistInfo(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/info/artist/:id', (req, res, next) => {
-      this.getArtistInfo(req.params.id)
+      this.getArtistInfo(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/info/artist/:id/albums', (req, res, next) => {
-      this.getArtistAlbums(req.params.id)
+      this.getArtistAlbums(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/info/artist/:id/live', (req, res, next) => {
-      this.getArtistLiveAlbums(req.params.id)
+      this.getArtistLiveAlbums(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/info/artist/:id/singles', (req, res, next) => {
-      this.getArtistSingles(req.params.id)
+      this.getArtistSingles(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/info/artist/:id/compilations', (req, res, next) => {
-      this.getArtistCompilations(req.params.id)
+      this.getArtistCompilations(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/info/artist/:id/toptracks', (req, res, next) => {
-      this.getArtistTopTracks(req.params.id)
+      this.getArtistTopTracks(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/info/artist/:id/radio', (req, res, next) => {
-      this.getArtistRadio(req.params.id)
+      this.getArtistRadio(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/info/artist/:id/similar', (req, res, next) => {
-      this.getSimilarArtists(req.params.id)
+      this.getSimilarArtists(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/info/genres', (req, res, next) => {
-      this.getGenres(req.query.countryCode)
+      this.getGenres(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/info/genre/:id/tracks', (req, res, next) => {
-      this.getGenreTracks(req.params.id)
+      this.getGenreTracks(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/info/mix/:id/tracks', (req, res, next) => {
-      this.getMixTracks(req.params.id)
+      this.getMixTracks(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get(['/lyrics/:id', '/info/track/:id/lyrics'], (req, res, next) => {
-      this.getTrackLyrics(req.params.id)
+      this.getTrackLyrics(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/info/track/:id/radio', (req, res, next) => {
-      this.getTrackRadio(req.params.id)
+      this.getTrackRadio(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/info/track/:id/url', async (req, res) => {
       try {
-        let api = new TidalApi(this._settings)
+        let api = new TidalApi(this._settings, req.userAuth)
         let quality = req.query.quality || 'LOSSLESS'  // HIGH, LOSSLESS, HI_RES_LOSSLESS
         let streamInfo = await api.fetchTrackStreamUrl(req.params.id, quality)
         res.json(streamInfo)
@@ -115,25 +115,25 @@ module.exports = class {
     })
 
     router.get('/search/artist', (req, res, next) => {
-      this.searchArtists(req.query.query)
+      this.searchArtists(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/search/album', (req, res, next) => {
-      this.searchAlbums(req.query.query)
+      this.searchAlbums(req)
       .then((result) => json_status(res, null, result))
       .catch(err => next(err))
     })
 
     router.get('/search/track', (req, res, next) => {
-      this.searchTracks(req.query.query)
+      this.searchTracks(req)
       .then((result) => json_status(res, null, result))
       .catch(err => next(err))
     })
 
     router.get('/search/track/digest', (req, res, next) => {
-      this.searchTracks(req.query.query)
+      this.searchTracks(req)
       .then((result) => {
         result = result.items.map((i) => { return {
           id: i.id,
@@ -145,9 +145,9 @@ module.exports = class {
       })
       .catch(err => next(err))
     })
-    
+
     router.get('/api/*', (req, res, next) => {
-      this.apiProxy(req.path.substring(4), req.query)
+      this.apiProxy(req)
       .then((result) => json_status(res, null, result))
       .catch(err => next(err))
     })
@@ -156,124 +156,124 @@ module.exports = class {
 
   }
 
-  async getAlbumInfo(albumId) {
-    let api = new TidalApi(this._settings)
-    let info = await api.fetchAlbumInfo(albumId)
-    let tracks = await api.fetchAlbumTracks(albumId)
+  async getAlbumInfo(req) {
+    let api = new TidalApi(this._settings, req.userAuth)
+    let info = await api.fetchAlbumInfo(req.params.id)
+    let tracks = await api.fetchAlbumTracks(req.params.id)
     return {
       ...info,
       ...tracks
     }
   }
-  
-  async getPlaylistInfo(playlistId) {
-    let api = new TidalApi(this._settings)
-    let tracks = await api.fetchPlaylistTracks(playlistId)
+
+  async getPlaylistInfo(req) {
+    let api = new TidalApi(this._settings, req.userAuth)
+    let tracks = await api.fetchPlaylistTracks(req.params.id)
     return tracks
   }
-  
-  async getTrackLyrics(trackId) {
-    let api = new TidalApi(this._settings)
-    let lyrics = await api.fetchTrackLyrics(trackId)
+
+  async getTrackLyrics(req) {
+    let api = new TidalApi(this._settings, req.userAuth)
+    let lyrics = await api.fetchTrackLyrics(req.params.id)
     return lyrics
   }
 
-  async searchArtists(query) {
-    let api = new TidalApi(this._settings)
-    let results = await api.search('artists', query)
+  async searchArtists(req) {
+    let api = new TidalApi(this._settings, req.userAuth)
+    let results = await api.search('artists', req.query.query)
     return results
   }
 
-  async searchAlbums(query) {
-    let api = new TidalApi(this._settings)
-    let results = await api.search('albums', query)
+  async searchAlbums(req) {
+    let api = new TidalApi(this._settings, req.userAuth)
+    let results = await api.search('albums', req.query.query)
     return results
   }
 
-  async searchTracks(query) {
-    let api = new TidalApi(this._settings)
-    let results = await api.search('tracks', query)
+  async searchTracks(req) {
+    let api = new TidalApi(this._settings, req.userAuth)
+    let results = await api.search('tracks', req.query.query)
     return results
   }
 
-  async getArtistInfo(artistId) {
-    let api = new TidalApi(this._settings)
-    let results = await api.fetchArtistInfo(artistId)
+  async getArtistInfo(req) {
+    let api = new TidalApi(this._settings, req.userAuth)
+    let results = await api.fetchArtistInfo(req.params.id)
     return results
   }
 
-  async getArtistAlbums(artistId) {
-    let api = new TidalApi(this._settings)
-    let results = await api.fetchArtistAlbums(artistId)
-    //let results = await api.fetchArtistRelationShip(artistId, 'Featured Albums')
+  async getArtistAlbums(req) {
+    let api = new TidalApi(this._settings, req.userAuth)
+    let results = await api.fetchArtistAlbums(req.params.id)
+    //let results = await api.fetchArtistRelationShip(req.params.id, 'Featured Albums')
     return this.deduplicateAlbums(results)
   }
 
-  async getArtistLiveAlbums(artistId) {
-    let api = new TidalApi(this._settings)
-    let results = await api.fetchArtistRelationShip(artistId, 'Live albums')
+  async getArtistLiveAlbums(req) {
+    let api = new TidalApi(this._settings, req.userAuth)
+    let results = await api.fetchArtistRelationShip(req.params.id, 'Live albums')
     return this.deduplicateAlbums(results)
   }
 
-  async getArtistSingles(artistId) {
-    let api = new TidalApi(this._settings)
-    let results = await api.fetchArtistAlbums(artistId, { filter: 'EPSANDSINGLES' })
-    //let results = await api.fetchArtistRelationShip(artistId, 'EP & Singles')
+  async getArtistSingles(req) {
+    let api = new TidalApi(this._settings, req.userAuth)
+    let results = await api.fetchArtistAlbums(req.params.id, { filter: 'EPSANDSINGLES' })
+    //let results = await api.fetchArtistRelationShip(req.params.id, 'EP & Singles')
     return this.deduplicateAlbums(results)
   }
 
-  async getArtistCompilations(artistId) {
-    let api = new TidalApi(this._settings)
-    let results = await api.fetchArtistAlbums(artistId, { filter: 'COMPILATIONS' })
-    //let results = await api.fetchArtistRelationShip(artistId, 'Appears On')
+  async getArtistCompilations(req) {
+    let api = new TidalApi(this._settings, req.userAuth)
+    let results = await api.fetchArtistAlbums(req.params.id, { filter: 'COMPILATIONS' })
+    //let results = await api.fetchArtistRelationShip(req.params.id, 'Appears On')
     return this.deduplicateAlbums(results)
   }
 
-  async getArtistTopTracks(artistId) {
-    let api = new TidalApi(this._settings)
-    let results = await api.fetchArtistTopTracks(artistId)
+  async getArtistTopTracks(req) {
+    let api = new TidalApi(this._settings, req.userAuth)
+    let results = await api.fetchArtistTopTracks(req.params.id)
     return results
   }
 
-  async getArtistRadio(artistId) {
-    let api = new TidalApi(this._settings)
-    let results = await api.fetchArtistRadio(artistId)
+  async getArtistRadio(req) {
+    let api = new TidalApi(this._settings, req.userAuth)
+    let results = await api.fetchArtistRadio(req.params.id)
     return results
   }
 
-  async getSimilarArtists(artistId) {
-    let api = new TidalApi(this._settings)
-    let results = await api.fetchSimilarArtists(artistId)
+  async getSimilarArtists(req) {
+    let api = new TidalApi(this._settings, req.userAuth)
+    let results = await api.fetchSimilarArtists(req.params.id)
     return results
   }
 
-  async getGenres(countryCode) {
-    let api = new TidalApi(this._settings)
-    let results = await api.fetchGenres(countryCode)
+  async getGenres(req) {
+    let api = new TidalApi(this._settings, req.userAuth)
+    let results = await api.fetchGenres(req.query.countryCode)
     return results
   }
 
-  async getGenreTracks(genreId) {
-    let api = new TidalApi(this._settings)
-    let results = await api.fetchGenreTracks(genreId)
+  async getGenreTracks(req) {
+    let api = new TidalApi(this._settings, req.userAuth)
+    let results = await api.fetchGenreTracks(req.params.id)
     return results
   }
 
-  async getMixTracks(mixId) {
-    let api = new TidalApi(this._settings)
-    let results = await api.fetchMixTracks(mixId)
+  async getMixTracks(req) {
+    let api = new TidalApi(this._settings, req.userAuth)
+    let results = await api.fetchMixTracks(req.params.id)
     return results.items
   }
 
-  async getTrackRadio(trackId) {
-    let api = new TidalApi(this._settings)
-    let results = await api.fetchTrackRadio(trackId)
+  async getTrackRadio(req) {
+    let api = new TidalApi(this._settings, req.userAuth)
+    let results = await api.fetchTrackRadio(req.params.id)
     return results
   }
 
-  async apiProxy(path, query) {
-    let api = new TidalApi(this._settings)
-    let results = await api.proxy(path, query)
+  async apiProxy(req) {
+    let api = new TidalApi(this._settings, req.userAuth)
+    let results = await api.proxy(req.path.substring(4), req.query)
     return results
   }
 

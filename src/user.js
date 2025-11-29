@@ -14,62 +14,62 @@ module.exports = class {
     const router = express.Router()
 
     router.get('/user/home', (req, res, next) => {
-      this.getUserFeed()
+      this.getUserFeed(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/user/feed', (req, res, next) => {
-      this.getUserFeed()
+      this.getUserFeed(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/user/module/:moduleId', (req, res, next) => {
-      this.getFeedModule(req.params.moduleId)
+      this.getFeedModule(req.params.moduleId, req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/user/shortcuts', (req, res, next) => {
-      this.getUserShortcuts()
+      this.getUserShortcuts(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/user/artists', (req, res, next) => {
-      this.getUserArtists()
+      this.getUserArtists(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/user/albums', (req, res, next) => {
-      this.getUserAlbums()
+      this.getUserAlbums(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/user/playlists', (req, res, next) => {
-      this.getUserPlaylists()
+      this.getUserPlaylists(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/user/tracks', (req, res, next) => {
-      this.getUserTracks()
+      this.getUserTracks(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
 
     router.get('/user/new/albums', (req, res, next) => {
-      this.getNewAlbums()
+      this.getNewAlbums(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/user/new/tracks', (req, res, next) => {
-      this.getNewTracks()
+      this.getNewTracks(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
@@ -81,73 +81,73 @@ module.exports = class {
     // })
 
     router.get('/user/recent/artists', (req, res, next) => {
-      this.getRecentArtists()
+      this.getRecentArtists(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/user/recommended/albums', (req, res, next) => {
-      this.getRecommendedAlbums()
+      this.getRecommendedAlbums(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/user/forgotten/albums', (req, res, next) => {
-      this.getForgottenAlbums()
+      this.getForgottenAlbums(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/user/playlists/popular', (req, res, next) => {
-      this.getPopularPlaylists()
+      this.getPopularPlaylists(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/user/playlists/essential', (req, res, next) => {
-      this.getEssentialPlaylists()
+      this.getEssentialPlaylists(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/user/playlists/updated', (req, res, next) => {
-      this.getUpdatedPlaylists()
+      this.getUpdatedPlaylists(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/user/playlists/recommended', (req, res, next) => {
-      this.getRecommendedPlaylists()
+      this.getRecommendedPlaylists(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/user/mixes/history', (req, res, next) => {
-      this.getHistoryMixes()
+      this.getHistoryMixes(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/user/mixes/daily', (req, res, next) => {
-      this.getDailyMixes()
+      this.getDailyMixes(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/user/mixes/radio', (req, res, next) => {
-      this.getRadioMixes()
+      this.getRadioMixes(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/user/tracks/spotlighted', (req, res, next) => {
-      this.getSpotlightedTracks()
+      this.getSpotlightedTracks(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
 
     router.get('/user/tracks/uploads', (req, res, next) => {
-      this.getUploadsTracks()
+      this.getUploadsTracks(req)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
@@ -156,109 +156,109 @@ module.exports = class {
 
   }
 
-  async getUserHome() {
-    const api = new TidalApi(this._settings)
+  async getUserHome(req) {
+    const api = new TidalApi(this._settings, req.userAuth)
     const home = await api.proxy('/pages/home', { deviceType: 'PHONE' })
     return home
   }
 
-  async getUserFeed() {
-    const api = new TidalApi(this._settings)
+  async getUserFeed(req) {
+    const api = new TidalApi(this._settings, req.userAuth)
     const feed = api.fetchHomeStaticFeed()
     return feed
   }
 
-  async getUserShortcuts() {
-    return await this.getFeedModule('SHORTCUT_LIST')
+  async getUserShortcuts(req) {
+    return await this.getFeedModule('SHORTCUT_LIST', req)
   }
 
-  async getUserArtists() {
-    const api = new TidalApi(this._settings)
+  async getUserArtists(req) {
+    const api = new TidalApi(this._settings, req.userAuth)
     const artists = await api.fetchUserArtists()
     return artists
   }
 
-  async getUserAlbums() {
-    const api = new TidalApi(this._settings)
+  async getUserAlbums(req) {
+    const api = new TidalApi(this._settings, req.userAuth)
     const albums = await api.fetchUserAlbums()
     return albums
   }
 
-  async getUserPlaylists() {
-    const api = new TidalApi(this._settings)
+  async getUserPlaylists(req) {
+    const api = new TidalApi(this._settings, req.userAuth)
     const playlists = await api.fetchUserPlaylists()
     return playlists
   }
 
-  async getUserTracks() {
-    const api = new TidalApi(this._settings)
+  async getUserTracks(req) {
+    const api = new TidalApi(this._settings, req.userAuth)
     const tracks = await api.fetchUserTracks()
     return tracks
   }
 
 
-  async getNewAlbums() {
-    return await this.getFeedModule('NEW_ALBUM_SUGGESTIONS')
+  async getNewAlbums(req) {
+    return await this.getFeedModule('NEW_ALBUM_SUGGESTIONS', req)
   }
 
-  async getNewTracks() {
-    return await this.getFeedModule('NEW_TRACK_SUGGESTIONS')
+  async getNewTracks(req) {
+    return await this.getFeedModule('NEW_TRACK_SUGGESTIONS', req)
   }
-  
+
   // async getRecentAlbums() {
   //   return await this.getFeedModule('CONTINUE_LISTEN_TO')
   // }
 
-  async getRecentArtists() {
-    return await this.getFeedModule('YOUR_FAVORITE_ARTISTS')
+  async getRecentArtists(req) {
+    return await this.getFeedModule('YOUR_FAVORITE_ARTISTS', req)
   }
 
-  async getRecommendedAlbums() {
-    return await this.getFeedModule('ALBUM_RECOMMENDATIONS')
+  async getRecommendedAlbums(req) {
+    return await this.getFeedModule('ALBUM_RECOMMENDATIONS', req)
   }
 
-  async getForgottenAlbums() {
-    return await this.getFeedModule('FORGOTTEN_FAVORITES')
+  async getForgottenAlbums(req) {
+    return await this.getFeedModule('FORGOTTEN_FAVORITES', req)
   }
 
-  async getPopularPlaylists() {
-    return await this.getFeedModule('POPULAR_PLAYLISTS')
+  async getPopularPlaylists(req) {
+    return await this.getFeedModule('POPULAR_PLAYLISTS', req)
   }
 
-  async getEssentialPlaylists() {
-    return await this.getFeedModule('SUGGESTED_ESSENTIAL_PLAYLISTS')
+  async getEssentialPlaylists(req) {
+    return await this.getFeedModule('SUGGESTED_ESSENTIAL_PLAYLISTS', req)
   }
 
-  async getUpdatedPlaylists() {
-    return await this.getFeedModule('RECENTLY_UPDATED_FAVORITED_PLAYLIST')
+  async getUpdatedPlaylists(req) {
+    return await this.getFeedModule('RECENTLY_UPDATED_FAVORITED_PLAYLIST', req)
   }
 
-  async getRecommendedPlaylists() {
-    return await this.getFeedModule('RECOMMENDED_USERS_PLAYLISTS')
+  async getRecommendedPlaylists(req) {
+    return await this.getFeedModule('RECOMMENDED_USERS_PLAYLISTS', req)
   }
 
-  async getHistoryMixes() {
-    return await this.getFeedModule('HISTORY_MIXES')
+  async getHistoryMixes(req) {
+    return await this.getFeedModule('HISTORY_MIXES', req)
   }
 
-  async getDailyMixes() {
-    return await this.getFeedModule('DAILY_MIXES')
+  async getDailyMixes(req) {
+    return await this.getFeedModule('DAILY_MIXES', req)
   }
 
-  async getRadioMixes() {
-    return await this.getFeedModule('SUGGESTED_RADIOS_MIXES')
+  async getRadioMixes(req) {
+    return await this.getFeedModule('SUGGESTED_RADIOS_MIXES', req)
   }
 
-  async getSpotlightedTracks() {
-    return await this.getFeedModule('LATEST_SPOTLIGHTED_TRACKS')
+  async getSpotlightedTracks(req) {
+    return await this.getFeedModule('LATEST_SPOTLIGHTED_TRACKS', req)
   }
 
-  async getUploadsTracks() {
-    return await this.getFeedModule('UPLOADS_FOR_YOU')
+  async getUploadsTracks(req) {
+    return await this.getFeedModule('UPLOADS_FOR_YOU', req)
   }
 
-  async getFeedModule(moduleId) {
-    const api = new TidalApi(this._settings)
+  async getFeedModule(moduleId, req) {
+    const api = new TidalApi(this._settings, req.userAuth)
     const feed = await api.fetchHomeStaticFeed()
     const module = feed.items.find((item) => item.moduleId === moduleId)
     if (!module) {
