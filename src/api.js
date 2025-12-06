@@ -8,7 +8,7 @@ const AUTH_BASE_URL = 'https://auth.tidal.com/v1/oauth2'
 const API_V1_BASE_URL = 'https://api.tidal.com/v1'
 const API_V2_BASE_URL = 'https://listen.tidal.com/v2'
 const QUEUE_BASE_URL = 'https://connectqueue.tidal.com/v1'
-const CACHE_EXPIRES = 24 * 60 * 60 * 1000
+const CACHE_EXPIRES = 1 * 60 * 60 * 1000
 
 // api limits
 const COUNTRY_CODE = 'US'

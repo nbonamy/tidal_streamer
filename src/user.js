@@ -260,9 +260,13 @@ module.exports = class {
   async getFeedModule(moduleId, req) {
     const api = new TidalApi(this._settings, req.userAuth)
     const feed = await api.fetchHomeStaticFeed()
+    if (!feed || !feed.items) {
+      console.warn('User feed is empty or invalid', JSON.stringify(feed))
+      return []
+    }
     const module = feed.items.find((item) => item.moduleId === moduleId)
     if (!module) {
-      console.warn(`Module ${moduleId} not found in user feed`)
+      console.warn(`Module ${moduleId} not found in user feed`, JSON.stringify(feed))
       return []
     }
     if (module.viewAll) {
