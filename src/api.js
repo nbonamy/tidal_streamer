@@ -446,43 +446,52 @@ module.exports = class {
         }
       }
 
-      // parse and check auth
+      // parse response
       let json = null
       try {
         json = await response.json();
       } catch (e) {
         throw new Error(`API Error: Invalid JSON response from ${url}`, await response.text());
       }
-      if (i != 0 || json.httpStatus != 401) {
 
-        // cache it
-        cache[cacheKey] = {
-          expires: Date.now() + CACHE_EXPIRES,
-          response: json
+      // if 401 and first iteration, try to renew token
+      if (json.httpStatus === 401 && i === 0) {
+
+        // use shared promise to avoid parallel refresh attempts
+        if (!this._refreshPromise) {
+          this._refreshPromise = (async () => {
+            try {
+              console.log('Auth token expired, trying to renew...')
+              let auth = new Auth(this._settings)
+              let renewed = await auth.refreshToken(this._userAuth)
+              this._settings.reload()
+              return renewed
+            } finally {
+              this._refreshPromise = null
+            }
+          })()
         }
 
-        return json;
+        let renewed = await this._refreshPromise
+        if (!renewed) {
+          return json
+        }
+
+        // retry with renewed token
+        continue
       }
 
-      // try to renew token - use shared promise to avoid parallel refresh attempts
-      if (!this._refreshPromise) {
-        this._refreshPromise = (async () => {
-          try {
-            console.log('Auth token expired, trying to renew...')
-            let auth = new Auth(this._settings)
-            let renewed = await auth.refreshToken(this._userAuth)
-            this._settings.reload()
-            return renewed
-          } finally {
-            this._refreshPromise = null
-          }
-        })()
+      // if error, return it
+      if (json.error || json.httpStatus) {
+        return json
       }
 
-      let renewed = await this._refreshPromise
-      if (renewed == false) {
-        return json;
+      // success: cache and return
+      cache[cacheKey] = {
+        expires: Date.now() + CACHE_EXPIRES,
+        response: json
       }
+      return json
 
     }
     
