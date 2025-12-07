@@ -429,7 +429,7 @@ module.exports = class {
       // check in cache
       const cached = cache[cacheKey]
       if (cached) {
-        if (cached.expires > Date.now()) {
+        if (Date.now() < cached.expires) {
           console.log(`[CACHE] ${options?.method || 'GET'} ${url}`)
           return cached.response
         }
@@ -455,7 +455,7 @@ module.exports = class {
       }
 
       // if 401 and first iteration, try to renew token
-      if (json.httpStatus === 401 && i === 0) {
+      if ((response.status === 401 || json.httpStatus === 401 || json.status === 401) && i === 0) {
 
         // use shared promise to avoid parallel refresh attempts
         if (!this._refreshPromise) {
@@ -482,7 +482,7 @@ module.exports = class {
       }
 
       // if error, return it
-      if (json.error || json.httpStatus) {
+      if (json.error) {
         return json
       }
 

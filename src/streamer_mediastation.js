@@ -299,7 +299,7 @@ module.exports = class {
         let api = new TidalApi(this._settings)
         let quality = req.query.quality || 'LOSSLESS'
 
-        console.log(`Fetching stream URL for track ${req.params.trackId} (quality: ${quality})`)
+        // console.log(`Fetching stream URL for track ${req.params.trackId} (quality: ${quality})`)
 
         let streamInfo = await api.fetchTrackStreamUrl(req.params.trackId, quality)
 
@@ -308,7 +308,7 @@ module.exports = class {
         }
 
         // Redirect to actual Tidal stream URL
-        console.log(`Redirecting to Tidal stream URL for track ${req.params.trackId}`)
+        // console.log(`Redirecting to Tidal stream URL for track ${req.params.trackId}`)
         res.redirect(302, streamInfo.urls[0])
       } catch (err) {
         console.error(`Failed to fetch stream URL for track ${req.params.trackId}:`, err)
