@@ -472,21 +472,24 @@ module.exports = class {
   }
 
   async _enrichCurrentTrack() {
+    // DEBUG: confirm function is called
+    const debugStart = { called: true, position: this._status.position, tracksLength: this._status.tracks?.length }
+
     // get current track
     const position = this._status.position
     if (position < 0 || position >= this._status.tracks.length) {
-      return { error: 'invalid position', position, tracksLength: this._status.tracks.length }
+      return { ...debugStart, error: 'invalid position' }
     }
 
     const track = this._status.tracks[position]?.item
     if (!track?.id) {
-      return { error: 'no track id', track }
+      return { ...debugStart, error: 'no track id' }
     }
 
     // check cache
     if (this._enrichedTrackId === track.id) {
       this._applyEnrichedData(track)
-      return { status: 'cached', trackId: track.id }
+      return { ...debugStart, status: 'cached', trackId: track.id }
     }
 
     // fetch full track info
@@ -496,7 +499,7 @@ module.exports = class {
 
       // check for API error
       if (fullTrack.error || fullTrack.httpStatus || !fullTrack.album) {
-        return { error: 'api error', fullTrack }
+        return { ...debugStart, error: 'api error', response: fullTrack }
       }
 
       // cache it
@@ -509,10 +512,10 @@ module.exports = class {
 
       // apply
       this._applyEnrichedData(track)
-      return { status: 'enriched', trackId: track.id, albumId: fullTrack.album?.id, artistId: fullTrack.artist?.id }
+      return { ...debugStart, status: 'enriched', trackId: track.id, albumId: fullTrack.album?.id, artistId: fullTrack.artist?.id }
 
     } catch (e) {
-      return { error: 'exception', message: e.message }
+      return { ...debugStart, error: 'exception', message: e.message }
     }
   }
 
