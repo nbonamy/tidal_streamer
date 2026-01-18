@@ -40,7 +40,8 @@ module.exports = class {
     return this._device
   }
 
-  status() {
+  async status() {
+    await this._enrichCurrentTrack()
     return this._status
   }
 

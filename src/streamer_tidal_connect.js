@@ -44,8 +44,8 @@ module.exports = class {
       res.json('pong')
     })
 
-    router.get('/status', (req, res) => {
-      let status = req.device.connect?.status()
+    router.get('/status', async (req, res) => {
+      let status = await req.device.connect?.status()
       if (this._settings.volume?.up != null) {
         status.volume.level = -1
       }
