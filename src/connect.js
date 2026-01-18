@@ -41,10 +41,7 @@ module.exports = class {
   }
 
   async status() {
-    console.log('status() called')
-    const debug = await this._enrichCurrentTrack()
-    console.log('enrichCurrentTrack returned:', debug)
-    this._status._debug = debug
+    await this._enrichCurrentTrack()
     return this._status
   }
 
@@ -474,34 +471,39 @@ module.exports = class {
   }
 
   async _enrichCurrentTrack() {
-    // DEBUG: confirm function is called
-    const debugStart = { called: true, position: this._status.position, tracksLength: this._status.tracks?.length }
-
-    // get current track
     const position = this._status.position
+    console.log(`[enrich] position=${position}, tracks=${this._status.tracks?.length}`)
+
     if (position < 0 || position >= this._status.tracks.length) {
-      return { ...debugStart, error: 'invalid position' }
+      console.log('[enrich] invalid position')
+      return
     }
 
     const track = this._status.tracks[position]?.item
     if (!track?.id) {
-      return { ...debugStart, error: 'no track id' }
+      console.log('[enrich] no track id')
+      return
     }
+
+    console.log(`[enrich] track.id=${track.id}, cached=${this._enrichedTrackId}`)
 
     // check cache
     if (this._enrichedTrackId === track.id) {
       this._applyEnrichedData(track)
-      return { ...debugStart, status: 'cached', trackId: track.id }
+      console.log('[enrich] using cache')
+      return
     }
 
     // fetch full track info
     try {
       const api = new TidalApi(this._settings, this._settings.getUser())
+      console.log(`[enrich] fetching track info for ${track.id}`)
       const fullTrack = await api.fetchTrackInfo(track.id)
+      console.log(`[enrich] got response: album.id=${fullTrack.album?.id}, error=${fullTrack.error}`)
 
-      // check for API error
       if (fullTrack.error || fullTrack.httpStatus || !fullTrack.album) {
-        return { ...debugStart, error: 'api error', response: fullTrack }
+        console.log('[enrich] API error:', fullTrack)
+        return
       }
 
       // cache it
@@ -514,10 +516,10 @@ module.exports = class {
 
       // apply
       this._applyEnrichedData(track)
-      return { ...debugStart, status: 'enriched', trackId: track.id, albumId: fullTrack.album?.id, artistId: fullTrack.artist?.id }
+      console.log(`[enrich] SUCCESS album.id=${fullTrack.album?.id}, artist.id=${fullTrack.artist?.id}`)
 
     } catch (e) {
-      return { ...debugStart, error: 'exception', message: e.message }
+      console.log('[enrich] exception:', e.message)
     }
   }
 
