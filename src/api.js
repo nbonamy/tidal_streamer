@@ -80,17 +80,21 @@ module.exports = class {
   }
 
   async addTrackFavorite(trackId) {
-    return this._callApiV1(`/users/${this.getUserId()}/favorites/tracks`, {}, {
+    const url = this._getUrl(API_V1_BASE_URL, `/users/${this.getUserId()}/favorites/tracks`, {})
+    const response = await fetch(url, this._getFetchOptions({
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `trackIds=${trackId}`
-    })
+    }))
+    return { success: response.ok, status: response.status }
   }
 
   async removeTrackFavorite(trackId) {
-    return this._callApiV1(`/users/${this.getUserId()}/favorites/tracks/${trackId}`, {}, {
+    const url = this._getUrl(API_V1_BASE_URL, `/users/${this.getUserId()}/favorites/tracks/${trackId}`, {})
+    const response = await fetch(url, this._getFetchOptions({
       method: 'DELETE'
-    })
+    }))
+    return { success: response.ok, status: response.status }
   }
 
   async fetchTrackInfo(trackId) {
