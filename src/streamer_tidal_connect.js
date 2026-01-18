@@ -45,7 +45,9 @@ module.exports = class {
     })
 
     router.get('/status', async (req, res) => {
+      console.log('[status route] called, connect exists:', !!req.device.connect)
       let status = await req.device.connect?.status()
+      console.log('[status route] got status')
       if (this._settings.volume?.up != null) {
         status.volume.level = -1
       }
