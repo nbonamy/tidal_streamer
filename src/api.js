@@ -74,15 +74,21 @@ module.exports = class {
     return await this._fetchAll(`/users/${this.getUserId()}/favorites/tracks`)
   }
 
+  async isTrackFavorite(trackId) {
+    // Fetch favorites and check if track is in the list
+    const favorites = await this.fetchUserTracks()
+    return favorites?.items?.some(item => item.item?.id == trackId) || false
+  }
+
   async toggleTrackFavorite(trackId) {
-    // Try to remove first
-    const removeResult = await this.removeTrackFavorite(trackId)
-    if (removeResult.success) {
+    const isFavorite = await this.isTrackFavorite(trackId)
+    if (isFavorite) {
+      await this.removeTrackFavorite(trackId)
       return { favorite: false }
+    } else {
+      await this.addTrackFavorite(trackId)
+      return { favorite: true }
     }
-    // If remove failed (404 = not a favorite), add it
-    const addResult = await this.addTrackFavorite(trackId)
-    return { favorite: addResult.success }
   }
 
   async addTrackFavorite(trackId) {
