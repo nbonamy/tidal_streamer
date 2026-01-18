@@ -74,6 +74,25 @@ module.exports = class {
     return await this._fetchAll(`/users/${this.getUserId()}/favorites/tracks`)
   }
 
+  async isTrackFavorite(trackId) {
+    const favorites = await this._callApiV1(`/users/${this.getUserId()}/favorites/tracks`, { limit: 1, trackIds: trackId })
+    return favorites?.items?.length > 0
+  }
+
+  async addTrackFavorite(trackId) {
+    return this._callApiV1(`/users/${this.getUserId()}/favorites/tracks`, {}, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `trackIds=${trackId}`
+    })
+  }
+
+  async removeTrackFavorite(trackId) {
+    return this._callApiV1(`/users/${this.getUserId()}/favorites/tracks/${trackId}`, {}, {
+      method: 'DELETE'
+    })
+  }
+
   async fetchTrackInfo(trackId) {
     return this._callApiV1(`/tracks/${trackId}`)
   }
