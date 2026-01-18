@@ -61,6 +61,24 @@ module.exports = class {
         .catch(err => next(err))
     })
 
+    router.post('/user/tracks/:trackId/favorite/toggle', (req, res, next) => {
+      this.toggleTrackFavorite(req, req.params.trackId)
+        .then((result) => json_status(res, null, result))
+        .catch(err => next(err))
+    })
+
+    router.post('/user/tracks/:trackId/favorite', (req, res, next) => {
+      this.addTrackFavorite(req, req.params.trackId)
+        .then((result) => json_status(res, null, result))
+        .catch(err => next(err))
+    })
+
+    router.delete('/user/tracks/:trackId/favorite', (req, res, next) => {
+      this.removeTrackFavorite(req, req.params.trackId)
+        .then((result) => json_status(res, null, result))
+        .catch(err => next(err))
+    })
+
 
     router.get('/user/new/albums', (req, res, next) => {
       this.getNewAlbums(req)
@@ -196,6 +214,20 @@ module.exports = class {
     return tracks
   }
 
+  async toggleTrackFavorite(req, trackId) {
+    const api = new TidalApi(this._settings, req.userAuth)
+    return await api.toggleTrackFavorite(trackId)
+  }
+
+  async addTrackFavorite(req, trackId) {
+    const api = new TidalApi(this._settings, req.userAuth)
+    return await api.addTrackFavorite(trackId)
+  }
+
+  async removeTrackFavorite(req, trackId) {
+    const api = new TidalApi(this._settings, req.userAuth)
+    return await api.removeTrackFavorite(trackId)
+  }
 
   async getNewAlbums(req) {
     return await this.getFeedModule('NEW_ALBUM_SUGGESTIONS', req)

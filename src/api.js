@@ -74,6 +74,52 @@ module.exports = class {
     return await this._fetchAll(`/users/${this.getUserId()}/favorites/tracks`)
   }
 
+  async isTrackFavorite(trackId) {
+    // Fetch favorites and check if track is in the list
+    const favorites = await this.fetchUserTracks()
+    return favorites?.items?.some(item => item.item?.id == trackId) || false
+  }
+
+  async toggleTrackFavorite(trackId) {
+    const isFavorite = await this.isTrackFavorite(trackId)
+    if (isFavorite) {
+      await this.removeTrackFavorite(trackId)
+      return { favorite: false }
+    } else {
+      await this.addTrackFavorite(trackId)
+      return { favorite: true }
+    }
+  }
+
+  _clearFavoritesCache() {
+    const userId = this._userAuth?.user?.id || 'default'
+    for (const key of Object.keys(cache)) {
+      if (key.startsWith(`${userId}:`) && key.includes('/favorites/tracks')) {
+        delete cache[key]
+      }
+    }
+  }
+
+  async addTrackFavorite(trackId) {
+    const url = this._getUrl(API_V1_BASE_URL, `/users/${this.getUserId()}/favorites/tracks`, {})
+    const response = await fetch(url, this._getFetchOptions({
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `trackIds=${trackId}`
+    }))
+    this._clearFavoritesCache()
+    return { success: response.ok, status: response.status }
+  }
+
+  async removeTrackFavorite(trackId) {
+    const url = this._getUrl(API_V1_BASE_URL, `/users/${this.getUserId()}/favorites/tracks/${trackId}`, {})
+    const response = await fetch(url, this._getFetchOptions({
+      method: 'DELETE'
+    }))
+    this._clearFavoritesCache()
+    return { success: response.ok, status: response.status }
+  }
+
   async fetchTrackInfo(trackId) {
     return this._callApiV1(`/tracks/${trackId}`)
   }
