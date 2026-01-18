@@ -15,6 +15,8 @@ module.exports = class {
     this._wss = null
     this._pollInterval = null
     this._lastStatus = null
+    this._enrichedTrackId = null
+    this._enrichedTrackData = null
     this._discoverPods()
   }
 
@@ -74,6 +76,7 @@ module.exports = class {
         let mediaStatus = await response.json()
         if (req.query.format === 'tidal') {
           let tidalStatus = this._transformStatus(mediaStatus)
+          await this._enrichCurrentTrack(tidalStatus)
           res.json(tidalStatus)
         } else {
           res.json(mediaStatus)
@@ -592,6 +595,46 @@ module.exports = class {
     if (this._wss) {
       this._wss.close()
       this._wss = null
+    }
+  }
+
+  async _enrichCurrentTrack(status) {
+    const position = status.position
+    if (position < 0 || position >= status.tracks.length) return
+
+    const track = status.tracks[position]?.item
+    if (!track?.id) return
+
+    // check cache
+    if (this._enrichedTrackId === track.id) {
+      if (this._enrichedTrackData.album) track.album = this._enrichedTrackData.album
+      if (this._enrichedTrackData.artist) track.artist = this._enrichedTrackData.artist
+      if (this._enrichedTrackData.artists) track.artists = this._enrichedTrackData.artists
+      return
+    }
+
+    // fetch full track info
+    try {
+      const api = new TidalApi(this._settings)
+      const fullTrack = await api.fetchTrackInfo(track.id)
+
+      if (fullTrack.error || fullTrack.httpStatus || !fullTrack.album) return
+
+      // cache it
+      this._enrichedTrackId = track.id
+      this._enrichedTrackData = {
+        album: fullTrack.album,
+        artist: fullTrack.artist,
+        artists: fullTrack.artists,
+      }
+
+      // apply
+      track.album = fullTrack.album
+      track.artist = fullTrack.artist
+      track.artists = fullTrack.artists
+
+    } catch (e) {
+      // silently fail
     }
   }
 
