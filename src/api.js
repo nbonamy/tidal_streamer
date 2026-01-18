@@ -74,9 +74,15 @@ module.exports = class {
     return await this._fetchAll(`/users/${this.getUserId()}/favorites/tracks`)
   }
 
-  async isTrackFavorite(trackId) {
-    const favorites = await this._callApiV1(`/users/${this.getUserId()}/favorites/tracks`, { limit: 1, trackIds: trackId })
-    return favorites?.items?.length > 0
+  async toggleTrackFavorite(trackId) {
+    // Try to remove first
+    const removeResult = await this.removeTrackFavorite(trackId)
+    if (removeResult.success) {
+      return { favorite: false }
+    }
+    // If remove failed (404 = not a favorite), add it
+    const addResult = await this.addTrackFavorite(trackId)
+    return { favorite: addResult.success }
   }
 
   async addTrackFavorite(trackId) {

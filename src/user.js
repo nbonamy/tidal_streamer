@@ -61,8 +61,8 @@ module.exports = class {
         .catch(err => next(err))
     })
 
-    router.get('/user/tracks/:trackId/favorite', (req, res, next) => {
-      this.isTrackFavorite(req, req.params.trackId)
+    router.post('/user/tracks/:trackId/favorite/toggle', (req, res, next) => {
+      this.toggleTrackFavorite(req, req.params.trackId)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
     })
@@ -214,9 +214,9 @@ module.exports = class {
     return tracks
   }
 
-  async isTrackFavorite(req, trackId) {
+  async toggleTrackFavorite(req, trackId) {
     const api = new TidalApi(this._settings, req.userAuth)
-    return await api.isTrackFavorite(trackId)
+    return await api.toggleTrackFavorite(trackId)
   }
 
   async addTrackFavorite(req, trackId) {
