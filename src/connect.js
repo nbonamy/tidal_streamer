@@ -41,7 +41,8 @@ module.exports = class {
   }
 
   async status() {
-    await this._enrichCurrentTrack()
+    const debug = await this._enrichCurrentTrack()
+    this._status._debug = debug
     return this._status
   }
 
@@ -473,21 +474,30 @@ module.exports = class {
   async _enrichCurrentTrack() {
     // get current track
     const position = this._status.position
-    if (position < 0 || position >= this._status.tracks.length) return
+    if (position < 0 || position >= this._status.tracks.length) {
+      return { error: 'invalid position', position, tracksLength: this._status.tracks.length }
+    }
 
     const track = this._status.tracks[position]?.item
-    if (!track?.id) return
+    if (!track?.id) {
+      return { error: 'no track id', track }
+    }
 
     // check cache
     if (this._enrichedTrackId === track.id) {
       this._applyEnrichedData(track)
-      return
+      return { status: 'cached', trackId: track.id }
     }
 
     // fetch full track info
     try {
       const api = new TidalApi(this._settings, this._settings.getUser())
       const fullTrack = await api.fetchTrackInfo(track.id)
+
+      // check for API error
+      if (fullTrack.error || fullTrack.httpStatus || !fullTrack.album) {
+        return { error: 'api error', fullTrack }
+      }
 
       // cache it
       this._enrichedTrackId = track.id
@@ -499,10 +509,10 @@ module.exports = class {
 
       // apply
       this._applyEnrichedData(track)
-      console.log(`Enriched track ${track.id} with album.id=${fullTrack.album?.id}, artist.id=${fullTrack.artist?.id}`)
+      return { status: 'enriched', trackId: track.id, albumId: fullTrack.album?.id, artistId: fullTrack.artist?.id }
 
     } catch (e) {
-      console.log(`Failed to enrich track ${track.id}: ${e.message}`)
+      return { error: 'exception', message: e.message }
     }
   }
 
