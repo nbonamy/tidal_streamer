@@ -75,9 +75,8 @@ module.exports = class {
   }
 
   async isTrackFavorite(trackId) {
-    // Fetch favorites and check if track is in the list
     const favorites = await this.fetchUserTracks()
-    return favorites?.items?.some(item => item.item?.id == trackId) || false
+    return favorites?.items?.some(item => String(item.item?.id) === String(trackId)) || false
   }
 
   async toggleTrackFavorite(trackId) {
