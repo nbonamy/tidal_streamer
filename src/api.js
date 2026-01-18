@@ -91,6 +91,15 @@ module.exports = class {
     }
   }
 
+  _clearFavoritesCache() {
+    const userId = this._userAuth?.user?.id || 'default'
+    for (const key of Object.keys(cache)) {
+      if (key.startsWith(`${userId}:`) && key.includes('/favorites/tracks')) {
+        delete cache[key]
+      }
+    }
+  }
+
   async addTrackFavorite(trackId) {
     const url = this._getUrl(API_V1_BASE_URL, `/users/${this.getUserId()}/favorites/tracks`, {})
     const response = await fetch(url, this._getFetchOptions({
@@ -98,6 +107,7 @@ module.exports = class {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `trackIds=${trackId}`
     }))
+    this._clearFavoritesCache()
     return { success: response.ok, status: response.status }
   }
 
@@ -106,6 +116,7 @@ module.exports = class {
     const response = await fetch(url, this._getFetchOptions({
       method: 'DELETE'
     }))
+    this._clearFavoritesCache()
     return { success: response.ok, status: response.status }
   }
 
