@@ -498,6 +498,9 @@ module.exports = class {
         // Transform to Tidal-like format
         let tidalStatus = this._transformStatus(mediaStatus)
 
+        // Enrich current track with full album/artist info
+        await this._enrichCurrentTrack(tidalStatus)
+
         // Broadcast if status changed
         let statusStr = JSON.stringify(tidalStatus)
         if (statusStr !== JSON.stringify(this._lastStatus)) {
