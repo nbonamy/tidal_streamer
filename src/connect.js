@@ -23,6 +23,8 @@ module.exports = class {
 
   _resetStatus() {
     this._lastMediaId = null
+    this._enrichedTrackId = null
+    this._enrichedTrackData = null
     this._status = {
       state: 'STOPPED',
       queue: null,
@@ -447,6 +449,9 @@ module.exports = class {
     this._status.tracks = tracks
     this._setStatusPosition()
 
+    // enrich current track with full album/artist info
+    await this._enrichCurrentTrack()
+
   }
 
   _getLastMediaPosition() {
@@ -462,6 +467,49 @@ module.exports = class {
       this._status.position = new_position
       console.log(`Position updated: ${this._status.position}`)
     }
+  }
+
+  async _enrichCurrentTrack() {
+    // get current track
+    const position = this._status.position
+    if (position < 0 || position >= this._status.tracks.length) return
+
+    const track = this._status.tracks[position]?.item
+    if (!track?.id) return
+
+    // check cache
+    if (this._enrichedTrackId === track.id) {
+      this._applyEnrichedData(track)
+      return
+    }
+
+    // fetch full track info
+    try {
+      const api = new TidalApi(this._settings, this._settings.getUser())
+      const fullTrack = await api.fetchTrackInfo(track.id)
+
+      // cache it
+      this._enrichedTrackId = track.id
+      this._enrichedTrackData = {
+        album: fullTrack.album,
+        artist: fullTrack.artist,
+        artists: fullTrack.artists,
+      }
+
+      // apply
+      this._applyEnrichedData(track)
+      console.log(`Enriched track ${track.id} with album.id=${fullTrack.album?.id}, artist.id=${fullTrack.artist?.id}`)
+
+    } catch (e) {
+      console.log(`Failed to enrich track ${track.id}: ${e.message}`)
+    }
+  }
+
+  _applyEnrichedData(track) {
+    if (!this._enrichedTrackData) return
+    if (this._enrichedTrackData.album) track.album = this._enrichedTrackData.album
+    if (this._enrichedTrackData.artist) track.artist = this._enrichedTrackData.artist
+    if (this._enrichedTrackData.artists) track.artists = this._enrichedTrackData.artists
   }
 
   _sendStatus() {
@@ -527,6 +575,7 @@ module.exports = class {
       this._status.progress = 0
       this._lastMediaId = message.mediaInfo.mediaId
       this._setStatusPosition()
+      this._enrichCurrentTrack()
       this._sendStatus()
       return
     }
