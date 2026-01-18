@@ -41,7 +41,9 @@ module.exports = class {
   }
 
   async status() {
+    console.log('status() called')
     const debug = await this._enrichCurrentTrack()
+    console.log('enrichCurrentTrack returned:', debug)
     this._status._debug = debug
     return this._status
   }
