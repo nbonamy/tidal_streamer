@@ -62,7 +62,6 @@ module.exports = class {
     })
 
     router.get('/user/tracks/:trackId/favorite', (req, res, next) => {
-      console.log('GET /user/tracks/:trackId/favorite', req.params.trackId)
       this.isTrackFavorite(req, req.params.trackId)
         .then((result) => json_status(res, null, result))
         .catch(err => next(err))
@@ -224,7 +223,6 @@ module.exports = class {
   async isTrackFavorite(req, trackId) {
     const api = new TidalApi(this._settings, req.userAuth)
     const favorite = await api.isTrackFavorite(trackId)
-    console.log(`isTrackFavorite(${trackId}):`, favorite)
     return { favorite }
   }
 
