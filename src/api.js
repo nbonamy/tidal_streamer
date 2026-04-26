@@ -6,7 +6,7 @@ const Auth = require('./auth')
 // some constants
 const AUTH_BASE_URL = 'https://auth.tidal.com/v1/oauth2'
 const API_V1_BASE_URL = 'https://api.tidal.com/v1'
-const API_V2_BASE_URL = 'https://listen.tidal.com/v2'
+const API_V2_BASE_URL = 'https://api.tidal.com/v2'
 const QUEUE_BASE_URL = 'https://connectqueue.tidal.com/v1'
 const CACHE_EXPIRES = 1 * 60 * 60 * 1000
 
@@ -446,13 +446,13 @@ module.exports = class {
     return this._callApi(API_V2_BASE_URL, path, {
       countryCode: options?.countryCode || COUNTRY_CODE,
       locale: 'en_US',
-      deviceType: 'BROWSER',
-      platform: 'WEB',
+      deviceType: 'DESKTOP',
+      platform: 'DESKTOP',
       timeOffset: '-06:00',
         ...params
       }, {
       headers: {
-        'x-tidal-client-version': '2025.1.9',
+        'x-tidal-client-version': '2026.2.18',
         ...options?.headers
       },
       ...options

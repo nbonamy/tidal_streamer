@@ -310,7 +310,7 @@ module.exports = class {
     }
     const module = feed.items.find((item) => item.moduleId === moduleId)
     if (!module) {
-      console.warn(`Module ${moduleId} not found in user feed`, JSON.stringify(feed))
+      console.warn(`Module ${moduleId} not found in user feed`, JSON.stringify(feed.items.map(i => i.moduleId)))
       return []
     }
     if (module.viewAll) {
