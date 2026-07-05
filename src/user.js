@@ -25,6 +25,18 @@ module.exports = class {
         .catch(err => next(err))
     })
 
+    router.get('/user/home/sections', (req, res, next) => {
+      this.getHomeSections(req)
+        .then((result) => json_status(res, null, result))
+        .catch(err => next(err))
+    })
+
+    router.get('/user/home/sections/:sectionId/items', (req, res, next) => {
+      this.getHomeSectionItems(req.params.sectionId, req)
+        .then((result) => json_status(res, null, result))
+        .catch(err => next(err))
+    })
+
     router.get('/user/module/:moduleId', (req, res, next) => {
       this.getFeedModule(req.params.moduleId, req)
         .then((result) => json_status(res, null, result))
@@ -192,6 +204,47 @@ module.exports = class {
     return feed
   }
 
+  async getHomeSections(req) {
+    const api = new TidalApi(this._settings, req.userAuth)
+    const feed = await api.fetchHomeStaticFeed()
+    const modules = this._getFeedModules(feed)
+    return modules.map((module) => ({
+      id: module.moduleId,
+      title: module.title,
+      type: module.type,
+      itemCount: module.items?.length || 0,
+      hasViewAll: !!module.viewAll
+    }))
+  }
+
+  async getHomeSectionItems(sectionId, req) {
+    const api = new TidalApi(this._settings, req.userAuth)
+    const feed = await api.fetchHomeStaticFeed()
+    const module = this._findFeedModule(feed, sectionId)
+    if (!module) {
+      console.warn(`Module ${sectionId} not found in user feed`, JSON.stringify(this._getFeedModules(feed).map(i => i.moduleId)))
+      return {
+        id: sectionId,
+        title: null,
+        type: null,
+        items: []
+      }
+    }
+
+    let items = module.items || []
+    if (module.viewAll) {
+      const results = await api.proxyV2(`/${module.viewAll}`, { deviceType: 'PHONE' })
+      items = results.items || []
+    }
+
+    return {
+      id: module.moduleId,
+      title: module.title,
+      type: module.type,
+      items: this._typedHomeItems(items)
+    }
+  }
+
   async getUserShortcuts(req) {
     return await this.getFeedModule('SHORTCUT_LIST', req)
   }
@@ -304,13 +357,9 @@ module.exports = class {
   async getFeedModule(moduleId, req) {
     const api = new TidalApi(this._settings, req.userAuth)
     const feed = await api.fetchHomeStaticFeed()
-    if (!feed || !feed.items) {
-      console.warn('User feed is empty or invalid', JSON.stringify(feed))
-      return []
-    }
-    const module = feed.items.find((item) => item.moduleId === moduleId)
+    const module = this._findFeedModule(feed, moduleId)
     if (!module) {
-      console.warn(`Module ${moduleId} not found in user feed`, JSON.stringify(feed.items.map(i => i.moduleId)))
+      console.warn(`Module ${moduleId} not found in user feed`, JSON.stringify(this._getFeedModules(feed).map(i => i.moduleId)))
       return []
     }
     if (module.viewAll) {
@@ -320,6 +369,48 @@ module.exports = class {
     } else {
       return module.items.map((item) => item.data)
     }
+  }
+
+  _getFeedModules(feed) {
+    if (!feed || !feed.items) {
+      console.warn('User feed is empty or invalid', JSON.stringify(feed))
+      return []
+    }
+    return feed.items
+  }
+
+  _findFeedModule(feed, moduleId) {
+    return this._getFeedModules(feed).find((item) => item.moduleId === moduleId)
+  }
+
+  _typedHomeItems(items) {
+    return items
+      .map((item) => this._typedHomeItem(item))
+      .filter((item) => item != null)
+  }
+
+  _typedHomeItem(item) {
+    const data = item?.data || item?.item || item
+    const itemType = this._homeItemType(item, data)
+    if (!itemType || !data) {
+      return null
+    }
+    return { itemType, data }
+  }
+
+  _homeItemType(item, data) {
+    const wrapperType = item?.type?.toLowerCase()
+    if (['album', 'playlist', 'track', 'artist', 'mix'].includes(wrapperType)) {
+      return wrapperType
+    }
+
+    if (data?.uuid) return 'playlist'
+    if (data?.album && data?.trackNumber != null) return 'track'
+    if (data?.mixImages || data?.artifactIdType === 'trackGroupId') return 'mix'
+    if (data?.picture && !data?.cover) return 'artist'
+    if (data?.cover && data?.numberOfTracks != null) return 'album'
+
+    return null
   }
 
 }
