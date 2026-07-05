@@ -340,16 +340,17 @@ module.exports = class {
       body: JSON.stringify({
         mode: 'append',
         item_id: afterId,
-        items: tracks.map((track) => ({
+        items: tracks.map((track, index) => ({
           type: 'track',
           media_id: track.id,
           properties: {
             active: false,
-            original_order: queue.total
+            original_order: (queue.total || 0) + index
           }
         })),
       })
     })
+    await this._throwQueueError(response, 'add tracks to queue')
     queue.etag = response.headers.get('etag')
     return response;
   }
@@ -358,6 +359,7 @@ module.exports = class {
     let response = await this._callQueue(`/queues/${queue.id}/items/${trackId}`, null, {
       method: 'DELETE',
     })
+    await this._throwQueueError(response, 'delete track from queue')
     queue.etag = response.headers.get('etag')
     return response;
   }
@@ -373,8 +375,23 @@ module.exports = class {
         after: afterId
       })
     })
+    await this._throwQueueError(response, 'reorder queue')
     queue.etag = response.headers.get('etag')
     return response;
+  }
+
+  async _throwQueueError(response, action) {
+    if (response.ok !== false) return
+
+    let details = ''
+    try {
+      details = await response.text()
+    } catch {}
+
+    const suffix = details ? `: ${details}` : ''
+    const error = new Error(`Failed to ${action}: ${response.status}${suffix}`)
+    error.code = response.status || 500
+    throw error
   }
 
   queueTracks(sourceType, sourceId, tracks, position) {
