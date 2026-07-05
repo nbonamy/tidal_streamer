@@ -5,6 +5,19 @@ const TidalApi = require('./api')
 const Discoverer = require('./discoverer')
 const { json_status } = require('./utils')
 
+function badRequest(message) {
+  const error = new Error(message)
+  error.code = 400
+  return error
+}
+
+function parseQueuePosition(position) {
+  if (!/^\d+$/.test(String(position))) {
+    throw badRequest('position must be a non-negative integer')
+  }
+  return parseInt(position)
+}
+
 module.exports = class {
 
   constructor(settings) {
@@ -206,45 +219,8 @@ module.exports = class {
 
     router.post('/enqueue/:position', async (req, res) => {
       try {
-        const { getAlbumCovers } = require('./utils')
-
-        // Parse tracks
-        let tracks = req.body.items || req.body
-        if (!Array.isArray(tracks)) tracks = [tracks]
-
-        // Build tracks with proxy URLs (no API calls)
-        let tracksWithUrls = tracks.map((track) => {
-          if (typeof track == 'string') track = JSON.parse(track)
-
-          let albumCover = track.album?.cover ? getAlbumCovers(track.album.cover) : {}
-          let thumbnail = albumCover.medium?.url || albumCover.low?.url || null
-
-          // Use local proxy URL with server IP and port
-          let quality = req.query.quality || 'LOSSLESS'
-          let proxyUrl = `http://${this._serverIp}:${this._serverPort}/stream/track/${track.id}?quality=${quality}`
-
-          return {
-            id: track.id,
-            title: track.title,
-            album: track.album?.title || track.album || '',
-            artist: track.artist?.name || track.artists?.[0]?.name || '',
-            duration: track.duration || 0,
-            url: proxyUrl,
-            thumbnail: thumbnail
-          }
-        })
-
-        // Enqueue to MediaPod
-        let response = await fetch(`http://${req.pod.ip}:${req.pod.port}/player/enqueue`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(tracksWithUrls)
-        })
-
-        if (!response.ok) {
-          throw new Error(`Failed to enqueue tracks: ${response.status}`)
-        }
-
+        const tracks = this._parseQueueTracks(req.body)
+        await this._enqueueTracksToMediaPod(req.pod, tracks, req.params.position, req.query.quality)
         json_status(res)
       } catch (err) {
         json_status(res, err)
@@ -252,11 +228,22 @@ module.exports = class {
     })
 
     router.post('/dequeue/:position', async (req, res) => {
-      this._forwardCommand(req.pod, `dequeue/${req.params.position}`, req, res)
+      try {
+        this._assertQueuePositionParam(req.params.position)
+        await this._forwardCommand(req.pod, `dequeue/${req.params.position}`, req, res)
+      } catch (err) {
+        json_status(res, err)
+      }
     })
 
     router.post('/reorderqueue/:from/:to', async (req, res) => {
-      this._forwardCommand(req.pod, `reorderqueue/${req.params.from}/${req.params.to}`, req, res)
+      try {
+        this._assertQueuePositionParam(req.params.from)
+        this._assertQueuePositionParam(req.params.to)
+        await this._forwardCommand(req.pod, `reorderqueue/${req.params.from}/${req.params.to}`, req, res)
+      } catch (err) {
+        json_status(res, err)
+      }
     })
 
     // Forward control commands to MediaPod
@@ -281,7 +268,12 @@ module.exports = class {
     })
 
     router.post('/trackseek/:position', async (req, res) => {
-      this._forwardCommand(req.pod, `trackseek/${req.params.position}`, req, res)
+      try {
+        this._assertQueuePositionParam(req.params.position)
+        await this._forwardCommand(req.pod, `trackseek/${req.params.position}`, req, res)
+      } catch (err) {
+        json_status(res, err)
+      }
     })
 
     router.post('/timeseek/:progress', async (req, res) => {
@@ -328,11 +320,98 @@ module.exports = class {
       let response = await fetch(`http://${pod.ip}:${pod.port}/player/${command}`, {
         method: 'POST'
       })
+      if (!response.ok) {
+        throw new Error(`Failed to forward command ${command}: ${response.status}`)
+      }
       let result = await response.json()
       res.json(result)
     } catch (err) {
       json_status(res, err)
     }
+  }
+
+  _parseQueueTracks(body) {
+    let tracks = body?.items || body
+    if (!Array.isArray(tracks)) tracks = [tracks]
+
+    tracks = tracks.map((track) => {
+      if (typeof track == 'string') {
+        try {
+          track = JSON.parse(track)
+        } catch {
+          throw badRequest('enqueue track strings must be valid JSON')
+        }
+      }
+      return track
+    })
+
+    if (tracks.length == 0 || tracks.some((track) => track?.id == null)) {
+      throw badRequest('enqueue body must include one or more tracks with ids')
+    }
+
+    return tracks
+  }
+
+  _buildMediaPodTrack(track, quality) {
+    const { getAlbumCovers } = require('./utils')
+
+    let albumCover = track.album?.cover ? getAlbumCovers(track.album.cover) : {}
+    let thumbnail = albumCover.medium?.url || albumCover.low?.url || null
+    let resolvedQuality = quality || 'LOSSLESS'
+    let proxyUrl = `http://${this._serverIp}:${this._serverPort}/stream/track/${track.id}?quality=${resolvedQuality}`
+
+    return {
+      id: String(track.id),
+      title: track.title,
+      album: track.album?.title || track.album || '',
+      album_cover: track.album?.cover || null,
+      artist: track.artist?.name || track.artists?.[0]?.name || '',
+      duration: track.duration || 0,
+      duration_raw: track.duration || 0,
+      quality: resolvedQuality.toLowerCase(),
+      url: proxyUrl,
+      upnp_url: proxyUrl,
+      thumbnail: thumbnail
+    }
+  }
+
+  async _enqueueTracksToMediaPod(pod, tracks, position, quality) {
+    const mediaPodTracks = tracks.map((track) => this._buildMediaPodTrack(track, quality))
+    const insertPosition = await this._getMediaPodEnqueuePosition(pod, position)
+
+    for (let i = 0; i < mediaPodTracks.length; i++) {
+      const response = await fetch(`http://${pod.ip}:${pod.port}/player/enqueue`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          track: mediaPodTracks[i],
+          position: insertPosition == -1 ? -1 : insertPosition + i
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error(`Failed to enqueue tracks: ${response.status}`)
+      }
+    }
+  }
+
+  async _getMediaPodEnqueuePosition(pod, position) {
+    if (position == null || position == 'end') return -1
+    if (/^\d+$/.test(String(position))) return parseInt(position)
+    if (position != 'next') throw badRequest('enqueue position must be next, end, or a non-negative integer')
+
+    let response = await fetch(`http://${pod.ip}:${pod.port}/player/status`)
+    if (!response.ok) {
+      throw new Error(`Failed to fetch player status: ${response.status}`)
+    }
+
+    let status = await response.json()
+    if (!Number.isInteger(status.index) || status.index < 0) return -1
+    return status.index + 1
+  }
+
+  _assertQueuePositionParam(position) {
+    parseQueuePosition(position)
   }
 
   _discoverPods() {
@@ -514,6 +593,8 @@ module.exports = class {
   }
 
   _transformStatus(mediaStatus) {
+    const index = Number.isInteger(mediaStatus.index) ? mediaStatus.index : -1
+
     return {
       state: mediaStatus.state ? mediaStatus.state.toUpperCase() : 'IDLE',
       queue: {
@@ -523,7 +604,7 @@ module.exports = class {
           media_id: track.id,
           type: 'track',
           properties: {
-            active: (idx === mediaStatus.index).toString(),
+            active: (idx === index).toString(),
             sourceId: '0',
             sourceType: 'tidal',
             original_order: idx.toString()
@@ -569,7 +650,7 @@ module.exports = class {
           streamStartDate: '1970-01-01T00:00:00.000+0000'
         }
       })),
-      position: mediaStatus.index || 0,
+      position: index,
       progress: mediaStatus.position ? mediaStatus.position * 1000 : 0,
       volume: {
         level: mediaStatus.volume || 0,
