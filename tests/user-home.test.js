@@ -62,6 +62,15 @@ const feed = {
         { data: mix },
         { data: { mystery: true } }
       ]
+    },
+    {
+      moduleId: 'FALLBACK',
+      title: 'Fallback section',
+      type: 'HORIZONTAL_LIST',
+      viewAll: 'home/pages/FALLBACK/view-all',
+      items: [
+        { type: 'TRACK', data: track }
+      ]
     }
   ]
 }
@@ -74,11 +83,17 @@ beforeEach(() => {
   jest.spyOn(console, 'warn').mockImplementation(() => {})
   api = {
     fetchHomeStaticFeed: jest.fn().mockResolvedValue(feed),
-    proxyV2: jest.fn().mockResolvedValue({
-      items: [
-        { type: 'ALBUM', data: { ...album, id: 10 } },
-        { type: 'UNKNOWN', data: { unsupported: true } }
-      ]
+    proxyV2: jest.fn().mockImplementation((path) => {
+      if (path === '/home/pages/FALLBACK/view-all') {
+        return Promise.resolve({ items: [] })
+      }
+
+      return Promise.resolve({
+        items: [
+          { type: 'ALBUM', data: { ...album, id: 10 } },
+          { type: 'UNKNOWN', data: { unsupported: true } }
+        ]
+      })
     })
   }
   TidalApi.mockImplementation(() => api)
@@ -106,6 +121,13 @@ test('gets ordered home sections from the static feed', async () => {
       type: 'HORIZONTAL_LIST',
       itemCount: 5,
       hasViewAll: false
+    },
+    {
+      id: 'FALLBACK',
+      title: 'Fallback section',
+      type: 'HORIZONTAL_LIST',
+      itemCount: 1,
+      hasViewAll: true
     }
   ])
 })
@@ -139,6 +161,18 @@ test('gets typed section items from inline module items', async () => {
   ])
 })
 
+test('falls back to typed inline items when view all returns no items', async () => {
+  const section = await user.getHomeSectionItems('FALLBACK', req)
+
+  expect(api.proxyV2).toHaveBeenCalledWith('/home/pages/FALLBACK/view-all', { deviceType: 'PHONE' })
+  expect(section.items).toEqual([
+    {
+      itemType: 'track',
+      data: track
+    }
+  ])
+})
+
 test('returns empty typed items for missing sections', async () => {
   const section = await user.getHomeSectionItems('MISSING', req)
 
@@ -160,4 +194,10 @@ test('keeps legacy module endpoint returning raw item data', async () => {
     mix,
     { mystery: true }
   ])
+})
+
+test('keeps legacy module endpoint using inline fallback when view all is empty', async () => {
+  const items = await user.getFeedModule('FALLBACK', req)
+
+  expect(items).toEqual([track])
 })
