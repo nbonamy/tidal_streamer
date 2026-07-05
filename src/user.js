@@ -231,17 +231,17 @@ module.exports = class {
       }
     }
 
-    let items = module.items || []
-    if (module.viewAll) {
-      const results = await api.proxyV2(`/${module.viewAll}`, { deviceType: 'PHONE' })
-      items = results.items || []
+    const items = await this._getModuleItems(api, module)
+    let typedItems = this._typedHomeItems(items)
+    if (typedItems.length === 0 && items !== module.items) {
+      typedItems = this._typedHomeItems(module.items || [])
     }
 
     return {
       id: module.moduleId,
       title: module.title,
       type: module.type,
-      items: this._typedHomeItems(items)
+      items: typedItems
     }
   }
 
@@ -363,9 +363,8 @@ module.exports = class {
       return []
     }
     if (module.viewAll) {
-      const url = module.viewAll
-      const results = await api.proxyV2(`/${url}`, { deviceType: 'PHONE' })
-      return results.items.map((item) => item.data)
+      const items = await this._getModuleItems(api, module)
+      return items.map((item) => item.data)
     } else {
       return module.items.map((item) => item.data)
     }
@@ -381,6 +380,26 @@ module.exports = class {
 
   _findFeedModule(feed, moduleId) {
     return this._getFeedModules(feed).find((item) => item.moduleId === moduleId)
+  }
+
+  async _getModuleItems(api, module) {
+    const inlineItems = module.items || []
+    if (!module.viewAll) {
+      return inlineItems
+    }
+
+    try {
+      const results = await api.proxyV2(`/${module.viewAll}`, { deviceType: 'PHONE' })
+      const viewAllItems = results.items || []
+      if (viewAllItems.length > 0) {
+        return viewAllItems
+      }
+      console.warn(`View all returned no items for module ${module.moduleId}; using inline feed items`)
+    } catch (err) {
+      console.warn(`Error fetching view all for module ${module.moduleId}; using inline feed items`, err)
+    }
+
+    return inlineItems
   }
 
   _typedHomeItems(items) {
