@@ -84,6 +84,8 @@ Regardless of authentication method:
 | Path                          | Method | Parameters          | Explanation                                      |
 |-------------------------------|--------|---------------------|--------------------------------------------------|
 | `/user/feed`                  | GET    | none                | Get user feed                                    |
+| `/user/home/sections`         | GET    | none                | Get ordered home section metadata                |
+| `/user/home/sections/:sectionId/items` | GET | sectionId    | Get typed items for a home section               |
 | `/user/module/:moduleId`      | GET    | moduleId            | Get specific feed module by ID                   |
 | `/user/shortcuts`             | GET    | none                | Get user shortcuts                               |
 | `/user/artists`               | GET    | none                | Get user artists                                 |
