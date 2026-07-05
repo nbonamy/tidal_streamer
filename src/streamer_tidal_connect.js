@@ -8,6 +8,41 @@ const TidalConnect = require('./connect')
 const WebSocket = require('ws')
 const { json_status, runLocalCommand } = require('./utils')
 
+function badRequest(message) {
+  const error = new Error(message)
+  error.code = 400
+  return error
+}
+
+function parseQueuePosition(position) {
+  if (!/^\d+$/.test(String(position))) {
+    throw badRequest('position must be a non-negative integer')
+  }
+  return parseInt(position)
+}
+
+function parseQueueTracks(body) {
+  let tracks = body?.items || body
+  if (!Array.isArray(tracks)) tracks = [tracks]
+
+  tracks = tracks.map((track) => {
+    if (typeof track == 'string') {
+      try {
+        track = JSON.parse(track)
+      } catch {
+        throw badRequest('enqueue track strings must be valid JSON')
+      }
+    }
+    return track
+  })
+
+  if (tracks.length == 0 || tracks.some((track) => track?.id == null)) {
+    throw badRequest('enqueue body must include one or more tracks with ids')
+  }
+
+  return tracks
+}
+
 module.exports = class {
 
   constructor(settings) {
@@ -81,7 +116,8 @@ module.exports = class {
     router.post('/enqueue/:position', async (req, res) => {
       try {
         let api = new TidalApi(this._settings)
-        await req.device.connect.enqueueTracks(api, req.body, req.params.position)
+        const tracks = parseQueueTracks(req.body)
+        await req.device.connect.enqueueTracks(api, tracks, req.params.position)
         json_status(res)
       } catch (err) {
         json_status(res, err)
@@ -91,7 +127,7 @@ module.exports = class {
     router.post('/dequeue/:position', async (req, res) => {
       try {
         let api = new TidalApi(this._settings)
-        await req.device.connect.dequeueTrack(api, parseInt(req.params.position));
+        await req.device.connect.dequeueTrack(api, parseQueuePosition(req.params.position));
         json_status(res)
       } catch (err) {
         json_status(res, err)
@@ -101,7 +137,11 @@ module.exports = class {
     router.post('/reorderqueue/:from/:to', async (req, res) => {
       try {
         let api = new TidalApi(this._settings)
-        await req.device.connect.reorderQueue(api, parseInt(req.params.from), parseInt(req.params.to));
+        await req.device.connect.reorderQueue(
+          api,
+          parseQueuePosition(req.params.from),
+          parseQueuePosition(req.params.to)
+        );
         json_status(res)
       } catch (err) {
         json_status(res, err)
@@ -135,7 +175,7 @@ module.exports = class {
 
     router.post('/trackseek/:position', async (req, res) => {
       try {
-        await req.device.connect.goto(parseInt(req.params.position))
+        await req.device.connect.goto(parseQueuePosition(req.params.position))
         json_status(res)
       } catch (err) {
         json_status(res, err)

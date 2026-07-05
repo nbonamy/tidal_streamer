@@ -6,12 +6,6 @@ const { getAlbumCovers } = require('./utils')
 const CONNECT_WAIT_DELAY = 1000
 const CONNECT_RETRY_DELAY = 5000
 
-Array.prototype.swap = function(i, j) {
-  const item = this[i]
-  this.splice(i, 1)
-  this.splice(j, 0, item)
-}
-
 module.exports = class {
 
   constructor(settings, device, wss) {
@@ -192,7 +186,9 @@ module.exports = class {
       })
 
       this._ws.on('message', (message) => {
-        this._processMessage(JSON.parse(message.toString()))
+        this._processMessage(JSON.parse(message.toString())).catch((err) => {
+          console.log(`[${this._device.description}] failed to process message: ${err.message}`)
+        })
       })
 
     })
@@ -273,43 +269,17 @@ module.exports = class {
 
     // the queue
     let queue = this._status?.queue
-    if (queue?.id == null) return
+    if (queue?.id == null) throw new Error('queue not loaded')
+    if (!Array.isArray(tracks) || tracks.length == 0) throw new Error('no tracks to enqueue')
 
-    // positiion can be next: we need get the queue id of current track
-    // otherwise we are adding at the end of the queue (afterId is empty)
-    const afterId = position == 'next' ? queue.items[this._status.position]?.id : ''
+    // position can be next: anchor to the current queue item if it is known.
+    // Otherwise use the old append behavior so local and server ordering agree.
+    const currentPosition = this._status.position
+    const currentIndex = position == 'next' ? this._getCurrentQueueIndex(queue, currentPosition) : -1
+    const afterId = currentIndex >= 0 ? queue.items[currentIndex].id : ''
 
-    try {
-
-      // add at queue server
-      let res = await api.addToQueue(queue, tracks, afterId)
-      let queueTracks = await res.json()
-      
-      // transform
-      const statusTracks = tracks.map((t) => ({
-        mediaId: t.id,
-        type: 'track',
-        item: t
-      }))
-
-      // update our queue
-      if (position == 'next') {
-        this._status.tracks.splice(this._status.position + 1, 0, ...statusTracks)
-        queue.items.splice(this._status.position + 1, 0, ...queueTracks.items)
-      } else {
-        this._status.tracks = [ ...this._status.tracks, ...statusTracks ]
-        queue.items = [ ...queue.items, ...queueTracks.items ]
-      }
-
-      // done
-      queue.total = queue.total + tracks.length
-      
-      // tell device to reload
-      await this.sendCommand('refreshQueue', { queueId: queue.id })
-
-    } catch (err) {
-      console.log(err)
-    }
+    await api.addToQueue(queue, tracks, afterId)
+    await this._refreshQueueFromServer(api, queue.id)
 
   }
 
@@ -317,25 +287,14 @@ module.exports = class {
 
     // the queue
     let queue = this._status?.queue
-    if (queue?.id == null) return
+    if (queue?.id == null) throw new Error('queue not loaded')
+    this._assertQueuePosition(queue, position)
 
-    try {
+    // remove at queue server
+    let trackId = queue.items[position].id
+    await api.deleteFromQueue(queue, trackId)
 
-      // remove at queue server
-      let trackId = queue.items[position].id
-      await api.deleteFromQueue(queue, trackId)
-
-      // update our queue
-      this._status.tracks.splice(position, 1)
-      queue.items.splice(position, 1)
-      queue.total = queue.total - 1
-      
-      // tell device to reload
-      await this.sendCommand('refreshQueue', { queueId: queue.id })
-
-    } catch (err) {
-      console.log(err)
-    }
+    await this._refreshQueueFromServer(api, queue.id)
   
   }
 
@@ -343,34 +302,29 @@ module.exports = class {
 
     // the queue
     let queue = this._status?.queue
-    if (queue?.id == null) return
+    if (queue?.id == null) throw new Error('queue not loaded')
+    this._assertQueuePosition(queue, from)
+    this._assertQueuePosition(queue, to)
+    if (from == to) return
 
-    try {
+    // PATCH uses "after item id" semantics. Convert the requested target index
+    // to the item that will precede the moved item after removal.
+    let moveId = queue.items[from].id
+    let afterId = this._getReorderAfterId(queue, from, to)
+    await api.reorderQueue(queue, moveId, afterId)
 
-      // remove at queue server
-      let moveId = queue.items[from].id
-      let afterId = queue.items[to].id
-      let res = await api.reorderQueue(queue, moveId, afterId)
-      console.log(await res.text())
-
-      // update our queue
-      this._status.tracks.swap(from, to)
-      queue.items.swap(from, to)
-      
-      // tell device to reload
-      await this.sendCommand('refreshQueue', { queueId: queue.id })
-
-    } catch (err) {
-      console.log(err)
-    }
+    await this._refreshQueueFromServer(api, queue.id)
   
   }
 
   goto(position) {
 
     // check
-    if (position > this._status.tracks.length - 1) {
+    if (!Number.isInteger(position) || position < 0 || position > this._status.tracks.length - 1) {
       throw new Error('index out of bounds')
+    }
+    if (!this._status.queue?.items?.[position]) {
+      throw new Error('queue item not found')
     }
 
     // build payload
@@ -410,7 +364,7 @@ module.exports = class {
   }
 
   sendCommand(command, params) {
-    this._sendMessage(JSON.stringify({
+    return this._sendMessage(JSON.stringify({
       'command': command,
       'requestId': this._reqid++,
       ...params
@@ -431,13 +385,13 @@ module.exports = class {
     }
   }
 
-  async _reloadQueue(queueId) {
+  async _reloadQueue(queueId, api = null) {
 
     // log
     console.log(`Reloading queue ${queueId}`)
 
     // we need an api (use first user for backward compat)
-    let api = new TidalApi(this._settings, this._settings.getUser())
+    api = api || new TidalApi(this._settings, this._settings.getUser())
 
     // fetch queue
     let queue = await api.fetchQueue(queueId)
@@ -453,6 +407,38 @@ module.exports = class {
     // enrich current track with full album/artist info
     await this._enrichCurrentTrack()
 
+  }
+
+  async _refreshQueueFromServer(api, queueId) {
+    await this._reloadQueue(queueId, api)
+    await this.sendCommand('refreshQueue', { queueId })
+    this._sendStatus()
+  }
+
+  _assertQueuePosition(queue, position) {
+    if (!Number.isInteger(position) || position < 0 || position >= queue.items.length) {
+      throw new Error('queue position out of bounds')
+    }
+  }
+
+  _getCurrentQueueIndex(queue, position) {
+    if (!queue?.items?.length) return -1
+
+    if (this._lastMediaId != null) {
+      return queue.items.findIndex((item) => item.media_id == this._lastMediaId)
+    }
+
+    if (Number.isInteger(position) && position >= 0 && position < queue.items.length) {
+      return position
+    }
+
+    return -1
+  }
+
+  _getReorderAfterId(queue, from, to) {
+    const remainingItems = queue.items.filter((_, index) => index != from)
+    if (to == 0) return ''
+    return remainingItems[to - 1]?.id || ''
   }
 
   _getLastMediaPosition() {
@@ -537,7 +523,7 @@ module.exports = class {
     })
   }
 
-  _processMessage(message) {
+  async _processMessage(message) {
 
     // debug
     // if (message.command != 'notifyPlayerStatusChanged') {
@@ -575,7 +561,7 @@ module.exports = class {
     if (message.command == 'notifyQueueChanged') {
       let queueId = message.queueInfo.queueId
       if (this._status.queue == null || this._status.queue.id != queueId) {
-        this._reloadQueue(queueId)
+        await this._reloadQueue(queueId)
         this._sendStatus()
       }
       return
@@ -583,7 +569,7 @@ module.exports = class {
 
     //
     if (message.command == 'notifyQueueItemsChanged') {
-      this._reloadQueue(message.queueInfo.queueId)
+      await this._reloadQueue(message.queueInfo.queueId)
       this._sendStatus()
       return
     }
