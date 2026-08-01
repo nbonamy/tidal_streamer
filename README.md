@@ -149,6 +149,8 @@ Regardless of authentication method:
 | `/prev`                       | POST   | none                | Play the previous track                          |
 | `/trackseek/:position`        | POST   | position            | Seek to a specific track position                 |
 | `/timeseek/:progress`         | POST   | progress            | Seek to a specific time                           |
+| `/scan/start/:direction`      | POST   | -1 or 1             | Start backend fast-seek feedback                  |
+| `/scan/stop/:positionMs`      | POST   | milliseconds        | Stop scanning; preview backends seek then resume  |
 | `/volume/down`                | POST   | none                | Decrease the volume                              |
 | `/volume/up`                  | POST   | none                | Increase the volume                              |
 

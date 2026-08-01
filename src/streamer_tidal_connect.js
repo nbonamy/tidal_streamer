@@ -7,6 +7,7 @@ const TidalApi = require('./api')
 const TidalConnect = require('./connect')
 const WebSocket = require('ws')
 const { json_status, runLocalCommand } = require('./utils')
+const { parseScanDirection, stopPreviewScan } = require('./scan')
 
 function badRequest(message) {
   const error = new Error(message)
@@ -83,6 +84,8 @@ module.exports = class {
       console.log('[status route] called, connect exists:', !!req.device.connect)
       let status = await req.device.connect?.status()
       console.log('[status route] got status')
+      status.scan_mode = 'preview'
+      status.playback_rate = 1
       if (this._settings.volume?.up != null) {
         status.volume.level = -1
       }
@@ -185,6 +188,28 @@ module.exports = class {
     router.post('/timeseek/:progress', async (req, res) => {
       await req.device.connect.sendCommand('seek', { position: req.params.progress * 1000 });
       json_status(res)
+    })
+
+    router.post('/scan/start/:direction', async (req, res) => {
+      try {
+        parseScanDirection(req.params.direction)
+        await req.device.connect.sendCommand('pause')
+        json_status(res)
+      } catch (err) {
+        json_status(res, err)
+      }
+    })
+
+    router.post('/scan/stop/:positionMs', async (req, res) => {
+      try {
+        await stopPreviewScan(
+          req.device.connect.sendCommand.bind(req.device.connect),
+          req.params.positionMs
+        )
+        json_status(res)
+      } catch (err) {
+        json_status(res, err)
+      }
     })
 
     router.post('/volume/down', async (req, res) => {

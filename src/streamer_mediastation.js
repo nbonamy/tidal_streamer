@@ -4,6 +4,7 @@ const WebSocket = require('ws')
 const TidalApi = require('./api')
 const Discoverer = require('./discoverer')
 const { json_status } = require('./utils')
+const { parseScanDirection, parseScanPosition } = require('./scan')
 
 function badRequest(message) {
   const error = new Error(message)
@@ -278,6 +279,24 @@ module.exports = class {
 
     router.post('/timeseek/:progress', async (req, res) => {
       this._forwardCommand(req.pod, `timeseek/${req.params.progress}`, req, res)
+    })
+
+    router.post('/scan/start/:direction', async (req, res) => {
+      try {
+        const direction = parseScanDirection(req.params.direction)
+        await this._forwardCommand(req.pod, `scan/start/${direction}`, req, res)
+      } catch (err) {
+        json_status(res, err)
+      }
+    })
+
+    router.post('/scan/stop/:positionMs', async (req, res) => {
+      try {
+        const positionMs = parseScanPosition(req.params.positionMs)
+        await this._forwardCommand(req.pod, `scan/stop/${positionMs}`, req, res)
+      } catch (err) {
+        json_status(res, err)
+      }
     })
 
     router.post('/volume/down', async (req, res) => {
@@ -652,6 +671,8 @@ module.exports = class {
       })),
       position: index,
       progress: mediaStatus.position ? mediaStatus.position * 1000 : 0,
+      scan_mode: mediaStatus.scan_mode || 'preview',
+      playback_rate: mediaStatus.playback_rate || 1,
       volume: {
         level: mediaStatus.volume || 0,
         mute: false
