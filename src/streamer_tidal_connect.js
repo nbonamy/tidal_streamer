@@ -80,10 +80,8 @@ module.exports = class {
       res.json('pong')
     })
 
-    router.get('/status', async (req, res) => {
-      console.log('[status route] called, connect exists:', !!req.device.connect)
-      let status = await req.device.connect?.status()
-      console.log('[status route] got status')
+    router.get('/status', (req, res) => {
+      let status = req.device.connect?.status()
       status.scan_mode = 'preview'
       status.playback_rate = 1
       if (this._settings.volume?.up != null) {
