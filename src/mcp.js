@@ -91,7 +91,7 @@ function createServer(request) {
     })
   }
 
-  register('search', {
+  register('tidal_search', {
     description: 'Search TIDAL for artists, albums, or tracks.',
     inputSchema: z.object({
       type: z.enum(['artist', 'album', 'track']),
@@ -105,7 +105,7 @@ function createServer(request) {
     userId
   }))
 
-  register('get_collection', {
+  register('tidal_get_collection', {
     description: 'Get an album with its tracks, playlist tracks, or mix tracks from TIDAL.',
     inputSchema: z.object({
       type: z.enum(['album', 'playlist', 'mix']),
@@ -122,7 +122,7 @@ function createServer(request) {
     return request({ path: paths[type], userId })
   })
 
-  register('get_user_library', {
+  register('tidal_get_user_library', {
     description: 'Browse a section of the current user\'s TIDAL library or recommendations.',
     inputSchema: z.object({
       section: z.enum([
@@ -158,13 +158,13 @@ function createServer(request) {
     return request({ path: paths[section], userId })
   })
 
-  register('list_devices', {
+  register('tidal_list_devices', {
     description: 'List playback devices discovered by tidal-streamer.',
     inputSchema: z.object({}),
     annotations: { readOnlyHint: true, openWorldHint: true }
   }, () => request({ path: '/list' }))
 
-  register('get_playback_status', {
+  register('tidal_get_playback_status', {
     description: 'Get normalized playback status, queue, current track, progress, and volume.',
     inputSchema: z.object({ deviceUuid: DEVICE_UUID }),
     annotations: { readOnlyHint: true, openWorldHint: true }
@@ -173,7 +173,7 @@ function createServer(request) {
     query: { uuid: deviceUuid, format: 'tidal' }
   }))
 
-  register('play_collection', {
+  register('tidal_play_collection', {
     description: 'Replace the playback queue and play a TIDAL album, playlist, or mix.',
     inputSchema: z.object({
       type: z.enum(['album', 'playlist', 'mix']),
@@ -187,7 +187,7 @@ function createServer(request) {
     query: { position, uuid: deviceUuid }
   }))
 
-  register('play_tracks', {
+  register('tidal_play_tracks', {
     description: 'Replace the playback queue and play track objects returned by TIDAL search or metadata tools.',
     inputSchema: z.object({
       tracks: z.array(TRACK).min(1),
@@ -202,7 +202,7 @@ function createServer(request) {
     body: { items: tracks }
   }))
 
-  register('enqueue_tracks', {
+  register('tidal_enqueue_tracks', {
     description: 'Add track objects returned by TIDAL search or metadata tools to the current queue.',
     inputSchema: z.object({
       tracks: z.array(TRACK).min(1),
@@ -217,7 +217,7 @@ function createServer(request) {
     body: { items: tracks }
   }))
 
-  register('control_playback', {
+  register('tidal_control_playback', {
     description: 'Control current playback or adjust volume.',
     inputSchema: z.object({
       action: z.enum(['play', 'pause', 'stop', 'next', 'previous', 'volume_up', 'volume_down']),
@@ -237,7 +237,7 @@ function createServer(request) {
     return request({ method: 'POST', path: paths[action], query: { uuid: deviceUuid } })
   })
 
-  register('seek', {
+  register('tidal_seek', {
     description: 'Seek to a queue index or a playback time in seconds.',
     inputSchema: z.object({
       type: z.enum(['track', 'time']),
@@ -251,7 +251,7 @@ function createServer(request) {
     query: { uuid: deviceUuid }
   }))
 
-  register('set_track_favorite', {
+  register('tidal_set_track_favorite', {
     description: 'Add, remove, or toggle a track in the current user\'s TIDAL favorites.',
     inputSchema: z.object({
       trackId: TRACK_ID,
@@ -268,7 +268,7 @@ function createServer(request) {
     })
   })
 
-  register('create_playlist', {
+  register('tidal_create_playlist', {
     description: 'Create a TIDAL playlist for the current user.',
     inputSchema: z.object({
       title: z.string().min(1),
@@ -283,7 +283,7 @@ function createServer(request) {
     userId
   }))
 
-  register('add_tracks_to_playlist', {
+  register('tidal_add_tracks_to_playlist', {
     description: 'Add TIDAL track ids to an existing playlist for the current user.',
     inputSchema: z.object({
       playlistId: z.union([z.string(), z.number()]),

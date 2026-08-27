@@ -65,11 +65,12 @@ test('MCP endpoint advertises playlist tools and maps create playlist calls', as
   try {
     const toolsResponse = await mcpCall(endpoint, 1, 'tools/list')
     const toolNames = toolsResponse.result.tools.map((tool) => tool.name)
-    expect(toolNames).toContain('create_playlist')
-    expect(toolNames).toContain('add_tracks_to_playlist')
+    expect(toolNames).toContain('tidal_create_playlist')
+    expect(toolNames).toContain('tidal_add_tracks_to_playlist')
+    expect(toolNames.every((name) => name.startsWith('tidal_'))).toBe(true)
 
     const callResponse = await mcpCall(endpoint, 2, 'tools/call', {
-      name: 'create_playlist',
+      name: 'tidal_create_playlist',
       arguments: {
         title: 'Road trip',
         description: 'Summer',
@@ -102,7 +103,7 @@ test('MCP tools return downstream failures as tool errors', async () => {
 
   try {
     const callResponse = await mcpCall(endpoint, 1, 'tools/call', {
-      name: 'add_tracks_to_playlist',
+      name: 'tidal_add_tracks_to_playlist',
       arguments: {
         playlistId: 'playlist-1',
         trackIds: [10, 11]
