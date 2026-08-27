@@ -7,6 +7,7 @@ const Auth = require('./auth')
 const User = require('./user')
 const Metadata = require('./metadata')
 const Playlist = require('./playlist')
+const { createMcpEndpoint } = require('./mcp')
 const { json_status } = require('./utils')
 
 // init our stuff
@@ -60,11 +61,13 @@ portfinder.getPort({ port: startPort },  async (err, port) => {
   const metadata = new Metadata(settings)
   const streamer = new StreamerClass(settings)
   const playlist = new Playlist(settings)
+  const mcp = createMcpEndpoint({ port })
 
   // routes
   app.use('/', user.routes())
   app.use('/', metadata.routes())
   app.use('/', playlist.routes())
+  app.all('/mcp', mcp.route)
   app.use('/', streamer.routes())
 
   // error handler
@@ -75,6 +78,7 @@ portfinder.getPort({ port: startPort },  async (err, port) => {
 
   // gracefully handle exit
   const close = async () => {
+    await mcp.close()
     await streamer.shutdown()
     process.exit(0)
   }
@@ -87,6 +91,7 @@ portfinder.getPort({ port: startPort },  async (err, port) => {
 		// log
 		console.log(`Tidal streamer listening on port ${port}`)
 		console.log(`Using streamer: ${streamerType}`)
+		console.log(`MCP endpoint: http://localhost:${port}/mcp (no authentication)`)
 
 		// Set server info for MediaStation streamer (needs real IP for proxy URLs)
 		if (typeof streamer.setServerInfo === 'function') {

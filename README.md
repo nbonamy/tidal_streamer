@@ -77,6 +77,35 @@ Regardless of authentication method:
 5. Tokens refresh automatically when expired
 
 
+## MCP Server
+
+The same process exposes an unauthenticated, stateless Streamable HTTP MCP endpoint:
+
+```
+http://localhost:PORT/mcp
+```
+
+The MCP endpoint does not require a bearer token. Its tools use the TIDAL users already
+stored in `config.yml`; tools with a `userId` argument default to the first stored user.
+The endpoint exposes search, metadata and library browsing, device discovery and status,
+playback and queue controls, favorites, TIDAL playlist creation, and adding tracks to
+TIDAL playlists.
+
+Because the endpoint can control playback and modify a TIDAL account, only expose the
+server on networks you trust.
+
+### Example client configuration
+
+```json
+{
+  "mcpServers": {
+    "tidal": {
+      "url": "http://localhost:8000/mcp"
+    }
+  }
+}
+```
+
 ## API Endpoints
 
 ### User
