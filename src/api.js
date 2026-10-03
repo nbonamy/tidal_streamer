@@ -36,6 +36,7 @@ const FORM = {
 
 // global cache
 const cache = {}
+const refreshPromises = new WeakMap()
 
 module.exports = class {
 
@@ -43,7 +44,6 @@ module.exports = class {
     this._settings = settings
     this._userAuth = userAuth || settings.getUser()
     this._countryCode = settings.countryCode || COUNTRY_CODE
-    this._refreshPromise = null // shared promise for token refresh
   }
 
   getApiBaseUrl() {
@@ -519,25 +519,46 @@ module.exports = class {
       // if 401 and first iteration, try to renew token
       if ((response.status === 401 || json.httpStatus === 401 || json.status === 401) && i === 0) {
 
-        // use shared promise to avoid parallel refresh attempts
-        if (!this._refreshPromise) {
-          this._refreshPromise = (async () => {
-            try {
-              console.log('Auth token expired, trying to renew...')
-              let auth = new Auth(this._settings)
-              let renewed = await auth.refreshToken(this._userAuth)
-              this._settings.reload()
-              return renewed
-            } finally {
-              this._refreshPromise = null
-            }
-          })()
+        // share refreshes across API instances for the same settings/user
+        const userId = this._userAuth?.user?.id || 'default'
+        let refreshPromisesByUser = refreshPromises.get(this._settings)
+        if (!refreshPromisesByUser) {
+          refreshPromisesByUser = new Map()
+          refreshPromises.set(this._settings, refreshPromisesByUser)
         }
 
-        let renewed = await this._refreshPromise
+        let refreshPromise = refreshPromisesByUser.get(userId)
+        if (!refreshPromise) {
+          refreshPromise = (async () => {
+            console.log('Auth token expired, trying to renew...')
+            let auth = new Auth(this._settings)
+            let renewed = await auth.refreshToken(this._userAuth)
+            this._settings.reload()
+            return renewed
+          })()
+
+          refreshPromisesByUser.set(userId, refreshPromise)
+          refreshPromise.then(
+            () => {
+              if (refreshPromisesByUser.get(userId) === refreshPromise) {
+                refreshPromisesByUser.delete(userId)
+              }
+            },
+            () => {
+              if (refreshPromisesByUser.get(userId) === refreshPromise) {
+                refreshPromisesByUser.delete(userId)
+              }
+            }
+          )
+        }
+
+        let renewed = await refreshPromise
         if (!renewed) {
           return json
         }
+
+        // Auth.refreshToken replaces the stored user object; use it for the retry.
+        this._userAuth = this._settings.getUser(userId === 'default' ? undefined : userId)
 
         // retry with renewed token
         continue
