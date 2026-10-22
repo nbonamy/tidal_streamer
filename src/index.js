@@ -1,7 +1,8 @@
 
 const express = require('express')
 const portfinder = require('portfinder')
-const mdns = require('mdns')
+const { Bonjour } = require('bonjour-service')
+const { hostname } = require('node:os')
 const Config = require('./config')
 const Auth = require('./auth')
 const User = require('./user')
@@ -99,8 +100,8 @@ portfinder.getPort({ port: startPort },  async (err, port) => {
 		}
 
 		// advertise
-		const ad = mdns.createAdvertisement(mdns.tcp('tidalstreamer'), port);
-		ad.start();
+		const bonjour = new Bonjour()
+		bonjour.publish({ name: hostname(), type: 'tidalstreamer', port })
 
     // Handle authentication after server is running
     try {
