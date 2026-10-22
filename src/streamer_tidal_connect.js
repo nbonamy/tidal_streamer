@@ -438,7 +438,7 @@ module.exports = class {
 
   _discoverDevices() {
     this._devices = {}
-    new Discoverer(async (device) => {
+    this._discoverer = new Discoverer(async (device) => {
 
       // first clean up
       let current = this._devices[device.name]
@@ -485,6 +485,7 @@ module.exports = class {
   }
 
   async shutdown() {
+    this._discoverer?.close()
     for (const device of Object.values(this._devices)) {
       await device.connect?.shutdown()
     }

@@ -18,8 +18,8 @@ module.exports = class {
 
   _discover_by_type(device_type, service_type) {
 
-    const bonjour = new Bonjour(undefined, error => console.log(error))
-    const browser = bonjour.find({ type: service_type, protocol: 'tcp' })
+    this._bonjour = new Bonjour(undefined, error => console.log(error))
+    const browser = this._browser = this._bonjour.find({ type: service_type, protocol: 'tcp' })
     browser.on('error', error => {
       console.log(error)
     })
@@ -45,6 +45,28 @@ module.exports = class {
       //console.log(`Device lost ${service.name}`)
       this.cbDown(service.name)
     })
+
+    let lastQuery = Date.now()
+    this._expiryTimer = setInterval(() => {
+      browser.expire()
+      const now = Date.now()
+      // Query before cached records expire, even if a device never says goodbye.
+      const needsRefresh = browser.services.some(service =>
+        service.ttl > 0 && now >= service.lastSeen + service.ttl * 800)
+      if (needsRefresh || now - lastQuery >= 30000) {
+        browser.update()
+        lastQuery = now
+      }
+    }, 1000)
+    this._expiryTimer.unref()
+  }
+
+  close() {
+    if (!this._bonjour) return
+    clearInterval(this._expiryTimer)
+    this._browser.stop()
+    this._bonjour.destroy()
+    this._bonjour = null
   }
 
 }

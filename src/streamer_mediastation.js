@@ -442,6 +442,7 @@ module.exports = class {
         const pod = {
           uuid: `${device.name}-${device.ip}`,
           name: device.description,
+          discoveryName: device.name,
           ip: device.ip,
           port: device.port
         }
@@ -450,7 +451,7 @@ module.exports = class {
       },
       (name) => {
         // Device lost
-        const podToRemove = Object.values(this._pods).find(p => p.name === name)
+        const podToRemove = Object.values(this._pods).find(p => p.discoveryName === name)
         if (podToRemove) {
           console.log(`[MediaPod] Lost: ${podToRemove.name}`)
           delete this._pods[podToRemove.uuid]
@@ -690,6 +691,8 @@ module.exports = class {
   }
 
   async shutdown() {
+    this._discoverer?.close()
+
     // Stop polling
     if (this._pollInterval) {
       clearInterval(this._pollInterval)

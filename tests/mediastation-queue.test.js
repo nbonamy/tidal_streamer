@@ -142,3 +142,14 @@ test('tidal status transform preserves missing player index instead of selecting
   expect(status.position).toBe(-1)
   expect(status.queue.items.map((item) => item.properties.active)).toEqual(['false', 'false'])
 })
+
+test('removes an expired MediaPod by discovery name even when its display name differs', () => {
+  const Discoverer = require('../src/discoverer')
+  Discoverer.mockClear()
+  const streamer = new MediaStationStreamer({})
+  const [up, down] = Discoverer.mock.calls[0]
+  up({ name: 'player-id', description: 'Living Room', ip: pod.ip, port: pod.port })
+  expect(streamer._getPod()).toMatchObject({ name: 'Living Room' })
+  down('player-id')
+  expect(streamer._getPod()).toBeNull()
+})
