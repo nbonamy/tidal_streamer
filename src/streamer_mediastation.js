@@ -19,6 +19,18 @@ function parseQueuePosition(position) {
   return parseInt(position)
 }
 
+function tidalTrackId(track) {
+  for (const url of [track?.url, track?.upnp_url]) {
+    try {
+      const match = new URL(url, 'http://mediapod').pathname.match(/\/stream\/track\/([1-9]\d*)\/?$/)
+      if (match) return match[1]
+    } catch {
+      // Local files and other sources do not have a Tidal stream URL.
+    }
+  }
+  return null
+}
+
 module.exports = class {
 
   constructor(settings) {
@@ -31,6 +43,7 @@ module.exports = class {
     this._lastStatus = null
     this._enrichedTrackId = null
     this._enrichedTrackData = null
+    this._enrichmentAttempt = null
     this._discoverPods()
   }
 
@@ -90,7 +103,7 @@ module.exports = class {
         let mediaStatus = await response.json()
         if (req.query.format === 'tidal') {
           let tidalStatus = this._transformStatus(mediaStatus)
-          await this._enrichCurrentTrack(tidalStatus)
+          await this._enrichCurrentTrack(tidalStatus, mediaStatus)
           res.json(tidalStatus)
         } else {
           res.json(mediaStatus)
@@ -598,7 +611,7 @@ module.exports = class {
         let tidalStatus = this._transformStatus(mediaStatus)
 
         // Enrich current track with full album/artist info
-        await this._enrichCurrentTrack(tidalStatus)
+        await this._enrichCurrentTrack(tidalStatus, mediaStatus)
 
         // Broadcast if status changed
         let statusStr = JSON.stringify(tidalStatus)
@@ -706,44 +719,57 @@ module.exports = class {
     }
   }
 
-  async _enrichCurrentTrack(status) {
+  async _enrichCurrentTrack(status, mediaStatus) {
     const position = status.position
     if (position < 0 || position >= status.tracks.length) return
 
     const track = status.tracks[position]?.item
     if (!track?.id) return
+    // MediaStation ids also identify local files. Only a Tidal stream URL
+    // supplies a Tidal id; do not infer the source from a numeric track id.
+    const id = tidalTrackId(mediaStatus?.playlist?.tracks?.[position])
+    if (!id) return
 
     // check cache
-    if (this._enrichedTrackId === track.id) {
+    if (this._enrichedTrackId === id) {
       if (this._enrichedTrackData.album) track.album = this._enrichedTrackData.album
       if (this._enrichedTrackData.artist) track.artist = this._enrichedTrackData.artist
       if (this._enrichedTrackData.artists) track.artists = this._enrichedTrackData.artists
       return
     }
 
-    // fetch full track info
-    try {
-      const api = new TidalApi(this._settings)
-      const fullTrack = await api.fetchTrackInfo(track.id)
+    // Share in-flight lookups and wait a minute after failure instead of
+    // looking up the same cached error on every one-second status poll.
+    let attempt = this._enrichmentAttempt
+    if (!attempt || attempt.id !== id || Date.now() >= attempt.retryAt) {
+      attempt = { id, retryAt: Infinity }
+      this._enrichmentAttempt = attempt
+      attempt.promise = (async () => {
+        try {
+          const api = new TidalApi(this._settings)
+          const fullTrack = await api.fetchTrackInfo(id)
+          if (!fullTrack?.album || fullTrack.error || fullTrack.httpStatus) return null
 
-      if (fullTrack.error || fullTrack.httpStatus || !fullTrack.album) return
-
-      // cache it
-      this._enrichedTrackId = track.id
-      this._enrichedTrackData = {
-        album: fullTrack.album,
-        artist: fullTrack.artist,
-        artists: fullTrack.artists,
-      }
-
-      // apply
-      track.album = fullTrack.album
-      track.artist = fullTrack.artist
-      track.artists = fullTrack.artists
-
-    } catch (e) {
-      // silently fail
+          const data = {
+            album: fullTrack.album,
+            artist: fullTrack.artist,
+            artists: fullTrack.artists,
+          }
+          this._enrichedTrackId = id
+          this._enrichedTrackData = data
+          return data
+        } catch {
+          return null
+        } finally {
+          attempt.retryAt = Date.now() + 60000
+        }
+      })()
     }
+
+    const data = await attempt.promise
+    if (data?.album) track.album = data.album
+    if (data?.artist) track.artist = data.artist
+    if (data?.artists) track.artists = data.artists
   }
 
 }
