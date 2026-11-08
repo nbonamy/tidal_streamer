@@ -459,6 +459,13 @@ module.exports = class {
           ip: device.ip,
           port: device.port
         }
+        // A restart can move the same advertised player to a new IP. Remove
+        // its old endpoint so the default selection cannot keep using it.
+        for (const [uuid, existing] of Object.entries(this._pods)) {
+          if (existing.discoveryName === device.name && uuid !== pod.uuid) {
+            delete this._pods[uuid]
+          }
+        }
         this._pods[pod.uuid] = pod
         console.log(`[MediaPod] Discovered: ${pod.name} at ${pod.ip}:${pod.port}`)
       },

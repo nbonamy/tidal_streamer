@@ -153,3 +153,16 @@ test('removes an expired MediaPod by discovery name even when its display name d
   down('player-id')
   expect(streamer._getPod()).toBeNull()
 })
+
+test('replaces a restarted MediaPod endpoint instead of retaining its old IP', () => {
+  const Discoverer = require('../src/discoverer')
+  Discoverer.mockClear()
+  const streamer = new MediaStationStreamer({})
+  const [up, down] = Discoverer.mock.calls[0]
+  up({ name: 'player-id', description: 'Living Room', ip: '192.168.1.9', port: 8000 })
+  up({ name: 'player-id', description: 'Living Room', ip: '192.168.1.10', port: 8001 })
+  expect(Object.values(streamer._pods)).toHaveLength(1)
+  expect(streamer._getPod()).toMatchObject({ ip: '192.168.1.10', port: 8001 })
+  down('player-id')
+  expect(streamer._getPod()).toBeNull()
+})

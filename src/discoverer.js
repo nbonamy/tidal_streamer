@@ -25,7 +25,7 @@ module.exports = class {
     })
 
     // now real handler
-    browser.on('up', service => {
+    const onService = service => {
       for (let service_ip of service.addresses) {
         if (net.isIPv4(service_ip)) {
           //console.log(`Device found ${service.name}: ${service.host}:${service.port}`)
@@ -40,7 +40,10 @@ module.exports = class {
           break
         }
       }
-    });
+    }
+    browser.on('up', onService)
+    browser.on('srv-update', onService)
+    browser.on('txt-update', onService)
     browser.on('down', service => {
       //console.log(`Device lost ${service.name}`)
       this.cbDown(service.name)

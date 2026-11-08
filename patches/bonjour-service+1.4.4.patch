@@ -1,8 +1,8 @@
 diff --git a/node_modules/bonjour-service/dist/lib/browser.js b/node_modules/bonjour-service/dist/lib/browser.js
-index efd6b31..05e4e1d 100644
+index efd6b31..efc6749 100644
 --- a/node_modules/bonjour-service/dist/lib/browser.js
 +++ b/node_modules/bonjour-service/dist/lib/browser.js
-@@ -59,6 +59,16 @@ class Browser extends events_1.EventEmitter {
+@@ -59,14 +59,33 @@ class Browser extends events_1.EventEmitter {
              const receiveTime = Date.now();
              Object.keys(nameMap).forEach(function (name) {
                  self.goodbyes(name, packet).forEach(self.removeService.bind(self));
@@ -19,3 +19,20 @@ index efd6b31..05e4e1d 100644
                  var matches = self.buildServicesFor(name, packet, self.txt, rinfo, receiveTime);
                  if (matches.length === 0)
                      return;
+                 matches.forEach((service) => {
+                     const existingService = self._services.find((s) => (0, dns_equal_1.default)(s.fqdn, service.fqdn));
+                     if (existingService) {
++                        // Address records may arrive after the first SRV/TXT
++                        // announcement. Keep known addresses on partial replies
++                        // and notify browsers when a usable address is added.
++                        const hasNewAddresses = service.addresses.some((address) => !existingService.addresses.includes(address));
++                        const addresses = Array.from(new Set(service.addresses.concat(existingService.addresses)));
++                        existingService.addresses = addresses;
++                        service.addresses = addresses;
+                         self.updateServiceSrv(existingService, service);
+                         self.updateServiceTxt(existingService, service);
++                        if (hasNewAddresses)
++                            self.emit('up', service);
+                         return;
+                     }
+                     self.addService(service);
